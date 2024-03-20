@@ -1,10 +1,12 @@
 import pygame
+from Map import Map
 
 pygame.init()
 
 class Window:
     def __init__(self, width, height):
         self.window = pygame.display.set_mode((width, height))
+        self.map = Map()
         pygame.display.set_caption("FF RPG")
 
     def run(self):
