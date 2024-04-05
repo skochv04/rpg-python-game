@@ -3,13 +3,18 @@ from MapDirection import MapDirection
 
 
 class Character:
-
-    def __init__(self, vector=Vector2D(0, 0), direction=MapDirection.TOP_1):
+    # to choose correct images for character we will use skin and direction
+    def __init__(self, skin=1, name="undefined", vector=Vector2D(0, 0), direction=MapDirection.TOP_1):
+        self.name = name
         self.position = vector
         self.direction = direction
+        self.skin = skin
+
         self.money = 100
-        self.skin = 1
-        self.weapon = []
+        self.health = 100
+        self.power = 1
+
+        self.skills = []  # list of Skills enum objects
 
     def place(self, vector):
         self.position = vector

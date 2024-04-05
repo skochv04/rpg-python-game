@@ -1,0 +1,10 @@
+
+import pygame, sys
+
+WINDOW_WIDTH, WINDOW_HEIGHT = 1280, 720
+TILE_SIZE = 64
+ANIMATION_SPEED = 6
+
+Z_LAYERS = {
+
+}
