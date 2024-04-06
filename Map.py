@@ -1,9 +1,7 @@
 import pygame.image
 
 # import Map
-from Character import Character
 from Vector2D import Vector2D
-from MapDirection import MapDirection
 
 
 class Map:
