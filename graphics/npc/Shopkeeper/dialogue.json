@@ -1,0 +1,32 @@
+{"dialogues": {
+"000":
+{
+	"type": "response",
+	"npc_name": "Shopkeeper",
+	"portrait_id": "neutral",
+	"text": "Hello, my dear. Would you like to buy some equipment?",
+	"responses": {
+			"Yes! What equipment do you have?": {
+				"next": "001"
+			},
+			"No, thanks!": {
+				"next": null
+			}
+	},
+	"commands": [
+		"show_equipment"
+	]
+},
+
+"001":
+{
+	"type": "response",
+	"npc_name": "Shopkeeper",
+	"portrait_id": "neutral",
+	"text": "I have a lot of interesting things. You can choose whatever you want!",
+	"responses": {},
+	"commands": [
+		"buy_equipment", "cancel"]
+	}
+}
+}

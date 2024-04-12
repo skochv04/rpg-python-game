@@ -1,6 +1,7 @@
 from Settings import *
 from Spritessheet import Spritessheet
 
+
 # from Vector2D import Vector2D
 
 class Player(pygame.sprite.Sprite):
@@ -22,13 +23,20 @@ class Player(pygame.sprite.Sprite):
         self.power = 1
 
         self.skills = []  # list of Skills enum objects
+        self.equipment = []
+
+        self.move_disabled = False
 
         my_spritesheet = Spritessheet(f'graphics/player/{skin}/texture.png')
         # trainer1 = my_spritesheet.get_sprite(128, 128, 128, 128).convert_alpha()
-        self.sprite_down = [my_spritesheet.parse_sprite('1.png'), my_spritesheet.parse_sprite('2.png'), my_spritesheet.parse_sprite('3.png')]
-        self.sprite_left = [my_spritesheet.parse_sprite('4.png'), my_spritesheet.parse_sprite('5.png'), my_spritesheet.parse_sprite('6.png')]
-        self.sprite_right = [my_spritesheet.parse_sprite('7.png'), my_spritesheet.parse_sprite('8.png'), my_spritesheet.parse_sprite('9.png')]
-        self.sprite_up = [my_spritesheet.parse_sprite('10.png'), my_spritesheet.parse_sprite('11.png'), my_spritesheet.parse_sprite('12.png')]
+        self.sprite_down = [my_spritesheet.parse_sprite('1.png'), my_spritesheet.parse_sprite('2.png'),
+                            my_spritesheet.parse_sprite('3.png')]
+        self.sprite_left = [my_spritesheet.parse_sprite('4.png'), my_spritesheet.parse_sprite('5.png'),
+                            my_spritesheet.parse_sprite('6.png')]
+        self.sprite_right = [my_spritesheet.parse_sprite('7.png'), my_spritesheet.parse_sprite('8.png'),
+                             my_spritesheet.parse_sprite('9.png')]
+        self.sprite_up = [my_spritesheet.parse_sprite('10.png'), my_spritesheet.parse_sprite('11.png'),
+                          my_spritesheet.parse_sprite('12.png')]
 
         self.current_skin = self.sprite_down
         self.image = self.current_skin[1]
@@ -66,6 +74,9 @@ class Player(pygame.sprite.Sprite):
         # self.rect.topleft += self.direction * self.speed * dt
         self.rect.topleft += self.direction * self.speed
         self.image = self.current_skin[1]
+
+        # offset = math.sin(pygame.time.get_ticks() / 200) * 0.5
+        # self.rect.y += offset
 
     def update(self, dt):
         self.input()

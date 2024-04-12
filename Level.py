@@ -1,4 +1,5 @@
 from Settings import *
+from Shopkeeper import Shopkeeper
 from Sprites import Sprite
 from Player import Player
 
@@ -14,6 +15,8 @@ class Level:
         # groups
         self.all_sprites = pygame.sprite.Group()
 
+        self.player = None
+
         self.setup(tmx_map)
 
     def setup(self, tmx_map):
@@ -23,6 +26,8 @@ class Level:
         for obj in tmx_map.get_layer_by_name('Objects'):
             if obj.name == 'player':
                 Player((obj.x, obj.y), self.all_sprites, self.player_name, self.current_skin)
+            elif obj.name == 'shopkeeper':
+                Shopkeeper((obj.x, obj.y), self.all_sprites, "000")
 
     def run(self, dt):
         self.all_sprites.update(dt)
