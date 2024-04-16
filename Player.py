@@ -10,7 +10,8 @@ class Player(pygame.sprite.Sprite):
         # self.image.fill('red')
         self.rect = self.image.get_rect(topleft=pos)
 
-        self.speed = 3
+        self.pos = pos
+        self.speed = 500
 
         self.name = name
         self.direction = direction
@@ -69,10 +70,12 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
     def move(self, dt):
-        step = self.direction * self.speed
-        self.rect.topleft += step
+        step = self.direction * self.speed *dt
+        self.pos += step
+        self.rect.topleft = self.pos
         # self.rect.topleft += self.direction * self.speed
         self.image = self.current_skin[1]
+        print(self.pos)
 
         # offset = math.sin(pygame.time.get_ticks() / 200) * 0.5
         # self.rect.y += offset

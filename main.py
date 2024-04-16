@@ -35,7 +35,7 @@ class Game:
                     sys.exit()
             self.current_stage.run(dt)
 
-            self.clock.tick(120)
+            self.clock.tick()
             pygame.display.update()
 
 
