@@ -1,5 +1,5 @@
 from Settings import *
-from Spritessheet import Spritessheet
+from Spritessheet import SpritesSheet
 
 
 class Player(pygame.sprite.Sprite):
@@ -26,7 +26,7 @@ class Player(pygame.sprite.Sprite):
 
         self.move_disabled = False
 
-        my_spritesheet = Spritessheet(f'graphics/player/{skin}/texture.png')
+        my_spritesheet = SpritesSheet(f'graphics/player/{skin}/texture.png')
         # trainer1 = my_spritesheet.get_sprite(128, 128, 128, 128).convert_alpha()
         self.sprite_down = [my_spritesheet.parse_sprite('1.png'), my_spritesheet.parse_sprite('2.png'),
                             my_spritesheet.parse_sprite('3.png')]
@@ -72,12 +72,8 @@ class Player(pygame.sprite.Sprite):
     def move(self, dt):
         self.pos = (self.pos[0] + self.direction[0] * self.speed * dt, self.pos[1] + self.direction[1] * self.speed * dt)
         self.rect.topleft = self.pos
-        print(self.pos)
-        # self.rect.topleft += self.direction * self.speed
         self.image = self.current_skin[1]
 
-        # offset = math.sin(pygame.time.get_ticks() / 200) * 0.5
-        # self.rect.y += offset
 
     def update(self, dt):
         self.input()

@@ -2,7 +2,7 @@ import pygame.image
 import json
 
 
-class Spritessheet:
+class SpritesSheet:
     def __init__(self, filename):
         self.filename = filename
         self.sprite_sheet = pygame.image.load(filename).convert()
