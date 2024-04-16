@@ -37,17 +37,20 @@ class Shopkeeper(NPC):
         else:
             self.current_dialogue = self.start_dialogue
 
-    def activation(self):
+    def is_active(self):
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
         in_range = self_pos.distance_to(player_pos) < 100
 
-        if in_range:
-            print("Gracz w zasięgu")
-
         return in_range
+
+    def input(self):
+        if self.is_active():
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_RETURN]:
+                self.dialogue()
 
     def action(self, player):
         raise NotImplementedError
 
     def update(self, dt):
-        self.activation()
+        self.input()

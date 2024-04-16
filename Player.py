@@ -2,8 +2,6 @@ from Settings import *
 from Spritessheet import Spritessheet
 
 
-# from Vector2D import Vector2D
-
 class Player(pygame.sprite.Sprite):
     # to choose correct images for character we will use skin and direction
     def __init__(self, pos, groups, name="undefined", skin=1, direction=vector(0, 0)):
