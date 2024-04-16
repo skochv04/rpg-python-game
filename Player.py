@@ -10,8 +10,8 @@ class Player(pygame.sprite.Sprite):
         # self.image.fill('red')
         self.rect = self.image.get_rect(topleft=pos)
 
-        self.pos = pos
-        self.speed = 500
+        self.pos = (pos[0], pos[1])
+        self.speed = 300
 
         self.name = name
         self.direction = direction
@@ -45,18 +45,18 @@ class Player(pygame.sprite.Sprite):
 
     def input(self):
         keys = pygame.key.get_pressed()
-        key_direction = vector(0, 0)
+        key_direction = [0, 0]
         if keys[pygame.K_RIGHT]:
-            key_direction = vector(1, 0)
+            key_direction = [1, 0]
             self.current_skin = self.sprite_right
         elif keys[pygame.K_LEFT]:
-            key_direction = vector(-1, 0)
+            key_direction = [-1, 0]
             self.current_skin = self.sprite_left
         elif keys[pygame.K_UP]:
-            key_direction = vector(0, -1)
+            key_direction = [0, -1]
             self.current_skin = self.sprite_up
         elif keys[pygame.K_DOWN]:
-            key_direction = vector(0, 1)
+            key_direction = [0, 1]
             self.current_skin = self.sprite_down
 
         # if key_direction:
@@ -70,12 +70,11 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
     def move(self, dt):
-        step = self.direction * self.speed *dt
-        self.pos += step
+        self.pos = (self.pos[0] + 1 * self.speed * dt, self.pos[1] + 0 * self.speed * dt)
         self.rect.topleft = self.pos
+        print(self.pos)
         # self.rect.topleft += self.direction * self.speed
         self.image = self.current_skin[1]
-        print(self.pos)
 
         # offset = math.sin(pygame.time.get_ticks() / 200) * 0.5
         # self.rect.y += offset
