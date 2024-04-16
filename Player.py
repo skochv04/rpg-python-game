@@ -70,7 +70,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
     def move(self, dt):
-        self.pos = (self.pos[0] + 1 * self.speed * dt, self.pos[1] + 0 * self.speed * dt)
+        self.pos = (self.pos[0] + self.direction[0] * self.speed * dt, self.pos[1] + self.direction[1] * self.speed * dt)
         self.rect.topleft = self.pos
         print(self.pos)
         # self.rect.topleft += self.direction * self.speed
