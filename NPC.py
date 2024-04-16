@@ -15,7 +15,6 @@ class NPC(pygame.sprite.Sprite):
 
         self.player = player
 
-        self.dialogue()
 
     def dialogue(self):
         raise NotImplementedError
