@@ -12,8 +12,8 @@ def sell_equipment(equipment, player):
 
 
 class Shopkeeper(NPC):
-    def __init__(self, pos, groups, current_dialogue):
-        super().__init__(pos, groups, current_dialogue)
+    def __init__(self, pos, groups, current_dialogue, player):
+        super().__init__(pos, groups, current_dialogue, player)
 
     def dialogue(self):
         text, responses = self.dialogue_data.parse_text(self.current_dialogue)
@@ -37,5 +37,17 @@ class Shopkeeper(NPC):
         else:
             self.current_dialogue = self.start_dialogue
 
+    def activation(self):
+        player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
+        in_range = self_pos.distance_to(player_pos) < 100
+
+        if in_range:
+            print("Gracz w zasięgu")
+
+        return in_range
+
     def action(self, player):
         raise NotImplementedError
+
+    def update(self, dt):
+        self.activation()

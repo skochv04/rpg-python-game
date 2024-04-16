@@ -28,7 +28,7 @@ class Level:
             if obj.name == 'player':
                 self.player = Player((obj.x, obj.y), self.all_sprites, self.player_name, self.current_skin)
             elif obj.name == 'shopkeeper':
-                Shopkeeper((obj.x, obj.y), self.all_sprites, "000")
+                Shopkeeper((obj.x, obj.y), self.all_sprites, "000", self.player)
 
     def run(self, dt):
         self.all_sprites.update(dt)

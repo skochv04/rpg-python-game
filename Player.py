@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
         # self.image.fill('red')
         self.rect = self.image.get_rect(topleft=pos)
 
-        self.speed = 20
+        self.speed = 3
 
         self.name = name
         self.direction = direction
