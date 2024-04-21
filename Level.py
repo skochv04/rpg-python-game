@@ -1,3 +1,5 @@
+import pygame.sprite
+
 from Settings import *
 from Shopkeeper import Shopkeeper
 from Sprites import Sprite
@@ -15,6 +17,7 @@ class Level:
 
         # groups
         self.all_sprites = AllSprites()
+        self.collision_sprites = pygame.sprite.Group()
 
         self.player = None
 
@@ -22,13 +25,13 @@ class Level:
 
     def setup(self, tmx_map):
         for x, y, surf in tmx_map.get_layer_by_name('Terrain').tiles():
-            Sprite((x * TILE_SIZE, y * TILE_SIZE), surf, self.all_sprites)
+            Sprite((x * TILE_SIZE, y * TILE_SIZE), surf,(self.all_sprites, self.collision_sprites))
 
         for obj in tmx_map.get_layer_by_name('Objects'):
             if obj.name == 'player':
                 self.player = Player((obj.x, obj.y), self.all_sprites, self.player_name, self.current_skin)
             elif obj.name == 'shopkeeper':
-                Shopkeeper((obj.x, obj.y), self.all_sprites, "000", self.player)
+                Shopkeeper((obj.x, obj.y), self.all_sprites,  "000", self.player)
 
     def run(self, dt):
         self.all_sprites.update(dt)

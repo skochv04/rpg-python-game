@@ -1,5 +1,6 @@
 from Settings import *
 from Player import Player
+from Spritessheet import SpritesSheet
 
 def create_character():
     font = pygame.font.Font(None, 36)
@@ -51,9 +52,9 @@ def create_character():
         pygame.draw.rect(display_surface, color, input_box, 2)
 
         # Rysowanie obecnej postaci
-        player = Player((200, 200), [], "", current_skin + 1)
-        current_sprite = player.current_skin[1]
-        skin_view = pygame.transform.scale(current_sprite, (200, 200))
+        my_spritesheet = SpritesSheet(f'graphics/player/{current_skin + 1}/texture.png')
+        sprite_down = my_spritesheet.parse_sprite('1.png')
+        skin_view = pygame.transform.scale(sprite_down, (200, 200))
         display_surface.blit(skin_view, (WINDOW_WIDTH/2 - 110, 300))
 
         #Rysowanie strzałek wyboru
