@@ -5,7 +5,6 @@ import pygame.sprite
 from Settings import *
 from Level import Level
 from pytmx.util_pygame import load_pygame
-from os.path import join
 from CharacterCreator import create_character
 
 #Klasa okienka z grą

@@ -7,14 +7,13 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, name="undefined", skin=1, direction=vector(0, 0)):
         super().__init__(groups)
         self.image = pygame.Surface((48, 56))
-        # self.image.fill('red')
-        self.rect = self.image.get_rect(topleft=pos)
 
-        self.pos = (pos[0], pos[1])
+        self.rect = self.image.get_frect(topleft=pos)
+        self.old_rect = self.rect.copy()
+
         self.speed = 300
 
         self.collision_sprites = collision_sprites
-        #print(collision_sprites)
 
         self.name = name
         self.direction = direction
@@ -48,24 +47,19 @@ class Player(pygame.sprite.Sprite):
 
     def input(self):
         keys = pygame.key.get_pressed()
-        key_direction = [0, 0]
+        key_direction = vector(0, 0)
         if keys[pygame.K_RIGHT]:
-            key_direction = [1, 0]
+            key_direction = vector(1, 0)
             self.current_skin = self.sprite_right
         elif keys[pygame.K_LEFT]:
-            key_direction = [-1, 0]
+            key_direction = vector(-1, 0)
             self.current_skin = self.sprite_left
         elif keys[pygame.K_UP]:
-            key_direction = [0, -1]
+            key_direction = vector(0, -1)
             self.current_skin = self.sprite_up
         elif keys[pygame.K_DOWN]:
-            key_direction = [0, 1]
+            key_direction = vector(0, 1)
             self.current_skin = self.sprite_down
-
-        # if key_direction:
-        #     self.direction = key_direction.normalize()
-        # else:
-        #     self.direction = key_direction
 
         self.direction = key_direction
 
@@ -73,12 +67,38 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
     def move(self, dt):
-        self.pos = (self.pos[0] + self.direction[0] * self.speed * dt, self.pos[1] + self.direction[1] * self.speed * dt)
-        self.rect.topleft = self.pos
+        #self.pos[0] = self.pos[0] + self.direction[0] * self.speed * dt
+        #self.pos[1] = self.pos[1] + self.direction[1] * self.speed * dt
+
+        self.rect.x += self.direction.x * self.speed * dt
+        self.collision('horizontal')
+        self.rect.y += self.direction.y * self.speed * dt
+        self.collision('vertical')
+
         self.image = self.current_skin[1]
+
+    def collision(self, axis):
+        for sprite in self.collision_sprites:
+            if sprite.rect.colliderect(self.rect):
+                if axis == 'horizontal':
+                    # lewo
+                    if self.rect.left <= sprite.rect.right:
+                        self.rect.left = sprite.rect.right
+
+                    # prawo
+                    elif self.rect.right >= sprite.rect.left:
+                        self.rect.right= sprite.rect.left - self.rect.width
+
+                else:
+                    # # gora
+                    # #print(self.pos[1], ' - ', sprite.rect.bottom)
+                    # if self.pos[1] <= sprite.rect.bottom:
+                    #     self.pos[1] = sprite.rect.bottom
+                    pass
 
 
     def update(self, dt):
+        self.old_rect = self.rect.copy()
         self.input()
         self.move(dt)
 
