@@ -91,11 +91,11 @@ class Player(pygame.sprite.Sprite):
 
                 else:
                     # gora
-                    if self.rect.top <= sprite.rect.bottom:
+                    if self.rect.top <= sprite.rect.bottom and self.old_rect.top >= sprite.old_rect.bottom:
                         self.rect.top = sprite.rect.bottom
 
                     # dol
-                    if self.rect.bottom >= sprite.rect.top:
+                    if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
                         self.rect.bottom = sprite.rect.top
 
 
