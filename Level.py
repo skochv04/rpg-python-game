@@ -8,12 +8,13 @@ from AllSprites import AllSprites
 
 
 class Level:
-    def __init__(self, tmx_map, player_name, current_skin):
+    def __init__(self, tmx_map, player_name, current_skin, player_data):
         self.player_name = None
         self.display_surface = pygame.display.get_surface()
 
         self.player_name = player_name
         self.current_skin = current_skin
+        self.player_data = player_data
 
         # groups
         self.all_sprites = AllSprites()

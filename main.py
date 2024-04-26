@@ -6,6 +6,7 @@ from Settings import *
 from Level import Level
 from pytmx.util_pygame import load_pygame
 from CharacterCreator import create_character
+from PlayerData import PlayerData
 
 #Klasa okienka z grą
 class Game:
@@ -15,6 +16,7 @@ class Game:
         pygame.display.set_caption('No Title RPG Game')
         self.clock = pygame.time.Clock()
 
+        self.player_data = PlayerData(100, 5, 1)
         self.tmx_maps = {0: load_pygame(join('data', 'levels', 'omni.tmx'))}
 
         self.current_stage = None
@@ -24,7 +26,7 @@ class Game:
 
     def run(self):
         player_name, self.current_skin = create_character()
-        self.current_stage = Level(self.tmx_maps[0], player_name, self.current_skin + 1)
+        self.current_stage = Level(self.tmx_maps[0], player_name, self.current_skin + 1, self.player_data)
 
         while True:
             dt = self.clock.tick() / 1000

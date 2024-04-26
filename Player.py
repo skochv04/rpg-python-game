@@ -1,3 +1,5 @@
+import pygame
+
 from Settings import *
 from Spritessheet import SpritesSheet
 
@@ -19,17 +21,9 @@ class Player(pygame.sprite.Sprite):
         self.direction = direction
         self.skin = skin
 
-        self.money = 100
-        self.health = 100
-        self.power = 1
-
-        self.skills = []  # list of Skills enum objects
-        self.equipment = []
-
         self.move_disabled = False
 
         my_spritesheet = SpritesSheet(f'graphics/player/{skin}/texture.png')
-        # trainer1 = my_spritesheet.get_sprite(128, 128, 128, 128).convert_alpha()
         self.sprite_down = [my_spritesheet.parse_sprite('1.png'), my_spritesheet.parse_sprite('2.png'),
                             my_spritesheet.parse_sprite('3.png')]
         self.sprite_left = [my_spritesheet.parse_sprite('4.png'), my_spritesheet.parse_sprite('5.png'),
@@ -42,8 +36,6 @@ class Player(pygame.sprite.Sprite):
         self.current_skin = self.sprite_down
         self.image = self.current_skin[1]
 
-        # self.path = f'graphics/player/{skin}'
-        # self.image = pygame.image.load(f'{self.path}/run/0.png').convert_alpha()
 
     def input(self):
         keys = pygame.key.get_pressed()
@@ -67,9 +59,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
     def move(self, dt):
-        #self.pos[0] = self.pos[0] + self.direction[0] * self.speed * dt
-        #self.pos[1] = self.pos[1] + self.direction[1] * self.speed * dt
-
         self.rect.x += self.direction.x * self.speed * dt
         self.collision('horizontal')
         self.rect.y += self.direction.y * self.speed * dt
