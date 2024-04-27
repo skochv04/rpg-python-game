@@ -36,12 +36,14 @@ class UI:
             response_text = f"{i+1}: {response}"
             response_surface, _ = font.render(response_text, 'white', 'black')
             self.image.blit(response_surface, (10, self.rect.height - (len(responses) - i) * 30))
+        self.show()
 
 
     def run(self):
         end, text_ended = False, False
         text, responses = self.get_text()
         self.render_text(text)
+        self.render_responses(responses)
 
         while not end:
             answer = None
@@ -70,5 +72,6 @@ class UI:
                     self.current_dialogue = responses[selected_response]['next']
                     text, responses = self.get_text()
                     self.render_text(text)
+                    self.render_responses(responses)
                 else:
                     text_ended = True
