@@ -5,6 +5,7 @@ from Shopkeeper import Shopkeeper
 from Sprites import Sprite
 from Player import Player
 from AllSprites import AllSprites
+from UI import UI
 
 
 class Level:
@@ -19,6 +20,7 @@ class Level:
         # groups
         self.all_sprites = AllSprites()
         self.collision_sprites = pygame.sprite.Group()
+        self.ui = UI()
 
         self.player = None
 
@@ -32,9 +34,10 @@ class Level:
             if obj.name == 'player':
                 self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player_name, self.current_skin)
             elif obj.name == 'shopkeeper':
-                Shopkeeper((obj.x, obj.y), self.all_sprites,  "000", self.player)
+                Shopkeeper((obj.x, obj.y), self.all_sprites,  "000", self.player, self.ui)
 
     def run(self, dt):
         self.all_sprites.update(dt)
         self.display_surface.fill('yellow')
         self.all_sprites.draw(self.player.rect.center)
+        self.ui.update()

@@ -12,11 +12,12 @@ def sell_equipment(equipment, player):
 
 
 class Shopkeeper(NPC):
-    def __init__(self, pos, groups, current_dialogue, player):
-        super().__init__(pos, groups, current_dialogue, player)
+    def __init__(self, pos, groups, current_dialogue, player, ui):
+        super().__init__(pos, groups, current_dialogue, player, ui)
 
     def dialogue(self):
         text, responses = self.dialogue_data.parse_text(self.current_dialogue)
+        self.ui.show_text(text)
         print("\n ### " + self.__class__.__name__.upper() + ": " + text + "\n")
         if not responses:
             self.current_dialogue = self.start_dialogue
@@ -36,6 +37,7 @@ class Shopkeeper(NPC):
             self.dialogue()
         else:
             self.current_dialogue = self.start_dialogue
+        self.ui.clear_sprites()
 
     def is_active(self):
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
