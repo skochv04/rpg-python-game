@@ -1,33 +1,29 @@
+import pygame
+
 from Settings import *
 from Spritessheet import SpritesSheet
 
 
 class Player(pygame.sprite.Sprite):
     # to choose correct images for character we will use skin and direction
-    def __init__(self, pos, groups, name="undefined", skin=1, direction=vector(0, 0)):
+    def __init__(self, pos, groups, collision_sprites, name="undefined", skin=1, direction=vector(0, 0)):
         super().__init__(groups)
         self.image = pygame.Surface((48, 56))
-        # self.image.fill('red')
-        self.rect = self.image.get_rect(topleft=pos)
 
-        self.pos = (pos[0], pos[1])
+        self.rect = self.image.get_frect(topleft=pos)
+        self.old_rect = self.rect.copy()
+
         self.speed = 300
+
+        self.collision_sprites = collision_sprites
 
         self.name = name
         self.direction = direction
         self.skin = skin
 
-        self.money = 100
-        self.health = 100
-        self.power = 1
-
-        self.skills = []  # list of Skills enum objects
-        self.equipment = []
-
         self.move_disabled = False
 
         my_spritesheet = SpritesSheet(f'graphics/player/{skin}/texture.png')
-        # trainer1 = my_spritesheet.get_sprite(128, 128, 128, 128).convert_alpha()
         self.sprite_down = [my_spritesheet.parse_sprite('1.png'), my_spritesheet.parse_sprite('2.png'),
                             my_spritesheet.parse_sprite('3.png')]
         self.sprite_left = [my_spritesheet.parse_sprite('4.png'), my_spritesheet.parse_sprite('5.png'),
@@ -40,29 +36,22 @@ class Player(pygame.sprite.Sprite):
         self.current_skin = self.sprite_down
         self.image = self.current_skin[1]
 
-        # self.path = f'graphics/player/{skin}'
-        # self.image = pygame.image.load(f'{self.path}/run/0.png').convert_alpha()
 
     def input(self):
         keys = pygame.key.get_pressed()
-        key_direction = [0, 0]
+        key_direction = vector(0, 0)
         if keys[pygame.K_RIGHT]:
-            key_direction = [1, 0]
+            key_direction = vector(1, 0)
             self.current_skin = self.sprite_right
         elif keys[pygame.K_LEFT]:
-            key_direction = [-1, 0]
+            key_direction = vector(-1, 0)
             self.current_skin = self.sprite_left
         elif keys[pygame.K_UP]:
-            key_direction = [0, -1]
+            key_direction = vector(0, -1)
             self.current_skin = self.sprite_up
         elif keys[pygame.K_DOWN]:
-            key_direction = [0, 1]
+            key_direction = vector(0, 1)
             self.current_skin = self.sprite_down
-
-        # if key_direction:
-        #     self.direction = key_direction.normalize()
-        # else:
-        #     self.direction = key_direction
 
         self.direction = key_direction
 
@@ -70,12 +59,37 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
     def move(self, dt):
-        self.pos = (self.pos[0] + self.direction[0] * self.speed * dt, self.pos[1] + self.direction[1] * self.speed * dt)
-        self.rect.topleft = self.pos
+        self.rect.x += self.direction.x * self.speed * dt
+        self.collision('horizontal')
+        self.rect.y += self.direction.y * self.speed * dt
+        self.collision('vertical')
+
         self.image = self.current_skin[1]
+
+    def collision(self, axis):
+        for sprite in self.collision_sprites:
+            if sprite.rect.colliderect(self.rect):
+                if axis == 'horizontal':
+                    # lewo
+                    if self.rect.left <= sprite.rect.right and self.old_rect.left >= sprite.old_rect.right:
+                        self.rect.left = sprite.rect.right
+
+                    # prawo
+                    if self.rect.right >= sprite.rect.left and self.old_rect.right <= sprite.old_rect.left:
+                        self.rect.right = sprite.rect.left
+
+                else:
+                    # gora
+                    if self.rect.top <= sprite.rect.bottom and self.old_rect.top >= sprite.old_rect.bottom:
+                        self.rect.top = sprite.rect.bottom
+
+                    # dol
+                    if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
+                        self.rect.bottom = sprite.rect.top
 
 
     def update(self, dt):
+        self.old_rect = self.rect.copy()
         self.input()
         self.move(dt)
 

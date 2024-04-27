@@ -1,6 +1,7 @@
 from Dialogue import Dialogue
 from NPC import NPC
 from Settings import *
+from UI import UI
 
 
 def sell_equipment(equipment, player):
@@ -14,28 +15,14 @@ def sell_equipment(equipment, player):
 class Shopkeeper(NPC):
     def __init__(self, pos, groups, current_dialogue, player):
         super().__init__(pos, groups, current_dialogue, player)
+        self.last_input_time = 0
+        self.time_between_inputs = 200
 
     def dialogue(self):
-        text, responses = self.dialogue_data.parse_text(self.current_dialogue)
-        print("\n ### " + self.__class__.__name__.upper() + ": " + text + "\n")
-        if not responses:
-            self.current_dialogue = self.start_dialogue
-            return
-        a = (list(responses.keys())[0])
-        b = (list(responses.keys())[1])
-        t = None
-        while t != 1 and t != 2:
-            print("Option 1: " + a, ", Option 2: " + b)
-            print("Which option 1/2?")
-            t = input()
-            if t.isdigit(): t = int(t)
+        ui = UI(self.dialogue_data, self.current_dialogue)
+        ui.run()
+        self.last_input_time = pygame.time.get_ticks()
 
-        selected_response = list(responses.keys())[t - 1]
-        if responses[selected_response]['next'] is not None:
-            self.current_dialogue = responses[selected_response]['next']
-            self.dialogue()
-        else:
-            self.current_dialogue = self.start_dialogue
 
     def is_active(self):
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
@@ -44,10 +31,12 @@ class Shopkeeper(NPC):
         return in_range
 
     def input(self):
-        if self.is_active():
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_RETURN]:
-                self.dialogue()
+        current_time = pygame.time.get_ticks()
+        if current_time - self.last_input_time >= self.time_between_inputs:
+            if self.is_active():
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_RETURN]:
+                    self.dialogue()
 
     def action(self, player):
         raise NotImplementedError
