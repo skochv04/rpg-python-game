@@ -17,15 +17,25 @@ class UI:
     def get_text(self):
         return self.dialogue_data.parse_text(self.current_dialogue)
 
-    def render_text(self, text):
-        self.image.fill('black')
-        font = pygame.freetype.Font(None, 36)
-        text_surface, _ = font.render(text, 'white', 'black')
-        self.image.blit(text_surface, (10, 10))
-
     def show(self):
         self.display_surface.blit(self.image, self.rect.topleft)
         pygame.display.flip()
+
+    def render_text(self, text):
+        self.image.fill('black')
+        font = pygame.freetype.Font(None, 36)
+        for i in range(len(text)):
+            text_surface, _ = font.render(text[:i + 1], 'white', 'black')
+            self.image.blit(text_surface, (10, 10))
+            self.show()
+            pygame.time.wait(10)
+
+    def render_responses(self, responses):
+        font = pygame.freetype.Font(None, 24)
+        for i, response in enumerate(responses):
+            response_text = f"{i+1}: {response}"
+            response_surface, _ = font.render(response_text, 'white', 'black')
+            self.image.blit(response_surface, (10, self.rect.height - (len(responses) - i) * 30))
 
 
     def run(self):
@@ -35,7 +45,6 @@ class UI:
 
         while not end:
             answer = None
-            self.show()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
