@@ -21,6 +21,14 @@ class UI:
         self.display_surface.blit(self.image, self.rect.topleft)
         pygame.display.flip()
 
+
+    def render_end_dialogue_prompt(self):
+        font = pygame.freetype.Font(None, 24)
+        prompt_text = "Press Enter to end dialogue"
+        prompt_surface, _ = font.render(prompt_text, 'white', 'black')
+        self.image.blit(prompt_surface, (self.rect.width - prompt_surface.get_width() - 10, self.rect.height - 30))
+        self.show()
+
     def render_text(self, text):
         self.image.fill('black')
         font = pygame.freetype.Font(None, 36)
@@ -63,6 +71,7 @@ class UI:
 
 
             if text_ended:
+                self.render_end_dialogue_prompt()
                 if keys[pygame.K_RETURN]:
                     end = True
 
