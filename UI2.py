@@ -1,5 +1,4 @@
 import pygame
-
 from Settings import *
 
 class UI:
@@ -11,18 +10,33 @@ class UI:
 
         self.dialogue_data = dialogue_data
         self.current_dialogue = current_dialogue
+        self.response_keys = [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5,
+                              pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9, pygame.K_0]
         self.run()
 
     def get_text(self):
         return self.dialogue_data.parse_text(self.current_dialogue)
 
+    def render_text(self, text):
+        self.image.fill('black')
+        font = pygame.freetype.Font(None, 36)
+        text_surface, _ = font.render(text, 'white', 'black')
+        self.image.blit(text_surface, (10, 10))
+
+    def show(self):
+        self.image.blit(self.display_surface, self.rect)
+        pygame.display.flip()
+
 
     def run(self):
-        end = False
+        end, text_ended = False, False
         text, responses = self.get_text()
+        self.render_text(text)
+
         answer = None
 
         while not end:
+            self.show()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -30,9 +44,20 @@ class UI:
 
             keys = pygame.key.get_pressed()
 
-            if keys[pygame.K_1]:
-                answer = 1
-            elif keys[pygame.K_2]:
-                answer = 2
+            if len(responses) > 0:
+                for i in range(len(responses)):
+                    if keys[self.response_keys[i]]:
+                        answer = i
+            else:
+                text_ended = True
 
-            if answer is not None:
+
+            if text_ended:
+                if keys[pygame.K_RETURN]:
+                    end = True
+            else:
+                selected_response = list(responses.keys())[answer]
+                if responses[selected_response]['next'] is not None:
+                    text, responses = self.get_text(responses[selected_response]['next'])
+                else:
+                    text_ended = True
