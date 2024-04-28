@@ -60,6 +60,7 @@ class Player(pygame.sprite.Sprite):
             key_direction = vector(0, 1)
             self.current_skin = self.sprite_down
             self.is_moving = True
+
         else:
             self.image = self.current_skin[1]
 

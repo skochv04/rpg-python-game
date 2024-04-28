@@ -9,6 +9,7 @@ from Sprites import Sprite
 from Player import Player
 from AllSprites import AllSprites
 from UI import UI
+from Wilddog import Wilddog
 
 
 class Level:
@@ -43,8 +44,10 @@ class Level:
                 Informator((obj.x, obj.y), self.all_sprites, "000", self.player, 1000)
             elif obj.name == 'fortune':
                 Fortune((obj.x, obj.y), self.all_sprites, "000", self.player, 1500)
+            elif obj.name == 'wilddog':
+                Wilddog((obj.x, obj.y), self.all_sprites,  self.collision_sprites, self.player, 0)
 
     def run(self, dt):
         self.all_sprites.update(dt)
-        self.display_surface.fill('yellow')
+        self.display_surface.fill('lightblue')
         self.all_sprites.draw(self.player.rect.center)
