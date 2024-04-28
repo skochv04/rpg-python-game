@@ -1,0 +1,43 @@
+{
+	"dialogues": {
+		"000": {
+			"type": "response",
+			"npc_name": "Informator",
+			"portrait_id": "neutral",
+			"text": "What a wonderful day! I often find myself marveling at this vast world. From towering mountains to endless seas, there's so much to explore. Did you know there are ancient ruins hidden deep in the forest, remnants of a forgotten civilization? History weaves through every corner of our land. Enjoy your adventure!",
+			"responses": {
+				"I like this world so much. Would you be so kind and tell me more about it?": {
+					"next": "001"
+				},
+				"Sorry, I am very busy today... We can speake later on!": {
+					"next": "002"
+				}
+			},
+			"commands": [
+				"show_tasks"
+			]
+		},
+		"001": {
+			"type": "response",
+			"npc_name": "Informator",
+			"portrait_id": "neutral",
+			"text": "Of course, it is an honor for me! In this world you can improve your magical skills, earn money, complete tasks and compete with other magicians...",
+			"responses": {},
+			"commands": [
+				"buy_equipment",
+				"cancel"
+			]
+		},
+		"002": {
+			"type": "response",
+			"npc_name": "Questgiver",
+			"portrait_id": "neutral",
+			"text": "Don`t worry, my friend. I will wait for you here!",
+			"responses": {},
+			"commands": [
+				"buy_equipment",
+				"cancel"
+			]
+		}
+	}
+}

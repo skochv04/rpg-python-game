@@ -1,5 +1,8 @@
 import pygame.sprite
 
+from Fortune import Fortune
+from Informator import Informator
+from Questgiver import Questgiver
 from Settings import *
 from Shopkeeper import Shopkeeper
 from Sprites import Sprite
@@ -33,7 +36,13 @@ class Level:
             if obj.name == 'player':
                 self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player_name, self.current_skin)
             elif obj.name == 'shopkeeper':
-                Shopkeeper((obj.x, obj.y), self.all_sprites,  "000", self.player)
+                Shopkeeper((obj.x, obj.y), self.all_sprites,  "000", self.player, 0)
+            elif obj.name == 'questgiver':
+                Questgiver((obj.x, obj.y), self.all_sprites, "000", self.player, 500)
+            elif obj.name == 'informator':
+                Informator((obj.x, obj.y), self.all_sprites, "000", self.player, 1000)
+            elif obj.name == 'fortune':
+                Fortune((obj.x, obj.y), self.all_sprites, "000", self.player, 1500)
 
     def run(self, dt):
         self.all_sprites.update(dt)
