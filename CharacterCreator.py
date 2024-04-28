@@ -1,5 +1,4 @@
 from Settings import *
-from Player import Player
 from Spritessheet import SpritesSheet
 
 def create_character():

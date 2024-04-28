@@ -6,7 +6,7 @@ from Spritessheet import SpritesSheet
 
 class Player(pygame.sprite.Sprite):
     # to choose correct images for character we will use skin and direction
-    def __init__(self, pos, groups, collision_sprites, name="undefined", skin=1, direction=vector(0, 0)):
+    def __init__(self, pos, groups, collision_sprites, player_data, name="undefined", skin=1):
         super().__init__(groups)
         self.image = pygame.Surface((48, 56))
 
@@ -14,11 +14,12 @@ class Player(pygame.sprite.Sprite):
         self.old_rect = self.rect.copy()
 
         self.speed = 300
+        self.player_data = player_data
 
         self.collision_sprites = collision_sprites
 
         self.name = name
-        self.direction = direction
+        self.direction = None
         self.skin = skin
 
         self.move_disabled = False
