@@ -4,8 +4,9 @@ class InventoryUI(pygame.sprite.Sprite):
     def __init__(self, groups, inventory, player):
         super().__init__(groups)
         self.inventory = inventory
+        self.inventory_slot_size = 48
         self.player = player
-        self.image = pygame.Surface((WINDOW_WIDTH // 2, WINDOW_HEIGHT))
+        self.image = pygame.Surface((self.inventory.columns * self.inventory_slot_size, self.inventory.rows * self.inventory_slot_size))
         self.image.fill('gray')
         self.rect = self.image.get_frect(topleft=(WINDOW_WIDTH // 2, 0))
         self.font = pygame.font.Font(None, 24)
@@ -23,7 +24,8 @@ class InventoryUI(pygame.sprite.Sprite):
         for i in range(self.inventory.columns):
             for j in range(self.inventory.rows):
                 item = self.inventory.get_item(i, j)
-                slot_rect = pygame.Rect(i * 48, j * 48, 48, 48)
+                slot_rect = pygame.Rect(i * self.inventory_slot_size, j * self.inventory_slot_size,
+                                        self.inventory_slot_size, self.inventory_slot_size)
                 self.slot_rects.append(slot_rect)
                 pygame.draw.rect(self.image, 'black', slot_rect, 1)
                 if item != 0:
