@@ -2,7 +2,7 @@ import pygame
 
 from Settings import *
 from Spritessheet import SpritesSheet
-
+from InventoryUI import InventoryUI
 
 class Player(pygame.sprite.Sprite):
     # to choose correct images for character we will use skin and direction
