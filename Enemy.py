@@ -1,6 +1,8 @@
+from PlayerData import PlayerData
 from Settings import *
 from Spritessheet import SpritesSheet
 from UI import UI
+from Fight import fight
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -26,6 +28,7 @@ class Enemy(pygame.sprite.Sprite):
         self.direction = vector(1, 0)
 
         self.player = player
+        self.enemy_data = PlayerData(100, 5, 1)
 
         self.speed = 30
         self.collision_sprites = collision_sprites
@@ -51,7 +54,7 @@ class Enemy(pygame.sprite.Sprite):
             if self.is_active():
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_f]:
-                    self.fight()
+                    fight(self, self.player)
 
     def move(self, dt):
         self.skin_timer = (self.skin_timer + 1) % 56
@@ -108,6 +111,3 @@ class Enemy(pygame.sprite.Sprite):
                     if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
                         self.rect.bottom = sprite.rect.top
                         self.opposite_direction(self.direction)
-
-    def fight(self, player):
-        raise NotImplementedError

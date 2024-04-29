@@ -134,7 +134,7 @@
   <object id="85" name="fortune" gid="225" x="1196.67" y="574.572" width="48" height="46"/>
   <object id="86" name="informator" gid="225" x="794.061" y="445.962" width="48" height="46"/>
   <object id="87" name="wilddog" gid="225" x="395.42" y="511.212" width="32" height="32"/>
-  <object id="90" name="wilddog" gid="225" x="1332" y="256.167" width="32" height="32"/>
+  <object id="90" name="wilddog" gid="225" x="1332" y="255.167" width="32" height="32"/>
   <object id="91" name="wilddog" gid="225" x="1359" y="575.5" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="13" name="Moving Objects">

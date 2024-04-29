@@ -1,22 +1,27 @@
 from Settings import *
 from Player import Player
 from Spritessheet import SpritesSheet
+import pygame
+import sys
+from os.path import join
 
-def create_character():
+
+def fight(enemy, player):
     font = pygame.font.Font(None, 36)
-    input_box = pygame.Rect(WINDOW_WIDTH/2 - 110, 150, 140, 32)
+    input_box = pygame.Rect(50, 150, 140, 32)
     color_inactive = pygame.Color('lightskyblue3')
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
     active = False
-    current_skin = 0
+    current_skin = player.skin
     display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     clock = pygame.time.Clock()
     text = ''
-    default_text = font.render("Nazwa Postaci", True, color)
+    default_text = font.render(player.name, True, color)
+    background_image = pygame.image.load('graphics/map/background/1.png').convert()
+
     while True:
         for event in pygame.event.get():
-            # Obsługa zamykania okna
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -35,13 +40,9 @@ def create_character():
                     else:
                         text += event.unicode
 
-                if event.key == pygame.K_LEFT:
-                    current_skin = (current_skin - 1) % 8
-                elif event.key == pygame.K_RIGHT:
-                    current_skin = (current_skin + 1) % 8
-
-        # Rysowanie okienka z nazwą
         display_surface.fill((30, 30, 30))
+
+        # Display the input box
         if len(text) == 0:
             txt_surface = default_text
         else:
@@ -51,19 +52,23 @@ def create_character():
         display_surface.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
         pygame.draw.rect(display_surface, color, input_box, 2)
 
-        # Rysowanie obecnej postaci
-        my_spritesheet = SpritesSheet(join('graphics', 'player', f'{current_skin + 1}', 'texture.png'))
-        sprite_down = my_spritesheet.parse_sprite('2.png')
+        # Display player sprite
+        my_spritesheet = SpritesSheet(join('graphics', 'player', f'{current_skin}', 'texture.png'))
+        sprite_down = my_spritesheet.parse_sprite('8.png')
         skin_view = pygame.transform.scale(sprite_down, (200, 200))
-        display_surface.blit(skin_view, (WINDOW_WIDTH/2 - 110, 300))
+        display_surface.blit(skin_view, (150, 300))
 
-        #Rysowanie strzałek wyboru
-        arrows_image = pygame.image.load(join("graphics", "buttons", "arrow_keys.png")).convert_alpha()
-        arrows_width, arrows_height = arrows_image.get_size()
-        left_arrow = arrows_image.subsurface(0, 0, arrows_width / 4, arrows_height)
-        right_arrow = arrows_image.subsurface(arrows_width / 4 * 3, 0, arrows_width / 4, arrows_height)
-        display_surface.blit(pygame.transform.scale(left_arrow, (100, 100)), (450, 400))
-        display_surface.blit(pygame.transform.scale(right_arrow, (100, 100)), (700, 400))
+        # Display enemy sprite
+        enemy_spritesheet = SpritesSheet(join(f'graphics/enemies/{enemy.__class__.__name__}/texture.png'))
+        sprite_right = enemy_spritesheet.parse_sprite('5.png')
+        skin_view_right = pygame.transform.scale(sprite_right, (200, 200))
+        display_surface.blit(skin_view_right, (WINDOW_WIDTH - 350, 300))
+
+        # Display squares above player and enemy
+        square_size = 20
+        for i in range(5):
+            pygame.draw.rect(display_surface, (255, 0, 0), (150 + i * 40, 280, square_size, square_size))
+            pygame.draw.rect(display_surface, (255, 0, 0), (WINDOW_WIDTH - 350 + i * 40, 280, square_size, square_size))
 
         pygame.display.flip()
         clock.tick(30)

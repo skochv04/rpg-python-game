@@ -35,7 +35,7 @@ class Level:
 
         for obj in tmx_map.get_layer_by_name('Objects'):
             if obj.name == 'player':
-                self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player_name, self.current_skin)
+                self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player_data, self.player_name, self.current_skin)
             elif obj.name == 'shopkeeper':
                 Shopkeeper((obj.x, obj.y), self.all_sprites,  "000", self.player, 0)
             elif obj.name == 'questgiver':
@@ -49,5 +49,5 @@ class Level:
 
     def run(self, dt):
         self.all_sprites.update(dt)
-        self.display_surface.fill('lightblue')
+        self.display_surface.fill('lightskyblue3')
         self.all_sprites.draw(self.player.rect.center)
