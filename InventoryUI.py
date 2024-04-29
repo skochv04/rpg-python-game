@@ -32,17 +32,20 @@ class InventoryUI(pygame.sprite.Sprite):
                 self.image.blit(text_surface, (i * 48, j * 48))
 
     def detect_slot(self):
-        mouse = pygame.mouse.get_pos()
-        mouse = (mouse[0] - WINDOW_WIDTH//2 - 25, mouse[1])
-        display_surface = pygame.display.get_surface()
-        font = pygame.font.Font(None, 24)
-        font_surface = font.render(f'{mouse}', True, 'black')
-        display_surface.blit(font_surface, (10, 10))
+        event = pygame.event.poll()
 
-        for i, slot in enumerate(self.slot_rects):
-            if slot.collidepoint(mouse):
-                print(f"slot {i} clicked")
-                return i
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            mouse_pos = pygame.mouse.get_pos()
+            mouse_pos = (mouse_pos[0] - WINDOW_WIDTH // 2 - 25, mouse_pos[1])
+        else:
+            return
+
+        # do math to get the slot number
+        slot = (mouse_pos[0] // 48, mouse_pos[1] // 48)
+        if slot[0] < 0 or slot[0] >= self.inventory.columns or slot[1] < 0 or slot[1] >= self.inventory.rows:
+            return
+
+        print(f'Clicked slot {slot[0]}, {slot[1]}')
 
 
     def update(self, dt):
