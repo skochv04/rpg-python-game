@@ -12,6 +12,8 @@ class Inventory:
             for j in range(self.rows):
                 if self.inventory[i][j] == 0:
                     self.inventory[i][j] = item
+                    item.x = i
+                    item.y = j
                     return True
         return False
 
@@ -37,10 +39,10 @@ class Inventory:
         return len(self.inventory)
 
     def item_move(self, i, j, x, y):
-        if self.inventory[x][y] == 0:
-            self.inventory[x][y] = self.inventory[i][j]
-            self.inventory[i][j] = 0
-        else:
-            self.inventory[x][y], self.inventory[i][j]  = self.inventory[i][j], self.inventory[x][y]
-
+        self.inventory[x][y], self.inventory[i][j] = self.inventory[i][j], self.inventory[x][y]
+        self.inventory[x][y].x = x
+        self.inventory[x][y].y = y
+        if self.inventory[i][j] != 0:
+            self.inventory[i][j].x = i
+            self.inventory[i][j].y = j
         return True

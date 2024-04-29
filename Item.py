@@ -1,5 +1,4 @@
 
-
 class Item:
     def __init__(self, name, id_number, description, value, image, amount):
         self.name = name
@@ -8,6 +7,8 @@ class Item:
         self.value = value
         self.image = image
         self.amount = amount
+        self.x = None
+        self.y = None
 
     def descrease_amount(self):
         if self.amount > 0:
@@ -18,3 +19,6 @@ class Item:
     def increase_amount(self):
         self.amount += 1
         return True
+
+    def __str__(self):
+        return self.name
