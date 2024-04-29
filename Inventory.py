@@ -35,3 +35,12 @@ class Inventory:
 
     def get_inventory_size(self):
         return len(self.inventory)
+
+    def item_move(self, i, j, x, y):
+        if self.inventory[x][y] == 0:
+            self.inventory[x][y] = self.inventory[i][j]
+            self.inventory[i][j] = 0
+        else:
+            self.inventory[x][y], self.inventory[i][j]  = self.inventory[i][j], self.inventory[x][y]
+
+        return True
