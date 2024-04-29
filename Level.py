@@ -10,6 +10,8 @@ from Player import Player
 from AllSprites import AllSprites
 from UI import UI
 from Wilddog import Wilddog
+from Zombie import Zombie
+from Draft import Draft
 
 
 class Level:
@@ -37,15 +39,20 @@ class Level:
             if obj.name == 'player':
                 self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player_data, self.player_name, self.current_skin)
             elif obj.name == 'shopkeeper':
-                Shopkeeper((obj.x, obj.y), self.all_sprites,  "000", self.player, 0)
+                Shopkeeper((obj.x, obj.y), self.all_sprites,  self.collision_sprites,  "000", self.player, 0)
             elif obj.name == 'questgiver':
-                Questgiver((obj.x, obj.y), self.all_sprites, "000", self.player, 500)
+                Questgiver((obj.x, obj.y), self.all_sprites,  self.collision_sprites, "000", self.player, 500)
             elif obj.name == 'informator':
-                Informator((obj.x, obj.y), self.all_sprites, "000", self.player, 1000)
+                Informator((obj.x, obj.y), self.all_sprites,  self.collision_sprites, "000", self.player, 1000)
             elif obj.name == 'fortune':
-                Fortune((obj.x, obj.y), self.all_sprites, "000", self.player, 1500)
+                Fortune((obj.x, obj.y), self.all_sprites,  self.collision_sprites, "000", self.player, 1500)
             elif obj.name == 'wilddog':
                 Wilddog((obj.x, obj.y), self.all_sprites,  self.collision_sprites, self.player, 0)
+            elif obj.name == 'zombie':
+                Zombie((obj.x, obj.y), self.all_sprites,  self.collision_sprites, self.player, 0)
+            elif obj.name == 'draft':
+                Draft((obj.x, obj.y), self.all_sprites,  self.collision_sprites, self.player, 0)
+
 
     def run(self, dt):
         self.all_sprites.update(dt)
