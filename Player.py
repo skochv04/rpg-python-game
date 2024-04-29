@@ -6,9 +6,9 @@ from InventoryUI import InventoryUI
 
 class Player(pygame.sprite.Sprite):
     # to choose correct images for character we will use skin and direction
-    def __init__(self, pos, groups, collision_sprites, player_data, name="undefined", skin=1):
+    def __init__(self, pos, groups, collision_sprites, player_data, name="undefined", skin=1, direction=vector(0, 0)):
         super().__init__(groups)
-        self.image = pygame.Surface((48, 56))
+        self.image = pygame.Surface((42, 48))
 
         self.rect = self.image.get_frect(topleft=pos)
         self.old_rect = self.rect.copy()
@@ -37,6 +37,10 @@ class Player(pygame.sprite.Sprite):
         self.current_skin = self.sprite_down
         self.image = self.current_skin[1]
 
+        self.skin_action = 1
+        self.skin_timer = 0
+        self.prev_image = self.current_skin[1]
+        self.is_moving = False
 
     def input(self):
         keys = pygame.key.get_pressed()
@@ -44,15 +48,21 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_RIGHT]:
             key_direction = vector(1, 0)
             self.current_skin = self.sprite_right
+            self.is_moving = True
         elif keys[pygame.K_LEFT]:
             key_direction = vector(-1, 0)
             self.current_skin = self.sprite_left
+            self.is_moving = True
         elif keys[pygame.K_UP]:
             key_direction = vector(0, -1)
             self.current_skin = self.sprite_up
+            self.is_moving = True
         elif keys[pygame.K_DOWN]:
             key_direction = vector(0, 1)
             self.current_skin = self.sprite_down
+            self.is_moving = True
+        else:
+            self.image = self.current_skin[1]
 
         self.direction = key_direction
 
@@ -60,12 +70,18 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=pos)
 
     def move(self, dt):
+        if self.is_moving:
+            self.skin_timer = (self.skin_timer + 1) % 56
+            self.is_moving = False
+            if self.skin_timer == 55:
+                self.skin_action = (self.skin_action + 1) % 3
+                self.prev_image = self.image
+                self.image = self.current_skin[self.skin_action]
+
         self.rect.x += self.direction.x * self.speed * dt
         self.collision('horizontal')
         self.rect.y += self.direction.y * self.speed * dt
         self.collision('vertical')
-
-        self.image = self.current_skin[1]
 
     def collision(self, axis):
         for sprite in self.collision_sprites:

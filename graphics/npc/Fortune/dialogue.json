@@ -1,0 +1,41 @@
+{
+	"dialogues": {
+		"000": {
+			"type": "response",
+			"npc_name": "Fortune",
+			"portrait_id": "neutral",
+			"text": "Feeling lucky, adventurer? Test your fortune for a chance at a fascinating prize! Just 100 coins and who knows what awaits you!",
+			"responses": {
+				"Hm... I agree!": {
+					"next": "001"
+				},
+				"It seems to be interesting experience, but not for today!": {
+					"next": "002"
+				}
+			},
+			"commands": [
+				"show_tasks"
+			]
+		},
+		"001": {
+			"type": "response",
+			"npc_name": "Fortune",
+			"portrait_id": "neutral",
+			"text": "Super! Let`s the fortune... START!",
+			"responses": {},
+			"commands": [
+				"start_fortune",
+				"cancel"
+			]
+		},
+		"002": {
+			"type": "response",
+			"npc_name": "Fortune",
+			"portrait_id": "neutral",
+			"text": "Don`t worry, my friend. I will wait for you here!",
+			"responses": {},
+			"commands": [
+			]
+		}
+	}
+}

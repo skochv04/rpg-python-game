@@ -1,0 +1,41 @@
+{
+	"dialogues": {
+		"000": {
+			"type": "response",
+			"npc_name": "Questgiver",
+			"portrait_id": "neutral",
+			"text": "Ah, greetings, young magician! I have a couple of tasks to cope with... Would you like to help me? Of course, I will give you an interesting bonus =)",
+			"responses": {
+				"Yes! How can I help you?": {
+					"next": "001"
+				},
+				"Sorry, I am very busy today... See you later!": {
+					"next": "002"
+				}
+			},
+			"commands": [
+				"show_tasks"
+			]
+		},
+		"001": {
+			"type": "response",
+			"npc_name": "Questgiver",
+			"portrait_id": "neutral",
+			"text": "It's nice to hear that you're ready to help me out.",
+			"responses": {},
+			"commands": [
+				"start_task",
+				"cancel"
+			]
+		},
+		"002": {
+			"type": "response",
+			"npc_name": "Questgiver",
+			"portrait_id": "neutral",
+			"text": "Don`t worry, my friend. I will wait for you here!",
+			"responses": {},
+			"commands": [
+			]
+		}
+	}
+}

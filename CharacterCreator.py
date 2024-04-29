@@ -52,7 +52,7 @@ def create_character():
 
         # Rysowanie obecnej postaci
         my_spritesheet = SpritesSheet(join('graphics', 'player', f'{current_skin + 1}', 'texture.png'))
-        sprite_down = my_spritesheet.parse_sprite('1.png')
+        sprite_down = my_spritesheet.parse_sprite('2.png')
         skin_view = pygame.transform.scale(sprite_down, (200, 200))
         display_surface.blit(skin_view, (WINDOW_WIDTH/2 - 110, 300))
 
