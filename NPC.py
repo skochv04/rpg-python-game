@@ -5,8 +5,8 @@ from UI import UI
 
 
 class NPC(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, current_dialogue, player, timer):
-        super().__init__(groups)
+    def __init__(self, pos, groups, collision_sprites, current_dialogue, player, timer):
+        super().__init__([groups, collision_sprites])
         self.image = pygame.Surface((48, 56))
         # self.image.fill('red')
         self.rect = self.image.get_frect(topleft=pos)
@@ -14,6 +14,7 @@ class NPC(pygame.sprite.Sprite):
         self.dialogue_data = Dialogue(f'graphics/npc/{self.__class__.__name__}/dialogue.json')
         self.current_dialogue = current_dialogue
         self.start_dialogue = current_dialogue
+        self.old_rect = self.rect.copy()
 
         my_spritesheet = SpritesSheet(f'graphics/npc/{self.__class__.__name__}/texture.png')
         self.sprite_stable = [my_spritesheet.parse_sprite('1.png'), my_spritesheet.parse_sprite('2.png'),

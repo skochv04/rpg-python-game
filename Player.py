@@ -7,7 +7,7 @@ from InventoryUI import InventoryUI
 class Player(pygame.sprite.Sprite):
     # to choose correct images for character we will use skin and direction
     def __init__(self, pos, groups, collision_sprites, player_data, name="undefined", skin=1, direction=vector(0, 0)):
-        super().__init__(groups)
+        super().__init__([groups, collision_sprites])
         self.image = pygame.Surface((42, 48))
 
         self.rect = self.image.get_frect(topleft=pos)

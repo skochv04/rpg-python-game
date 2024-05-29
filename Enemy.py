@@ -7,7 +7,7 @@ from Fight import fight
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, player, timer):
-        super().__init__(groups)
+        super().__init__([groups, collision_sprites])
         self.image = pygame.Surface((32, 32))
         # self.image.fill('red')
         self.rect = self.image.get_frect(topleft=pos)
@@ -44,7 +44,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def is_active(self):
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
-        in_range = self_pos.distance_to(player_pos) < 100
+        in_range = self_pos.distance_to(player_pos) < 50
 
         return in_range
 
@@ -52,9 +52,10 @@ class Enemy(pygame.sprite.Sprite):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_input_time >= self.time_between_inputs:
             if self.is_active():
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_f]:
-                    fight(self, self.player)
+                # keys = pygame.key.get_pressed()
+                # if keys[pygame.K_f]:
+                #     fight(self, self.player)
+                fight(self, self.player)
 
     def move(self, dt):
         self.skin_timer = (self.skin_timer + 1) % 56
