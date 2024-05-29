@@ -30,13 +30,22 @@ class UI:
         self.show()
 
     def render_text(self, text):
-        self.image.fill('black')
-        font = pygame.freetype.Font(None, 36)
-        for i in range(len(text)):
-            text_surface, _ = font.render(text[:i + 1], 'white', 'black')
-            self.image.blit(text_surface, (10, 10))
-            self.show()
-            pygame.time.wait(10)
+        font = pygame.freetype.Font(None, 30)
+        words = text.split(' ')
+        lines = ['']
+        for word in words:
+            test_line = lines[-1] + ' ' + word
+            text_rect = font.get_rect(test_line, size=30)
+            if text_rect.width > self.rect.width - 20:  # Subtract 20 to leave a margin
+                lines.append(word)
+            else:
+                lines[-1] = test_line
+        for i, line in enumerate(lines):
+            for j in range(len(line)):
+                text_surface, _ = font.render(line[:j + 1].strip(), 'white', 'black')
+                self.image.blit(text_surface, (10, 10 + i * 30))  # Adjust the y position for each line
+                self.show()
+                pygame.time.wait(15)  # Adjust the wait time to control the speed of the text
 
     def render_responses(self, responses):
         font = pygame.freetype.Font(None, 24)
