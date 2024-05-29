@@ -12,7 +12,7 @@ class GeneralUI:
         self.last_input = pygame.time.get_ticks()
 
     def create_inventory(self):
-        self.inventory = InventoryUI(self.groups, self.player_data.inventory, self.player)
+        self.inventory = InventoryUI(self.groups, self.player.player_data.inventory, self.player)
 
     def input(self):
         keys = pygame.key.get_pressed()

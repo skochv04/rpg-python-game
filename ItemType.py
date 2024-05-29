@@ -16,3 +16,4 @@ class ItemType(Enum):
     THREAD = (9, 55, 25, 8, pygame.image.load(join('graphics', 'objects', 'items', 'thread.png')))
     ACID = (10, 75, 30, 15, pygame.image.load(join('graphics', 'objects', 'items', 'acid.png')))
     SLEEPING_FLOWER = (11, 10, 20, 0, pygame.image.load(join('graphics', 'objects', 'items', 'sleeping_flower.png')))
+
