@@ -7,6 +7,7 @@ from Level import Level
 from pytmx.util_pygame import load_pygame
 from CharacterCreator import create_character
 from PlayerData import PlayerData
+from Menu import MainMenu
 
 #Klasa okienka z grą
 class Game:
@@ -25,6 +26,15 @@ class Game:
         self.skin_font = pygame.font.Font(None, 24)
 
     def run(self):
+        menu = MainMenu()
+        option = menu.run()
+        if option == 'Exit':
+            pygame.quit()
+            sys.exit()
+        elif option == 'Settings':
+            pass
+
+
         player_name, self.current_skin = create_character()
         self.current_stage = Level(self.tmx_maps[0], player_name, self.current_skin + 1, self.player_data)
 
@@ -34,6 +44,14 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        option = menu.run()
+                        if option == 'Exit':
+                            pygame.quit()
+                            sys.exit()
+                        else:
+                            pass
             self.current_stage.run(dt)
 
             pygame.display.update()
