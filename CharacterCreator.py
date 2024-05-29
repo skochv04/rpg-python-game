@@ -1,4 +1,5 @@
 from ItemType import ItemType
+from PlayerData import available_items
 from Settings import *
 from Spritessheet import SpritesSheet
 import random
@@ -16,18 +17,6 @@ def create_character():
     clock = pygame.time.Clock()
     text = ''
     default_text = font.render("Nazwa Postaci", True, color)
-
-    # Створення списку доступних предметів для кожного скіна
-    available_items = {
-        0: [ItemType.SCISSORS, ItemType.HAMMER, ItemType.POISONOUS_SNAIL],
-        1: [ItemType.MAGIC_STONE, ItemType.SHIELD, ItemType.DIAMOND],
-        2: [ItemType.FLAMMABLE_LIQUID, ItemType.CHEMICAL_LIQUID, ItemType.THREAD],
-        3: [ItemType.ACID, ItemType.SLEEPING_FLOWER, ItemType.THREAD],
-        4: [ItemType.SCISSORS, ItemType.HAMMER, ItemType.POISONOUS_SNAIL],
-        5: [ItemType.MAGIC_STONE, ItemType.SHIELD, ItemType.DIAMOND],
-        6: [ItemType.FLAMMABLE_LIQUID, ItemType.CHEMICAL_LIQUID, ItemType.THREAD],
-        7: [ItemType.ACID, ItemType.SLEEPING_FLOWER, ItemType.THREAD]
-    }
 
     while True:
         for event in pygame.event.get():
@@ -83,7 +72,15 @@ def create_character():
             item_y = 550
             display_surface.blit(item_surface, (item_x, item_y))
 
-        # Відображення стрілок вибору
+
+            item_id, price, damage, min_power_to_get, _ = item_type.value
+            item_data_text = font.render(f"Damage: {damage} Min Power to get: {min_power_to_get}",
+                                         True, (255, 255, 255))
+            text_x = item_x - 135
+            text_y = item_y + item_surface.get_height()
+            display_surface.blit(item_data_text, (text_x, text_y))
+
+
         arrows_image = pygame.image.load(join("graphics", "buttons", "arrow_keys.png")).convert_alpha()
         arrows_width, arrows_height = arrows_image.get_size()
         left_arrow = arrows_image.subsurface(0, 0, arrows_width / 4, arrows_height)

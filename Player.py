@@ -1,5 +1,6 @@
 import pygame
 
+from PlayerData import PlayerData
 from Settings import *
 from Spritessheet import SpritesSheet
 from InventoryUI import InventoryUI
@@ -14,7 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.old_rect = self.rect.copy()
 
         self.speed = 300
-        self.player_data = player_data
+        self.player_data = PlayerData(100, 30, 1, skin)
 
         self.collision_sprites = collision_sprites
 
