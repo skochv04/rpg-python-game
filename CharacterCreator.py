@@ -1,9 +1,12 @@
+from ItemType import ItemType
 from Settings import *
 from Spritessheet import SpritesSheet
+import random
+
 
 def create_character():
     font = pygame.font.Font(None, 36)
-    input_box = pygame.Rect(WINDOW_WIDTH/2 - 110, 150, 140, 32)
+    input_box = pygame.Rect(WINDOW_WIDTH / 2 - 110, 150, 140, 32)
     color_inactive = pygame.Color('lightskyblue3')
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
@@ -13,9 +16,22 @@ def create_character():
     clock = pygame.time.Clock()
     text = ''
     default_text = font.render("Nazwa Postaci", True, color)
+
+    # Створення списку доступних предметів для кожного скіна
+    available_items = {
+        0: [ItemType.SCISSORS, ItemType.HAMMER, ItemType.POISONOUS_SNAIL],
+        1: [ItemType.MAGIC_STONE, ItemType.SHIELD, ItemType.DIAMOND],
+        2: [ItemType.FLAMMABLE_LIQUID, ItemType.CHEMICAL_LIQUID, ItemType.THREAD],
+        3: [ItemType.ACID, ItemType.SLEEPING_FLOWER, ItemType.THREAD],
+        4: [ItemType.SCISSORS, ItemType.HAMMER, ItemType.POISONOUS_SNAIL],
+        5: [ItemType.MAGIC_STONE, ItemType.SHIELD, ItemType.DIAMOND],
+        6: [ItemType.FLAMMABLE_LIQUID, ItemType.CHEMICAL_LIQUID, ItemType.THREAD],
+        7: [ItemType.ACID, ItemType.SLEEPING_FLOWER, ItemType.THREAD]
+    }
+
     while True:
         for event in pygame.event.get():
-            # Obsługa zamykania okna
+            # Обробка події закриття вікна
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -39,7 +55,7 @@ def create_character():
                 elif event.key == pygame.K_RIGHT:
                     current_skin = (current_skin + 1) % 8
 
-        # Rysowanie okienka z nazwą
+        # Відображення вікна з назвою
         display_surface.fill((30, 30, 30))
         if len(text) == 0:
             txt_surface = default_text
@@ -50,13 +66,24 @@ def create_character():
         display_surface.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
         pygame.draw.rect(display_surface, color, input_box, 2)
 
-        # Rysowanie obecnej postaci
+        # Відображення поточного скину
         my_spritesheet = SpritesSheet(join('graphics', 'player', f'{current_skin + 1}', 'texture.png'))
         sprite_down = my_spritesheet.parse_sprite('2.png')
         skin_view = pygame.transform.scale(sprite_down, (200, 200))
-        display_surface.blit(skin_view, (WINDOW_WIDTH/2 - 110, 300))
+        display_surface.blit(skin_view, (WINDOW_WIDTH / 2 - 110, 300))
 
-        #Rysowanie strzałek wyboru
+        # Відображення трьох предметів під скином
+        skin_items = available_items[current_skin]
+        items_count = len(skin_items)
+        sector_width = WINDOW_WIDTH // items_count
+        for i, item_type in enumerate(skin_items):
+            item_image = item_type.value[4]
+            item_surface = pygame.transform.scale(item_image, (50, 50))
+            item_x = i * sector_width + (sector_width - item_surface.get_width()) // 2
+            item_y = 550
+            display_surface.blit(item_surface, (item_x, item_y))
+
+        # Відображення стрілок вибору
         arrows_image = pygame.image.load(join("graphics", "buttons", "arrow_keys.png")).convert_alpha()
         arrows_width, arrows_height = arrows_image.get_size()
         left_arrow = arrows_image.subsurface(0, 0, arrows_width / 4, arrows_height)

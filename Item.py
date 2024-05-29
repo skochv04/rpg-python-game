@@ -1,16 +1,15 @@
-
 class Item:
-    def __init__(self, name, id_number, description, value, image, amount):
-        self.name = name
-        self.id = id_number
-        self.description = description
-        self.value = value
-        self.image = image
+    def __init__(self, item_type, amount):
+        self.name = item_type.name
+        self.id = item_type.value[0]
+        self.description = f"Price: {item_type.value[1]}, Damage: {item_type.value[2]}, Min Power: {item_type.value[3]}"
+        self.value = item_type.value[1]
+        self.image = item_type.value[4]
         self.amount = amount
         self.x = None
         self.y = None
 
-    def descrease_amount(self):
+    def decrease_amount(self):
         if self.amount > 0:
             self.amount -= 1
             return True
