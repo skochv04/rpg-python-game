@@ -14,7 +14,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_frect(topleft=pos)
         self.old_rect = self.rect.copy()
 
-        self.speed = 300
+        self.speed = 250
         self.player_data = PlayerData(100, 30, 1, skin)
 
         self.collision_sprites = collision_sprites
@@ -46,6 +46,13 @@ class Player(pygame.sprite.Sprite):
         self.is_invisible = False
         self.invisibility_start_time = None
 
+        self.teleport_target = None  # Координати для телепортації
+
+        # Додані змінні для пришвидшення
+        self.speed_boost = 3  # Коефіцієнт пришвидшення
+        self.boost_timer = 0
+        self.boost_duration = 10 * 1000  # 10 секунд
+
     def input(self):
         keys = pygame.key.get_pressed()
         key_direction = vector(0, 0)
@@ -70,6 +77,24 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_v]:
             self.activate_invisibility()
+        elif keys[pygame.K_s]:
+            self.activate_speed_boost()  # Додано виклик методу activate_speed_boost()
+
+        if keys[pygame.K_t]:
+            # Встановлення телепорт-таргету по кліку миші
+            if pygame.mouse.get_pressed()[0]:  # Перевірка лівої кнопки миші
+                self.teleport_target = pygame.mouse.get_pos()
+
+        # Телепортація, якщо телепорт-таргет встановлено
+        if self.teleport_target:
+            is_collision = False
+            for sprite in self.collision_sprites:
+                if sprite.rect.collidepoint(self.teleport_target):
+                    is_collision = True
+                    break
+            if not is_collision:
+                self.rect.center = self.teleport_target
+            self.teleport_target = None
 
         self.direction = key_direction
 
@@ -133,6 +158,12 @@ class Player(pygame.sprite.Sprite):
                         if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
                             self.rect.bottom = sprite.rect.top
 
+    def activate_speed_boost(self):
+        if self.boost_timer == 0:
+            self.speed *= self.speed_boost  # Збільшення швидкості гравця
+
+        self.boost_timer = pygame.time.get_ticks()
+
     def update(self, dt):
         self.old_rect = self.rect.copy()
         self.input()
@@ -140,3 +171,19 @@ class Player(pygame.sprite.Sprite):
 
         if self.is_invisible and pygame.time.get_ticks() - self.invisibility_start_time > 10000:
             self.deactivate_invisibility()
+
+        if self.boost_timer != 0:
+            if pygame.time.get_ticks() - self.boost_timer > self.boost_duration:
+                self.speed /= self.speed_boost  # Повернення швидкості до нормального рівня
+                self.boost_timer = 0
+
+        if self.teleport_target:  # Телепортуватися до місця, яке вказано кліком миші
+            # Перевірка, чи нове місце телепортації не перетинається з колізійними об'єктами
+            is_collision = False
+            for sprite in self.collision_sprites:
+                if sprite.rect.collidepoint(self.teleport_target):
+                    is_collision = True
+                    break
+            if not is_collision:
+                self.rect.center = self.teleport_target
+            self.teleport_target = None
