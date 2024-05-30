@@ -5,8 +5,10 @@ from Spritessheet import SpritesSheet
 from InventoryUI import InventoryUI
 from pygame.math import Vector2 as vector
 
+
 class Player(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, collision_sprites, invisible_collision_sprites, player_data, name="undefined", skin=1, direction=vector(0, 0)):
+    def __init__(self, pos, groups, collision_sprites, invisible_collision_sprites, player_data, name="undefined",
+                 skin=1, direction=vector(0, 0)):
         super().__init__([groups, collision_sprites])
         self.invisible_collision_sprites = invisible_collision_sprites
         self.image = pygame.Surface((42, 48))
@@ -24,6 +26,8 @@ class Player(pygame.sprite.Sprite):
         self.skin = skin
 
         self.move_disabled = False
+
+        self.not_used_skills = True
 
         my_spritesheet = SpritesSheet(f'graphics/player/{skin}/texture.png')
         self.sprite_down = [my_spritesheet.parse_sprite('1.png'), my_spritesheet.parse_sprite('2.png'),
@@ -53,9 +57,14 @@ class Player(pygame.sprite.Sprite):
         self.boost_timer = 0
         self.boost_duration = 10 * 1000  # 10 секунд
 
+        self.last_ability_time = pygame.time.get_ticks()  # Останній час використання здібностей
+
     def input(self):
+        current_time = pygame.time.get_ticks()
         keys = pygame.key.get_pressed()
         key_direction = vector(0, 0)
+
+        # Перевірка кнопок
         if keys[pygame.K_RIGHT]:
             key_direction = vector(1, 0)
             self.current_skin = self.sprite_right
@@ -75,15 +84,18 @@ class Player(pygame.sprite.Sprite):
         else:
             self.image = self.current_skin[1]
 
-        if keys[pygame.K_v]:
-            self.activate_invisibility()
-        elif keys[pygame.K_s]:
-            self.activate_speed_boost()  # Додано виклик методу activate_speed_boost()
-
-        if keys[pygame.K_t]:
-            # Встановлення телепорт-таргету по кліку миші
-            if pygame.mouse.get_pressed()[0]:  # Перевірка лівої кнопки миші
-                self.teleport_target = pygame.mouse.get_pos()
+        # Обробка натискання кнопок
+        if (keys[pygame.K_f] or keys[pygame.K_v] or keys[pygame.K_t]) and (self.not_used_skills or current_time - self.last_ability_time > 30000):
+            if keys[pygame.K_f]:
+                self.activate_speed_boost()  # Додано виклик методу activate_speed_boost()
+            elif keys[pygame.K_v]:
+                self.activate_invisibility()
+            elif keys[pygame.K_t]:
+                # Встановлення телепорт-таргету по кліку миші
+                if pygame.mouse.get_pressed()[0]:  # Перевірка лівої кнопки миші
+                    self.teleport_target = pygame.mouse.get_pos()
+            self.last_ability_time = current_time
+            self.not_used_skills = False
 
         # Телепортація, якщо телепорт-таргет встановлено
         if self.teleport_target:
@@ -97,7 +109,6 @@ class Player(pygame.sprite.Sprite):
             self.teleport_target = None
 
         self.direction = key_direction
-
     def activate_invisibility(self):
         if not self.is_invisible:
             self.is_invisible = True
