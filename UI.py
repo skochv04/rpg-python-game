@@ -30,6 +30,7 @@ class UI:
         self.show()
 
     def render_text(self, text):
+        self.image.fill('black')
         font = pygame.freetype.Font(None, 30)
         words = text.split(' ')
         lines = ['']
@@ -45,7 +46,7 @@ class UI:
                 text_surface, _ = font.render(line[:j + 1].strip(), 'white', 'black')
                 self.image.blit(text_surface, (10, 10 + i * 30))  # Adjust the y position for each line
                 self.show()
-                pygame.time.wait(15)  # Adjust the wait time to control the speed of the text
+                pygame.time.wait(14)  # Adjust the wait time to control the speed of the text
 
     def render_responses(self, responses):
         font = pygame.freetype.Font(None, 24)
@@ -61,6 +62,8 @@ class UI:
         text, responses = self.get_text()
         self.render_text(text)
         self.render_responses(responses)
+
+        selected_responses = []
 
         while not end:
             answer = None
@@ -86,6 +89,7 @@ class UI:
 
             if answer is not None:
                 selected_response = list(responses.keys())[answer]
+                selected_responses.append(answer)
                 if responses[selected_response]['next'] is not None:
                     self.current_dialogue = responses[selected_response]['next']
                     text, responses = self.get_text()
@@ -93,3 +97,5 @@ class UI:
                     self.render_responses(responses)
                 else:
                     text_ended = True
+
+        return selected_responses

@@ -2,6 +2,7 @@ from Inventory import Inventory
 from Item import Item
 from ItemType import ItemType
 from NPC import NPC
+from InventoryUI import InventoryUI
 from Settings import *
 # from ShopkeeperInventory import ShopkeeperInventoryUI
 
@@ -23,6 +24,11 @@ class Shopkeeper(NPC):
         for item_type in ItemType:
             self.inventory.add_item(Item(item_type, 10))
 
+    def dialogue(self):
+        responses = super().dialogue()
+        if responses[0] == 0:
+            InventoryUI(self.groups, self.inventory, self.player)
+
     def action(self, player):
-        pass
+        InventoryUI(self.groups, self.inventory, self.player)
         # self.shop_ui.run()

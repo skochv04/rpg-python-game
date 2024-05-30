@@ -7,6 +7,7 @@ from UI import UI
 class NPC(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, current_dialogue, player, timer):
         super().__init__([groups, collision_sprites])
+        self.groups = groups
         self.image = pygame.Surface((48, 56))
         # self.image.fill('red')
         self.rect = self.image.get_frect(topleft=pos)
@@ -31,8 +32,9 @@ class NPC(pygame.sprite.Sprite):
 
     def dialogue(self):
         ui = UI(self.dialogue_data, self.current_dialogue)
-        ui.run()
+        responses = ui.run()
         self.last_input_time = pygame.time.get_ticks()
+        return responses
 
     def is_active(self):
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
