@@ -4,7 +4,7 @@
 			"type": "response",
 			"npc_name": "Fortune",
 			"portrait_id": "neutral",
-			"text": "Feeling lucky, adventurer? Test your fortune for a chance at a fascinating prize! Just 100 coins and who knows what awaits you!",
+			"text": "Feeling lucky, adventurer? Test your fortune for a chance at a fascinating prize! Just 20 coins and who knows what awaits you!",
 			"responses": {
 				"Hm... I agree!": {
 					"next": "001"
@@ -33,6 +33,15 @@
 			"npc_name": "Fortune",
 			"portrait_id": "neutral",
 			"text": "Don`t worry, my friend. I will wait for you here!",
+			"responses": {},
+			"commands": [
+			]
+		},
+		"003": {
+			"type": "response",
+			"npc_name": "Fortune",
+			"portrait_id": "neutral",
+			"text": "You have tried your fortune on this level! I will wait for you, champion!",
 			"responses": {},
 			"commands": [
 			]

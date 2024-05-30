@@ -43,7 +43,7 @@ class NPC(pygame.sprite.Sprite):
     def input(self):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_input_time >= self.time_between_inputs:
-            if self.is_active():
+            if self.is_active() and not self.player.is_invisible:
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_RETURN]:
                     self.dialogue()

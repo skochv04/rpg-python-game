@@ -41,7 +41,6 @@ class GeneralUI:
         self.input()
         if self.inventory is not None:
             self.inventory.update(dt)
-
         # Оновлення і відображення кількості монет, сили і здоров'я
         self.render_coins()
         self.render_power()
