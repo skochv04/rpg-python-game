@@ -66,4 +66,4 @@ class NPC(pygame.sprite.Sprite):
         self.input()
 
     def action(self, player):
-        raise NotImplementedError
+        print("Performing NPC action!")
