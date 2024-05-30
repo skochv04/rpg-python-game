@@ -18,7 +18,7 @@ class Game:
         pygame.display.set_caption('No Title RPG Game')
         self.clock = pygame.time.Clock()
 
-        self.player_data = PlayerData(100, 5, 1)
+        self.player_data = PlayerData(6, 6, 2, 3)
         self.tmx_maps = {0: load_pygame(join('data', 'levels', 'omni.tmx'))}
 
         self.current_stage = None

@@ -1,4 +1,4 @@
-from PlayerData import PlayerData
+from EntityData import EntityData
 from Settings import *
 from Spritessheet import SpritesSheet
 from UI import UI
@@ -28,7 +28,7 @@ class Enemy(pygame.sprite.Sprite):
         self.direction = vector(1, 0)
 
         self.player = player
-        self.enemy_data = PlayerData(100, 5, 1)
+        self.enemy_data = EntityData(3, 3, 1)
 
         self.speed = 30
         self.collision_sprites = collision_sprites
@@ -48,14 +48,14 @@ class Enemy(pygame.sprite.Sprite):
 
         return in_range
 
-    def input(self):
+    def input(self, dt):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_input_time >= self.time_between_inputs:
             if self.is_active():
                 # keys = pygame.key.get_pressed()
                 # if keys[pygame.K_f]:
                 #     fight(self, self.player)
-                fight(self, self.player)
+                fight(self, self.player, dt)
 
     def move(self, dt):
         self.skin_timer = (self.skin_timer + 1) % 56
@@ -71,7 +71,7 @@ class Enemy(pygame.sprite.Sprite):
 
     def update(self, dt):
         self.old_rect = self.rect.copy()
-        self.input()
+        self.input(dt)
         self.move(dt)
 
     def opposite_direction(self, direction):
@@ -110,3 +110,6 @@ class Enemy(pygame.sprite.Sprite):
                     if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
                         self.rect.bottom = sprite.rect.top
                         self.opposite_direction(self.direction)
+
+    def destroy(self):
+        self.kill()

@@ -1,13 +1,14 @@
 from Settings import *
 from Item import Item
 from Inventory import Inventory
+from EntityData import EntityData
 
-class PlayerData:
-    def __init__(self, health, coins, power):
-        self.health = health
+class PlayerData(EntityData):
+    def __init__(self, health, max_health, power, coins, skills = None):
+        super().__init__(health, max_health, power, skills)
         self.coins = coins
-        self.power = power
-        self.skills = []
+        self.level = 1
+        self.exp = 0
         self.inventory = Inventory()
 
         self.inventory.add_item(Item('Skull', 0, 'A skull', 10,
