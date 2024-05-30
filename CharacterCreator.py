@@ -2,6 +2,7 @@ from ItemType import ItemType
 from PlayerData import available_items
 from Settings import *
 from Spritessheet import SpritesSheet
+from Skills import Skills  # Додано імпорт Skills
 import random
 
 
@@ -17,6 +18,18 @@ def create_character():
     clock = pygame.time.Clock()
     text = ''
     default_text = font.render("Nazwa Postaci", True, color)
+
+    # Список скілів для персонажів (по два на кожен скіл)
+    skills_list = [
+        Skills.SPEED_UP,
+        Skills.TELEPORTATION,
+        Skills.SHRINK,
+        Skills.INVISIBILITY,
+        Skills.SPEED_UP,
+        Skills.TELEPORTATION,
+        Skills.SHRINK,
+        Skills.INVISIBILITY
+    ]
 
     while True:
         for event in pygame.event.get():
@@ -72,14 +85,25 @@ def create_character():
             item_y = 550
             display_surface.blit(item_surface, (item_x, item_y))
 
-
             item_id, price, damage, min_power_to_get, file, name = item_type.value
-            item_data_text = font.render(f"Damage: {damage} Min Power to get: {min_power_to_get}",
+            item_data_text = font.render(f"Damage: {damage} Min Power to get later: {min_power_to_get}",
                                          True, (255, 255, 255))
             text_x = item_x - 135
             text_y = item_y + item_surface.get_height()
             display_surface.blit(item_data_text, (text_x, text_y))
 
+        # Відображення скілу для поточного скину
+        current_skill = skills_list[current_skin]
+        skill_image = current_skill.value[3]
+        skill_surface = pygame.transform.scale(skill_image, (50, 50))
+        skill_x = (WINDOW_WIDTH - skill_surface.get_width()) // 2
+        skill_y = 650
+        display_surface.blit(skill_surface, (skill_x, skill_y))
+
+        skill_id, skill_price, skill_min_power_to_get, skill_file, skill_name = current_skill.value
+        skill_data_text = font.render(f"Skill: {skill_name}, Min Power to get later: {skill_min_power_to_get}",
+                                      True, (255, 255, 255))
+        display_surface.blit(skill_data_text, (skill_x - 220, skill_y + skill_surface.get_height()))
 
         arrows_image = pygame.image.load(join("graphics", "buttons", "arrow_keys.png")).convert_alpha()
         arrows_width, arrows_height = arrows_image.get_size()

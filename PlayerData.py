@@ -1,5 +1,6 @@
 import random
 
+from Skills import Skills
 from ItemType import ItemType
 from Settings import *
 from Item import Item
@@ -28,4 +29,8 @@ class PlayerData:
 
         if itemset is None:
             itemset = random.choice(list(available_items.keys())) + 1
+        else:
+            print((itemset - 1) % len(Skills))
         for item in available_items[itemset - 1]: self.inventory.add_item(Item(item, 3))
+
+        self.skills.append(list(Skills)[(itemset - 1) % len(Skills)])
