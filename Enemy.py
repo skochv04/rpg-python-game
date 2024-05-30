@@ -76,17 +76,15 @@ class Enemy(pygame.sprite.Sprite):
 
     def opposite_direction(self, direction):
         if direction == vector(0, 1):
-            self.direction = vector(0, -1)
             self.current_skin = self.sprite_down
         elif direction == vector(0, -1):
-            self.direction = vector(0, 1)
             self.current_skin = self.sprite_up
         elif direction == vector(1, 0):
-            self.direction = vector(-1, 0)
             self.current_skin = self.sprite_left
         elif direction == vector(-1, 0):
-            self.direction = vector(1, 0)
             self.current_skin = self.sprite_right
+
+        direction *= -1
 
     def collision(self, axis):
         for sprite in self.collision_sprites:
