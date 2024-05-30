@@ -1,4 +1,5 @@
 import random
+
 from ItemType import ItemType
 from Settings import *
 from Item import Item
@@ -18,7 +19,7 @@ available_items = {
 
 class PlayerData:
 
-    def __init__(self, health, coins, power, itemset=None):
+    def __init__(self, health=100, coins=30, power=1, itemset=None):
         self.health = health
         self.coins = coins
         self.power = power
@@ -26,5 +27,5 @@ class PlayerData:
         self.inventory = Inventory()
 
         if itemset is None:
-            itemset = random.choice(list(available_items.keys()))
+            itemset = random.choice(list(available_items.keys())) + 1
         for item in available_items[itemset - 1]: self.inventory.add_item(Item(item, 3))

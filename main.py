@@ -36,6 +36,7 @@ class Game:
 
 
         player_name, self.current_skin = create_character()
+        self.player_data = PlayerData(100, 30, 1, self.current_skin + 1)
         self.current_stage = Level(self.tmx_maps[0], player_name, self.current_skin + 1, self.player_data)
 
         while True:
