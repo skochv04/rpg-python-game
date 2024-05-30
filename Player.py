@@ -57,7 +57,19 @@ class Player(pygame.sprite.Sprite):
         self.boost_timer = 0
         self.boost_duration = 10 * 1000  # 10 секунд
 
+        # Змінні для зменшення персонажа
+        self.shrink_duration = 10 * 1000  # 10 секунд
+        self.shrink_timer = 0
+        self.original_size = self.rect.size
+
         self.last_ability_time = pygame.time.get_ticks()  # Останній час використання здібностей
+
+        self.original_images = {
+            "down": self.sprite_down.copy(),
+            "left": self.sprite_left.copy(),
+            "right": self.sprite_right.copy(),
+            "up": self.sprite_up.copy()
+        }
 
     def input(self):
         current_time = pygame.time.get_ticks()
@@ -85,7 +97,7 @@ class Player(pygame.sprite.Sprite):
             self.image = self.current_skin[1]
 
         # Обробка натискання кнопок
-        if (keys[pygame.K_f] or keys[pygame.K_v] or keys[pygame.K_t]) and (self.not_used_skills or current_time - self.last_ability_time > 30000):
+        if (keys[pygame.K_f] or keys[pygame.K_v] or keys[pygame.K_t] or keys[pygame.K_s]) and (self.not_used_skills or current_time - self.last_ability_time > 30000):
             if keys[pygame.K_f]:
                 self.activate_speed_boost()  # Додано виклик методу activate_speed_boost()
             elif keys[pygame.K_v]:
@@ -94,6 +106,8 @@ class Player(pygame.sprite.Sprite):
                 # Встановлення телепорт-таргету по кліку миші
                 if pygame.mouse.get_pressed()[0]:  # Перевірка лівої кнопки миші
                     self.teleport_target = pygame.mouse.get_pos()
+            elif keys[pygame.K_s]:
+                self.shrink_player()
             self.last_ability_time = current_time
             self.not_used_skills = False
 
@@ -175,10 +189,36 @@ class Player(pygame.sprite.Sprite):
 
         self.boost_timer = pygame.time.get_ticks()
 
+    def shrink_player(self):
+        self.rect.size = (self.rect.width // 2, self.rect.height // 2)  # Зменшення розміру персонажа
+        # Зменшення розміру зображень
+        self.sprite_down = [pygame.transform.scale(image, (image.get_width() // 2, image.get_height() // 2)) for image
+                            in self.original_images["down"]]
+        self.sprite_left = [pygame.transform.scale(image, (image.get_width() // 2, image.get_height() // 2)) for image
+                            in self.original_images["left"]]
+        self.sprite_right = [pygame.transform.scale(image, (image.get_width() // 2, image.get_height() // 2)) for image
+                             in self.original_images["right"]]
+        self.sprite_up = [pygame.transform.scale(image, (image.get_width() // 2, image.get_height() // 2)) for image in
+                          self.original_images["up"]]
+        self.shrink_timer = pygame.time.get_ticks()  # Встановлення таймера зменшення персонажа
+
+    def reset_images(self):
+        self.sprite_down = self.original_images["down"].copy()
+        self.sprite_left = self.original_images["left"].copy()
+        self.sprite_right = self.original_images["right"].copy()
+        self.sprite_up = self.original_images["up"].copy()
+
     def update(self, dt):
         self.old_rect = self.rect.copy()
         self.input()
         self.move(dt)
+
+        # Перевірка часу зменшення персонажа
+        if self.shrink_timer != 0:
+            if pygame.time.get_ticks() - self.shrink_timer > self.shrink_duration:
+                self.rect.size = self.original_size  # Повернення до оригінального розміру
+                self.reset_images()  # Відновлення оригінальних зображень
+                self.shrink_timer = 0
 
         if self.is_invisible and pygame.time.get_ticks() - self.invisibility_start_time > 10000:
             self.deactivate_invisibility()
@@ -188,8 +228,7 @@ class Player(pygame.sprite.Sprite):
                 self.speed /= self.speed_boost  # Повернення швидкості до нормального рівня
                 self.boost_timer = 0
 
-        if self.teleport_target:  # Телепортуватися до місця, яке вказано кліком миші
-            # Перевірка, чи нове місце телепортації не перетинається з колізійними об'єктами
+        if self.teleport_target:  # Телепортація до місця, вказаного кліком миші
             is_collision = False
             for sprite in self.collision_sprites:
                 if sprite.rect.collidepoint(self.teleport_target):
