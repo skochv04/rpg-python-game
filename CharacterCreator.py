@@ -73,7 +73,7 @@ def create_character():
             display_surface.blit(item_surface, (item_x, item_y))
 
 
-            item_id, price, damage, min_power_to_get, _ = item_type.value
+            item_id, price, damage, min_power_to_get, file, name = item_type.value
             item_data_text = font.render(f"Damage: {damage} Min Power to get: {min_power_to_get}",
                                          True, (255, 255, 255))
             text_x = item_x - 135

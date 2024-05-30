@@ -24,6 +24,7 @@ class Level:
         # groups
         self.all_sprites = AllSprites()
         self.collision_sprites = pygame.sprite.Group()
+        self.invisible_collision_sprites = pygame.sprite.Group()
         self.GUI = None
 
         self.player = None
@@ -33,10 +34,10 @@ class Level:
     def setup(self, tmx_map):
         for x, y, surf in tmx_map.get_layer_by_name('Terrain').tiles():
             Sprite((x * TILE_SIZE, y * TILE_SIZE), surf, (self.all_sprites, self.collision_sprites))
-
+        for collision in self.collision_sprites: self.invisible_collision_sprites.add(collision)
         for obj in tmx_map.get_layer_by_name('Objects'):
             if obj.name == 'player':
-                self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player_data, self.player_name, self.current_skin)
+                self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.invisible_collision_sprites, self.player_data, self.player_name, self.current_skin)
             elif obj.name == 'shopkeeper':
                 Shopkeeper((obj.x, obj.y), self.all_sprites, self.collision_sprites, "000", self.player, 0)
             elif obj.name == 'questgiver':
@@ -52,7 +53,7 @@ class Level:
             elif obj.name == 'draft':
                 Draft((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0)
 
-        self.GUI = GeneralUI(self.all_sprites, self.player_data, self.player)
+        self.GUI = GeneralUI(self.all_sprites, self.player.player_data, self.player)
 
     def run(self, dt):
         self.all_sprites.update(dt)

@@ -1,14 +1,14 @@
 import pygame
-
 from PlayerData import PlayerData
 from Settings import *
 from Spritessheet import SpritesSheet
 from InventoryUI import InventoryUI
+from pygame.math import Vector2 as vector
 
 class Player(pygame.sprite.Sprite):
-    # to choose correct images for character we will use skin and direction
-    def __init__(self, pos, groups, collision_sprites, player_data, name="undefined", skin=1, direction=vector(0, 0)):
+    def __init__(self, pos, groups, collision_sprites, invisible_collision_sprites, player_data, name="undefined", skin=1, direction=vector(0, 0)):
         super().__init__([groups, collision_sprites])
+        self.invisible_collision_sprites = invisible_collision_sprites
         self.image = pygame.Surface((42, 48))
 
         self.rect = self.image.get_frect(topleft=pos)
@@ -43,6 +43,9 @@ class Player(pygame.sprite.Sprite):
         self.prev_image = self.current_skin[1]
         self.is_moving = False
 
+        self.is_invisible = False
+        self.invisibility_start_time = None
+
     def input(self):
         keys = pygame.key.get_pressed()
         key_direction = vector(0, 0)
@@ -65,7 +68,25 @@ class Player(pygame.sprite.Sprite):
         else:
             self.image = self.current_skin[1]
 
+        if keys[pygame.K_v]:
+            self.activate_invisibility()
+
         self.direction = key_direction
+
+    def activate_invisibility(self):
+        if not self.is_invisible:
+            self.is_invisible = True
+            self.invisibility_start_time = pygame.time.get_ticks()
+            self.set_transparency(128)  # 50% transparency
+
+    def deactivate_invisibility(self):
+        self.is_invisible = False
+        self.set_transparency(255)  # Reset transparency to 100%
+
+    def set_transparency(self, alpha):
+        for img_list in [self.sprite_down, self.sprite_left, self.sprite_right, self.sprite_up]:
+            for img in img_list:
+                img.set_alpha(alpha)
 
     def place(self, pos):
         self.rect = self.image.get_rect(topleft=pos)
@@ -85,34 +106,37 @@ class Player(pygame.sprite.Sprite):
         self.collision('vertical')
 
     def collision(self, axis):
-        for sprite in self.collision_sprites:
-            if sprite.rect.colliderect(self.rect):
-                if axis == 'horizontal':
-                    # lewo
-                    if self.rect.left <= sprite.rect.right and self.old_rect.left >= sprite.old_rect.right:
-                        self.rect.left = sprite.rect.right
-
-                    # prawo
-                    if self.rect.right >= sprite.rect.left and self.old_rect.right <= sprite.old_rect.left:
-                        self.rect.right = sprite.rect.left
-
-                else:
-                    # gora
-                    if self.rect.top <= sprite.rect.bottom and self.old_rect.top >= sprite.old_rect.bottom:
-                        self.rect.top = sprite.rect.bottom
-
-                    # dol
-                    if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
-                        self.rect.bottom = sprite.rect.top
-
+        if not self.is_invisible:
+            for sprite in self.collision_sprites:
+                if sprite.rect.colliderect(self.rect):
+                    if axis == 'horizontal':
+                        if self.rect.left <= sprite.rect.right and self.old_rect.left >= sprite.old_rect.right:
+                            self.rect.left = sprite.rect.right
+                        if self.rect.right >= sprite.rect.left and self.old_rect.right <= sprite.old_rect.left:
+                            self.rect.right = sprite.rect.left
+                    else:
+                        if self.rect.top <= sprite.rect.bottom and self.old_rect.top >= sprite.old_rect.bottom:
+                            self.rect.top = sprite.rect.bottom
+                        if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
+                            self.rect.bottom = sprite.rect.top
+        else:
+            for sprite in self.invisible_collision_sprites:
+                if sprite.rect.colliderect(self.rect):
+                    if axis == 'horizontal':
+                        if self.rect.left <= sprite.rect.right and self.old_rect.left >= sprite.old_rect.right:
+                            self.rect.left = sprite.rect.right
+                        if self.rect.right >= sprite.rect.left and self.old_rect.right <= sprite.old_rect.left:
+                            self.rect.right = sprite.rect.left
+                    else:
+                        if self.rect.top <= sprite.rect.bottom and self.old_rect.top >= sprite.old_rect.bottom:
+                            self.rect.top = sprite.rect.bottom
+                        if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
+                            self.rect.bottom = sprite.rect.top
 
     def update(self, dt):
         self.old_rect = self.rect.copy()
         self.input()
         self.move(dt)
 
-    # def __eq__(self, other):
-    #     return self.position[0] == other.position[0] and self.position[1] == other.position[1]
-
-    # def __hash__(self):
-    #     return hash((self.position[0], self.position[1]))
+        if self.is_invisible and pygame.time.get_ticks() - self.invisibility_start_time > 10000:
+            self.deactivate_invisibility()
