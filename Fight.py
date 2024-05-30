@@ -3,35 +3,41 @@ from Player import Player
 from Spritessheet import SpritesSheet
 import pygame
 import sys
+from Button import Button
 from os.path import join
 
 
 def fight(enemy, player):
-    font = pygame.font.Font(None, 36)
-    color_inactive = pygame.Color('lightskyblue3')
-    color_active = pygame.Color('dodgerblue2')
-    color = color_inactive
-    active = False
     current_skin = player.skin
     display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     clock = pygame.time.Clock()
-    text = ''
-    default_text = font.render(player.name, True, color)
     background_image = pygame.image.load('graphics/map/background/1.png').convert()
+
+    # Create buttons
+    button_width, button_height = 250, 50
+    button_y = WINDOW_HEIGHT - button_height - 40
+    spacing = 40
+    button1 = Button(spacing, button_y, button_width, button_height, 'Attack')
+    button2 = Button(spacing * 2 + button_width, button_y, button_width, button_height, 'Button 2')
+    button3 = Button(spacing * 3 + button_width * 2, button_y, button_width, button_height, 'Button 3')
+    button4 = Button(spacing * 4 + button_width * 3, button_y, button_width, button_height, 'Escape')
 
     while True:
         for event in pygame.event.get():
+            pos = pygame.mouse.get_pos()
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    return text, current_skin
-                if active:
-                    if event.key == pygame.K_BACKSPACE:
-                        text = text[:-1]
-                    else:
-                        text += event.unicode
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if button1.is_over(pos):
+                    print('button 1 clicked')
+                if button2.is_over(pos):
+                    print('button 2 clicked')
+                if button3.is_over(pos):
+                    print('button 3 clicked')
+                if button4.is_over(pos):
+                    print('button 4 clicked')
 
         display_surface.fill((30, 30, 30))
 
@@ -52,6 +58,11 @@ def fight(enemy, player):
         for i in range(5):
             pygame.draw.rect(display_surface, (255, 0, 0), (150 + i * 40, 280, square_size, square_size))
             pygame.draw.rect(display_surface, (255, 0, 0), (WINDOW_WIDTH - 350 + i * 40, 280, square_size, square_size))
+
+        button1.draw(display_surface)
+        button2.draw(display_surface)
+        button3.draw(display_surface)
+        button4.draw(display_surface)
 
         pygame.display.flip()
         clock.tick(30)
