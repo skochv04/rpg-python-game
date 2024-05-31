@@ -164,9 +164,9 @@ class Player(pygame.sprite.Sprite):
                 self.prev_image = self.image
                 self.image = self.current_skin[self.skin_action]
 
-        self.rect.x += self.direction.x * self.speed * dt
+        self.rect.x += self.direction.x * self.speed * dt.get()
         self.collision('horizontal')
-        self.rect.y += self.direction.y * self.speed * dt
+        self.rect.y += self.direction.y * self.speed * dt.get()
         self.collision('vertical')
 
     def collision(self, axis):

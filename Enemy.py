@@ -1,4 +1,4 @@
-from PlayerData import PlayerData
+from EntityData import EntityData
 from Settings import *
 from Spritessheet import SpritesSheet
 from UI import UI
@@ -28,7 +28,7 @@ class Enemy(pygame.sprite.Sprite):
         self.direction = vector(1, 0)
 
         self.player = player
-        self.enemy_data = PlayerData(100, 5, 1)
+        self.enemy_data = EntityData(3, 3, 1)
 
         self.speed = 30
         self.collision_sprites = collision_sprites
@@ -48,14 +48,14 @@ class Enemy(pygame.sprite.Sprite):
 
         return in_range
 
-    def input(self):
+    def input(self, dt):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_input_time >= self.time_between_inputs:
             if self.is_active() and not self.player.is_invisible:
                 # keys = pygame.key.get_pressed()
                 # if keys[pygame.K_f]:
                 #     fight(self, self.player)
-                fight(self, self.player)
+                fight(self, self.player, dt)
 
     def move(self, dt):
         self.skin_timer = (self.skin_timer + 1) % 56
@@ -64,29 +64,27 @@ class Enemy(pygame.sprite.Sprite):
             self.prev_image = self.image
             self.image = self.current_skin[self.skin_action]
 
-        self.rect.x += self.direction.x * self.speed * dt
+        self.rect.x += self.direction.x * self.speed * dt.get()
         self.collision('horizontal')
-        self.rect.y += self.direction.y * self.speed * dt
+        self.rect.y += self.direction.y * self.speed * dt.get()
         self.collision('vertical')
 
     def update(self, dt):
         self.old_rect = self.rect.copy()
-        self.input()
+        self.input(dt)
         self.move(dt)
 
     def opposite_direction(self, direction):
         if direction == vector(0, 1):
-            self.direction = vector(0, -1)
             self.current_skin = self.sprite_down
         elif direction == vector(0, -1):
-            self.direction = vector(0, 1)
             self.current_skin = self.sprite_up
         elif direction == vector(1, 0):
-            self.direction = vector(-1, 0)
             self.current_skin = self.sprite_left
         elif direction == vector(-1, 0):
-            self.direction = vector(1, 0)
             self.current_skin = self.sprite_right
+
+        direction *= -1
 
     def collision(self, axis):
         for sprite in self.collision_sprites:
@@ -112,3 +110,6 @@ class Enemy(pygame.sprite.Sprite):
                     if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
                         self.rect.bottom = sprite.rect.top
                         self.opposite_direction(self.direction)
+
+    def destroy(self):
+        self.kill()
