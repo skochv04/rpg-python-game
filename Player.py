@@ -105,6 +105,12 @@ class Player(pygame.sprite.Sprite):
                         self.rect.bottom = sprite.rect.top
 
 
+    def get_health(self):
+        return self.player_data.health
+
+    def get_max_health(self):
+        return self.player_data.max_health
+
     def update(self, dt):
         self.old_rect = self.rect.copy()
         self.input()

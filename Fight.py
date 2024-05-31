@@ -30,12 +30,23 @@ def display_enemy(enemy, display_surface):
     display_surface.blit(skin_view_right, (WINDOW_WIDTH - 350, 300))
 
 def display_health(player, enemy, display_surface):
-    square_size = 20
-    for i in range(enemy.enemy_data.health):
-        pygame.draw.rect(display_surface, (255, 0, 0), (WINDOW_WIDTH - 350 + i * 40, 280, square_size, square_size))
+    # Create health Bars for player and enemy
+    player_max_health = pygame.Surface((200, 10))
+    player_max_health.fill('black')
+    player_health = pygame.Surface((200 * (player.get_health()/player.get_max_health()) , 10))
+    player_health.fill('green')
+    player_health_rect = player_health.get_rect(topleft=(150, 250))
 
-    for i in range(player.player_data.health):
-        pygame.draw.rect(display_surface, (255, 0, 0), (150 + i * 40, 280, square_size, square_size))
+    enemy_max_health = pygame.Surface((200, 10))
+    enemy_max_health.fill('black')
+    enemy_health = pygame.Surface((200 * (enemy.get_health()/enemy.get_max_health()), 10))
+    enemy_health.fill('green')
+    enemy_health_rect = enemy_health.get_rect(topleft=(WINDOW_WIDTH - 350, 250))
+
+    display_surface.blit(player_max_health, player_health_rect)
+    display_surface.blit(player_health, player_health_rect)
+    display_surface.blit(enemy_max_health, enemy_health_rect)
+    display_surface.blit(enemy_health, enemy_health_rect)
 
 def create_buttons():
     button_width, button_height = 250, 50

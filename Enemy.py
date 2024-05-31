@@ -111,5 +111,11 @@ class Enemy(pygame.sprite.Sprite):
                         self.rect.bottom = sprite.rect.top
                         self.opposite_direction(self.direction)
 
+    def get_health(self):
+        return self.enemy_data.health
+
+    def get_max_health(self):
+        return self.enemy_data.max_health
+
     def destroy(self):
         self.kill()
