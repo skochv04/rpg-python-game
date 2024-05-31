@@ -7,18 +7,37 @@ from Button import Button
 from os.path import join
 
 
-def attack(player, enemy):
+def player_attack(player, enemy):
     enemy.enemy_data.reduce_health(player.player_data.power)
     if enemy.enemy_data.health <= 0:
         return True
 
-def fight(enemy, player, dt):
-    current_skin = player.skin
-    display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-    clock = pygame.time.Clock()
-    background_image = pygame.image.load('graphics/map/background/1.png').convert()
+def enemy_attack(player, enemy):
+    player.player_data.reduce_health(enemy.enemy_data.power)
+    if player.player_data.health <= 0:
+        return True
 
-    # Create buttons
+def display_player(player, display_surface):
+    my_spritesheet = SpritesSheet(join('graphics', 'player', f'{player.skin}', 'texture.png'))
+    sprite_down = my_spritesheet.parse_sprite('8.png')
+    skin_view = pygame.transform.scale(sprite_down, (200, 200))
+    display_surface.blit(skin_view, (150, 300))
+
+def display_enemy(enemy, display_surface):
+    enemy_spritesheet = SpritesSheet(join(f'graphics/enemies/{enemy.__class__.__name__}/texture.png'))
+    sprite_right = enemy_spritesheet.parse_sprite('5.png')
+    skin_view_right = pygame.transform.scale(sprite_right, (200, 200))
+    display_surface.blit(skin_view_right, (WINDOW_WIDTH - 350, 300))
+
+def display_health(player, enemy, display_surface):
+    square_size = 20
+    for i in range(enemy.enemy_data.health):
+        pygame.draw.rect(display_surface, (255, 0, 0), (WINDOW_WIDTH - 350 + i * 40, 280, square_size, square_size))
+
+    for i in range(player.player_data.health):
+        pygame.draw.rect(display_surface, (255, 0, 0), (150 + i * 40, 280, square_size, square_size))
+
+def create_buttons():
     button_width, button_height = 250, 50
     button_y = WINDOW_HEIGHT - button_height - 40
     spacing = 40
@@ -26,6 +45,16 @@ def fight(enemy, player, dt):
     button2 = Button(spacing * 2 + button_width, button_y, button_width, button_height, 'Button 2')
     button3 = Button(spacing * 3 + button_width * 2, button_y, button_width, button_height, 'Button 3')
     button4 = Button(spacing * 4 + button_width * 3, button_y, button_width, button_height, 'Escape')
+
+    return button1, button2, button3, button4
+
+def fight(enemy, player, dt):
+    display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+    clock = pygame.time.Clock()
+    background_image = pygame.image.load('graphics/map/background/1.png').convert()
+
+    # Create buttons
+    buttons = create_buttons()
 
     while True:
         for event in pygame.event.get():
@@ -35,47 +64,34 @@ def fight(enemy, player, dt):
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if button1.is_over(pos):
-                    if attack(player, enemy):
+                if buttons[0].is_over(pos):
+                    if player_attack(player, enemy):
                         enemy.kill()
                         dt.update()
                         return
+                    enemy_attack(player, enemy)
                     print('button 1 clicked')
-                if button2.is_over(pos):
+                if buttons[1].is_over(pos):
                     print('button 2 clicked')
-                if button3.is_over(pos):
+                if buttons[2].is_over(pos):
                     print('button 3 clicked')
-                if button4.is_over(pos):
+                if buttons[3].is_over(pos):
                     print('button 4 clicked')
 
         display_surface.fill((30, 30, 30))
 
         # Display player sprite
-        my_spritesheet = SpritesSheet(join('graphics', 'player', f'{current_skin}', 'texture.png'))
-        sprite_down = my_spritesheet.parse_sprite('8.png')
-        skin_view = pygame.transform.scale(sprite_down, (200, 200))
-        display_surface.blit(skin_view, (150, 300))
+        display_player(player, display_surface)
 
         # Display enemy sprite
-        enemy_spritesheet = SpritesSheet(join(f'graphics/enemies/{enemy.__class__.__name__}/texture.png'))
-        sprite_right = enemy_spritesheet.parse_sprite('5.png')
-        skin_view_right = pygame.transform.scale(sprite_right, (200, 200))
-        display_surface.blit(skin_view_right, (WINDOW_WIDTH - 350, 300))
+        display_enemy(enemy, display_surface)
 
         # Display squares above player and enemy
-        square_size = 20
-        for i in range(enemy.enemy_data.health):
-            #Centered above the enemy
-            pygame.draw.rect(display_surface, (255, 0, 0), (WINDOW_WIDTH - 350 + i * 40, 280, square_size, square_size))
+        display_health(player, enemy, display_surface)
 
-        for i in range(player.player_data.health):
-            #Centered above the player
-            pygame.draw.rect(display_surface, (255, 0, 0), (150 + i * 40, 280, square_size, square_size))
-
-        button1.draw(display_surface)
-        button2.draw(display_surface)
-        button3.draw(display_surface)
-        button4.draw(display_surface)
+        # Draw buttons
+        for button in buttons:
+            button.draw(display_surface)
 
         pygame.display.flip()
         clock.tick(30)
