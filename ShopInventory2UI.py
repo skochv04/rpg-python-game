@@ -2,21 +2,30 @@ import Shopkeeper
 from Settings import *
 
 class ShopInventory2UI(pygame.sprite.Sprite):
-    def __init__(self, groups, inventory, player):
+    def __init__(self, groups, inventory, player, shopkeeper):
         super().__init__(groups)
         self.inventory = inventory
-        self.inventory_slot_size = 48
+        self.inventory_slot_size = 100
         self.player = player
         self.image = pygame.Surface((self.inventory.columns * self.inventory_slot_size, self.inventory.rows * self.inventory_slot_size))
         self.image.fill('gray')
-        self.rect = self.image.get_frect(topleft=(WINDOW_WIDTH // 2, 0))
-        self.font = pygame.font.Font(None, 24)
+        self.rect = self.image.get_frect(topleft=(WINDOW_WIDTH // 3, 0))
+        self.font = pygame.font.Font(None, 32)
         self.slot_rects = []
         self.can_click = True
         self.selected_item = None
         self.time_since_last_click = pygame.time.get_ticks()
         self.attempt = 0
-
+        self.shopkeeper = shopkeeper
+    def input(self):
+        keys = pygame.key.get_pressed()
+        if pygame.time.get_ticks() - self.last_input < 190:
+            return
+        if keys[pygame.K_i] and self.inventory is None:
+            self.create_inventory()
+        elif keys[pygame.K_i] and self.inventory is not None:
+            self.inventory.kill()
+            self.inventory = None
     def render(self):
         self.rect.topleft = (self.player.rect.right, self.player.rect.centery - WINDOW_HEIGHT // 2)
         self.image.fill('white')
@@ -38,6 +47,7 @@ class ShopInventory2UI(pygame.sprite.Sprite):
                         elif self.attempt != 0:
                             Shopkeeper.sell_equipment(item, self.player)
                             self.selected_item = None
+                            self.shopkeeper.inventoryUI.kill()
                             continue
                     item_rect = item.image.get_rect(center=slot_rect.center)
                     self.image.blit(item.image, item_rect.topleft)
@@ -57,9 +67,8 @@ class ShopInventory2UI(pygame.sprite.Sprite):
             return
 
         mouse_pos = pygame.mouse.get_pos()
-        mouse_pos = (mouse_pos[0] - WINDOW_WIDTH // 2 - 25, mouse_pos[1]) # repairs the mouse position to be relative to the inventory
-        # do math to get the slot number
-        slot = (mouse_pos[0] // 48, mouse_pos[1] // 48)
+        mouse_pos = (mouse_pos[0] - WINDOW_WIDTH // 2 - 25, mouse_pos[1])
+        slot = (mouse_pos[0] // 100, mouse_pos[1] // 100)
         if slot[0] < 0 or slot[0] >= self.inventory.columns or slot[1] < 0 or slot[1] >= self.inventory.rows:
             return
         return slot

@@ -25,6 +25,7 @@ class Shopkeeper(NPC):
         super().__init__(pos, groups, collision_sprites, current_dialogue, player, timer)
         self.inventory = Inventory()
         self.populate_inventory()
+        self.inventoryUI = None
 
     def populate_inventory(self):
         for item_type in ItemType:
@@ -32,8 +33,9 @@ class Shopkeeper(NPC):
 
     def dialogue(self):
         responses = super().dialogue()
-        if responses[0] == 0:
-            ShopInventory2UI(self.groups, self.inventory, self.player)
+        if len(responses) > 0 and responses[0] == 0:
+            self.inventoryUI = ShopInventory2UI(self.groups, self.inventory, self.player, self)
 
-    def action(self, player):
-        ShopInventory2UI(self.groups, self.inventory, self.player)
+
+    # def action(self, player):
+    #     ShopInventory2UI(self.groups, self.inventory, self.player)
