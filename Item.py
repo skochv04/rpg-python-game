@@ -8,6 +8,7 @@ class Item:
         self.amount = amount
         self.x = None
         self.y = None
+        self.item_type = item_type
 
     def decrease_amount(self):
         if self.amount > 0:
@@ -15,8 +16,8 @@ class Item:
             return True
         return False
 
-    def increase_amount(self):
-        self.amount += 1
+    def increase_amount(self, amount = 1):
+        self.amount += amount
         return True
 
     def __str__(self):
