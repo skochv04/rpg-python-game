@@ -4,7 +4,6 @@ from Skills import Skills
 from PlayerData import PlayerData
 from Settings import *
 from Spritessheet import SpritesSheet
-from InventoryUI import InventoryUI
 from pygame.math import Vector2 as vector
 
 
