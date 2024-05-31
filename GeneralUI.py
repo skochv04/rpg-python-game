@@ -21,6 +21,7 @@ class GeneralUI:
         self.coin_icon = pygame.image.load(join('graphics', 'objects', 'coin.png')).convert_alpha()
         self.power_icon = pygame.image.load(join('graphics', 'objects', 'power.png')).convert_alpha()  # Приклад шляху до іконки сили
         self.health_icon = pygame.image.load(join('graphics', 'objects', 'health.png')).convert_alpha()  # Приклад шляху до іконки здоров'я
+        self.timer_icon = pygame.image.load(join('graphics', 'objects', 'timer.png')).convert_alpha()  # Завантаження іконки таймера
 
     def create_inventory(self):
         self.inventory = InventoryUI(self.groups, self.player.player_data.inventory, self.player)
@@ -45,6 +46,7 @@ class GeneralUI:
         self.render_coins()
         self.render_power()
         self.render_health()
+        self.render_timer()  # Додавання виклику методу відображення таймера
 
     def render_coins(self):
         # Оновлення тексту з кількістю монет
@@ -90,3 +92,20 @@ class GeneralUI:
         # Відображення іконки та тексту на екрані
         self.display_surface.blit(self.health_icon, health_icon_rect)
         self.display_surface.blit(health_surface, health_rect)
+
+    def render_timer(self):
+        # Оновлення тексту з таймером
+        if self.player_data.timer != 0:
+            timer_seconds = self.player_data.timer // 1000  # Перетворення мілісекунд в секунди
+            timer_text = str(timer_seconds)
+            timer_surface, timer_rect = self.font.render(timer_text, 'white')
+
+            # Позиція іконки та тексту таймера
+            timer_icon_rect = self.timer_icon.get_rect(center=(WINDOW_WIDTH // 2, 57))
+
+            # Центрування тексту по вертикалі відносно іконки
+            timer_rect.midleft = (timer_icon_rect.right + 5, timer_icon_rect.centery)
+
+            # Відображення іконки та тексту на екрані
+            self.display_surface.blit(self.timer_icon, timer_icon_rect)
+            self.display_surface.blit(timer_surface, timer_rect)

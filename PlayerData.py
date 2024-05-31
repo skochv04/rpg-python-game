@@ -20,12 +20,13 @@ available_items = {
 
 class PlayerData:
 
-    def __init__(self, health=100, coins=30, power=1, itemset=None):
+    def __init__(self, health=100, coins=30, power=1, itemset=None, timer=0):
         self.health = health
         self.coins = coins
         self.power = power
         self.skills = []
         self.inventory = Inventory()
+        self.timer = timer
 
         if itemset is None:
             itemset = random.choice(list(available_items.keys())) + 1

@@ -4,6 +4,9 @@ from ItemType import ItemType
 from NPC import NPC
 from InventoryUI import InventoryUI
 from Settings import *
+from ShopInventoryUI import ShopInventoryUI
+
+
 # from ShopkeeperInventory import ShopkeeperInventoryUI
 
 def sell_equipment(equipment, player):
@@ -27,8 +30,8 @@ class Shopkeeper(NPC):
     def dialogue(self):
         responses = super().dialogue()
         if responses[0] == 0:
-            InventoryUI(self.groups, self.inventory, self.player)
+            ShopInventoryUI(self.groups, self.inventory, self.player)
 
     def action(self, player):
-        InventoryUI(self.groups, self.inventory, self.player)
+        ShopInventoryUI(self.groups, self.inventory, self.player)
         # self.shop_ui.run()
