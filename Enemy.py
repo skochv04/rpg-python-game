@@ -9,7 +9,6 @@ class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, player, timer):
         super().__init__([groups, collision_sprites])
         self.image = pygame.Surface((32, 32))
-        # self.image.fill('red')
         self.rect = self.image.get_frect(topleft=pos)
         self.old_rect = self.rect.copy()
 
@@ -110,6 +109,9 @@ class Enemy(pygame.sprite.Sprite):
                     if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
                         self.rect.bottom = sprite.rect.top
                         self.opposite_direction(self.direction)
+
+    def fight_ai(self, player):
+        raise NotImplementedError
 
     def get_health(self):
         return self.enemy_data.health

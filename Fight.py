@@ -12,11 +12,6 @@ def player_attack(player, enemy):
     if enemy.enemy_data.health <= 0:
         return True
 
-def enemy_attack(player, enemy):
-    player.player_data.reduce_health(enemy.enemy_data.power)
-    if player.player_data.health <= 0:
-        return True
-
 def display_player(player, display_surface):
     my_spritesheet = SpritesSheet(join('graphics', 'player', f'{player.skin}', 'texture.png'))
     sprite_down = my_spritesheet.parse_sprite('8.png')
@@ -28,6 +23,37 @@ def display_enemy(enemy, display_surface):
     sprite_right = enemy_spritesheet.parse_sprite('5.png')
     skin_view_right = pygame.transform.scale(sprite_right, (200, 200))
     display_surface.blit(skin_view_right, (WINDOW_WIDTH - 350, 300))
+
+def display_items(player, display_surface, button):
+    items = player.player_data.inventory.get_item_list()
+    items = list(filter(lambda item: item.usable_during_battle, items))
+
+    if len(items) <= 0:
+        return False
+
+    # show list of items vertically above the items button
+    item_x = button.x
+    item_y = button.y - 50
+    item_width = items[0].image.get_width()
+    item_height = items[0].image.get_height()
+    for i, item in enumerate(items):
+        # Create a blue rect for item image and text
+        item_rect = pygame.Rect(item_x, item_y + i * item_height, button.width, item_height)
+        pygame.draw.rect(display_surface, (0, 100, 250), item_rect)
+        # Draw item image
+        item_image_position = (item_rect.topleft[0], item_rect.topleft[1] - 5)
+        display_surface.blit(item.image, item_image_position)
+        # Draw item amount to the right of the item image
+        font = pygame.font.Font(None, 36)
+        text_surface = font.render(str(item.amount), True, 'black')
+        text_position = (item_image_position[0] + item_width , item_image_position[1] + item_height // 2 - text_surface.get_height() // 2)
+        display_surface.blit(text_surface, text_position)
+        # Draw item name to the right of the item amount
+        text_surface = font.render(item.name, True, 'black')
+        text_position = (text_position[0] + 30, text_position[1])
+        display_surface.blit(text_surface, text_position)
+
+    return True
 
 def display_health(player, enemy, display_surface):
     # Create health Bars for player and enemy
@@ -53,8 +79,8 @@ def create_buttons():
     button_y = WINDOW_HEIGHT - button_height - 40
     spacing = 40
     button1 = Button(spacing, button_y, button_width, button_height, 'Attack')
-    button2 = Button(spacing * 2 + button_width, button_y, button_width, button_height, 'Button 2')
-    button3 = Button(spacing * 3 + button_width * 2, button_y, button_width, button_height, 'Button 3')
+    button2 = Button(spacing * 2 + button_width, button_y, button_width, button_height, 'Skills')
+    button3 = Button(spacing * 3 + button_width * 2, button_y, button_width, button_height, 'Items')
     button4 = Button(spacing * 4 + button_width * 3, button_y, button_width, button_height, 'Escape')
 
     return button1, button2, button3, button4
@@ -80,16 +106,17 @@ def fight(enemy, player, dt):
                         enemy.kill()
                         dt.update()
                         return
-                    enemy_attack(player, enemy)
+                    enemy.fight_ai(player)
                     print('button 1 clicked')
                 if buttons[1].is_over(pos):
                     print('button 2 clicked')
                 if buttons[2].is_over(pos):
+                    display_items(player, display_surface, buttons[2])
                     print('button 3 clicked')
                 if buttons[3].is_over(pos):
                     print('button 4 clicked')
 
-        display_surface.fill((30, 30, 30))
+        #display_surface.fill((30, 30, 30))
 
         # Display player sprite
         display_player(player, display_surface)

@@ -1,12 +1,13 @@
 
 class Item:
-    def __init__(self, name, id_number, description, value, image, amount):
+    def __init__(self, name, id_number, description, value, image, amount, usable_during_battle = False):
         self.name = name
         self.id = id_number
         self.description = description
         self.value = value
         self.image = image
         self.amount = amount
+        self.usable_during_battle = usable_during_battle
         self.x = None
         self.y = None
 

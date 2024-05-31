@@ -12,6 +12,6 @@ class PlayerData(EntityData):
         self.inventory = Inventory()
 
         self.inventory.add_item(Item('Skull', 0, 'A skull', 10,
-                                     pygame.image.load(join('graphics','objects', 'items', 'skull.png')), 1))
+                                     pygame.image.load(join('graphics','objects', 'items', 'skull.png')), 1, True))
         self.inventory.add_item(Item("Gold", 5, "A golden coin", 1,
                                      pygame.image.load(join('graphics','objects', 'items', 'gold.png')), 5))
