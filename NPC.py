@@ -1,7 +1,7 @@
 from Dialogue import Dialogue
 from Settings import *
 from Spritessheet import SpritesSheet
-from UI import UI
+from NPC_UI import UI
 
 
 class NPC(pygame.sprite.Sprite):

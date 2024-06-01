@@ -1,7 +1,7 @@
 from PlayerData import PlayerData
 from Settings import *
 from Spritessheet import SpritesSheet
-from UI import UI
+from NPC_UI import UI
 from Fight import fight
 
 
