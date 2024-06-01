@@ -1,6 +1,8 @@
 import pygame.freetype
 import pygame.image
 from os.path import join
+
+from QuestsUI import QuestsUI
 from Settings import *
 from InventoryUI import InventoryUI
 
@@ -12,6 +14,7 @@ class GeneralUI:
         self.groups = groups
 
         self.inventory = None
+        self.quests = None
         self.last_input = pygame.time.get_ticks()
 
         # Шрифт для відображення тексту
@@ -22,9 +25,13 @@ class GeneralUI:
         self.power_icon = pygame.image.load(join('graphics', 'objects', 'power.png')).convert_alpha()  # Приклад шляху до іконки сили
         self.health_icon = pygame.image.load(join('graphics', 'objects', 'health.png')).convert_alpha()  # Приклад шляху до іконки здоров'я
         self.timer_icon = pygame.image.load(join('graphics', 'objects', 'timer.png')).convert_alpha()  # Завантаження іконки таймера
+        self.quests_icon = pygame.image.load(join('graphics', 'objects', 'quests.png')).convert_alpha()  # Завантаження іконки tasks
 
     def create_inventory(self):
         self.inventory = InventoryUI(self.groups, self.player.player_data.inventory, self.player)
+
+    def create_quests(self):
+        self.quests = QuestsUI(self.groups, self.player, self, "")
 
     def input(self):
         keys = pygame.key.get_pressed()
@@ -38,8 +45,21 @@ class GeneralUI:
 
         self.last_input = pygame.time.get_ticks()
 
+    def check_tasks_button_click(self, mouse_pos):
+        tasks_button_rect = self.quests_icon.get_rect(topleft=(30, 90))
+        if tasks_button_rect.collidepoint(mouse_pos):
+            if self.quests is None:
+                self.create_quests()
+            else:
+                self.quests.kill()
+                self.quests = None
+
     def update(self, dt):
         self.input()
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Ліва кнопка миші
+                self.check_tasks_button_click(event.pos)
+
         if self.inventory is not None:
             self.inventory.update(dt)
         # Оновлення і відображення кількості монет, сили і здоров'я
@@ -47,6 +67,7 @@ class GeneralUI:
         self.render_power()
         self.render_health()
         self.render_timer()  # Додавання виклику методу відображення таймера
+        self.render_tasks_button()
 
     def render_coins(self):
         # Оновлення тексту з кількістю монет
@@ -109,3 +130,10 @@ class GeneralUI:
             # Відображення іконки та тексту на екрані
             self.display_surface.blit(self.timer_icon, timer_icon_rect)
             self.display_surface.blit(timer_surface, timer_rect)
+
+    def render_tasks_button(self):
+        # Позиція іконки tasks
+        quests_icon_rect = self.quests_icon.get_rect(topleft=(30, 90))
+
+        # Відображення іконки tasks на екрані
+        self.display_surface.blit(self.quests_icon, quests_icon_rect)

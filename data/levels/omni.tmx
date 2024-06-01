@@ -129,9 +129,9 @@
     <property name="inverted" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="83" name="shopkeeper" gid="225" x="414.804" y="440.129" width="48" height="46"/>
-  <object id="84" name="questgiver" gid="225" x="144.167" y="384.333" width="48" height="46"/>
-  <object id="85" name="fortune" gid="225" x="752.064" y="446.996" width="48" height="46"/>
+  <object id="83" name="shopkeeper" gid="225" x="1168.85" y="255.546" width="48" height="46"/>
+  <object id="84" name="questgiver" gid="225" x="745.5" y="446.666" width="48" height="46"/>
+  <object id="85" name="fortune" gid="225" x="1191.06" y="573.996" width="48" height="46"/>
   <object id="86" name="informator" gid="225" x="846.728" y="445.962" width="48" height="46"/>
   <object id="87" name="wilddog" gid="225" x="395.42" y="511.212" width="32" height="32"/>
   <object id="92" name="draft" gid="225" x="1390" y="574.333" width="48" height="46"/>

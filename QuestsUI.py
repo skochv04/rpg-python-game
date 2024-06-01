@@ -3,7 +3,7 @@ from os.path import join
 from Settings import WINDOW_WIDTH, WINDOW_HEIGHT
 
 
-class FortuneUI(pygame.sprite.Sprite):
+class QuestsUI(pygame.sprite.Sprite):
     def __init__(self, groups, player, fortune, message, item_icon=None):
         super().__init__(groups)
         self.player = player

@@ -55,7 +55,7 @@ class Fortune(NPC):
                 random_element = random.choice(item_types)
                 random_amount = random.randint(1, 5)
                 player.player_data.inventory.add_item(Item(random_element, random_amount))
-                message = f"It seems to me, that {random_element.value[5]} will be useful for your missions!"
+                message = f"It seems to me, that {random_amount} {random_element.value[5]} will be useful for your missions!"
                 item_icon = random_element.value[4]
                 self.current_dialogue = '003'
 
