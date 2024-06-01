@@ -1,3 +1,4 @@
+import pygame
 import Shopkeeper
 from Settings import *
 
@@ -7,7 +8,7 @@ class ShopInventory2UI(pygame.sprite.Sprite):
         self.inventory = inventory
         self.inventory_slot_size = 100
         self.player = player
-        self.image = pygame.Surface((self.inventory.columns * self.inventory_slot_size, self.inventory.rows * self.inventory_slot_size))
+        self.image = pygame.Surface((self.inventory.columns * self.inventory_slot_size, self.inventory.rows * self.inventory_slot_size + 50))  # Increased height for the text
         self.image.fill('gray')
         self.rect = self.image.get_frect(topleft=(WINDOW_WIDTH // 3, 0))
         self.font = pygame.font.Font(None, 32)
@@ -17,20 +18,18 @@ class ShopInventory2UI(pygame.sprite.Sprite):
         self.time_since_last_click = pygame.time.get_ticks()
         self.attempt = 0
         self.shopkeeper = shopkeeper
+
     def input(self):
         keys = pygame.key.get_pressed()
-        if pygame.time.get_ticks() - self.last_input < 190:
-            return
-        if keys[pygame.K_i] and self.inventory is None:
-            self.create_inventory()
-        elif keys[pygame.K_i] and self.inventory is not None:
-            self.inventory.kill()
-            self.inventory = None
+        if keys[pygame.K_c]:
+            self.kill()
+
     def render(self):
         self.rect.topleft = (self.player.rect.right, self.player.rect.centery - WINDOW_HEIGHT // 2)
         self.image.fill('white')
         self.slot_rects = []
 
+        # Draw inventory slots
         for i in range(self.inventory.columns):
             for j in range(self.inventory.rows):
                 item = self.inventory.get_item(i, j)
@@ -47,7 +46,6 @@ class ShopInventory2UI(pygame.sprite.Sprite):
                         elif self.attempt != 0:
                             Shopkeeper.sell_equipment(item, self.player)
                             self.selected_item = None
-                            self.shopkeeper.inventoryUI.kill()
                             continue
                     item_rect = item.image.get_rect(center=slot_rect.center)
                     self.image.blit(item.image, item_rect.topleft)
@@ -57,6 +55,10 @@ class ShopInventory2UI(pygame.sprite.Sprite):
                         slot_rect.right - text_surface.get_width() - 2, slot_rect.bottom - text_surface.get_height())
                         self.image.blit(text_surface, text_position)
 
+        # Draw text "Press C to close"
+        text_surface = self.font.render("Press C to close shop window", True, 'black')
+        text_position = (10, self.inventory.rows * self.inventory_slot_size + 10)
+        self.image.blit(text_surface, text_position)
 
     def selected_slot(self):
         click = pygame.mouse.get_pressed()[0]
@@ -100,9 +102,7 @@ class ShopInventory2UI(pygame.sprite.Sprite):
             self.attempt = 0
             return self.selected_item
 
-
-
-
     def update(self, dt):
+        self.input()
         self.mouse_logic()
         self.render()
