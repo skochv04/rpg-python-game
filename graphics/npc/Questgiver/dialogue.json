@@ -7,32 +7,68 @@
 			"text": "Ah, greetings, young magician! I have a couple of tasks to cope with... Would you like to help me? Of course, I will give you an interesting bonus =)",
 			"responses": {
 				"Yes! How can I help you?": {
-					"next": "001"
+					"next": "1000"
 				},
 				"Sorry, I am very busy today... See you later!": {
-					"next": "002"
+					"next": "2000"
 				}
 			},
 			"commands": [
 				"show_tasks"
 			]
 		},
+		"1000": {
+			"type": "response",
+			"npc_name": "Questgiver",
+			"portrait_id": "neutral",
+			"text": "It's nice to hear that you're ready to help me out. Are you ready for the first task?",
+			"responses": {
+				"Sure!": {
+					"next": "001"
+				}
+			},
+			"commands": [
+			]
+		},
+		"2000": {
+			"type": "response",
+			"npc_name": "Questgiver",
+			"portrait_id": "neutral",
+			"text": "Don`t worry, my friend. I will wait for you here!",
+			"responses": {},
+			"commands": [
+			]
+		},
 		"001": {
 			"type": "response",
 			"npc_name": "Questgiver",
 			"portrait_id": "neutral",
-			"text": "It's nice to hear that you're ready to help me out.",
+			"text": "My first task for you is to explore the world! I think, you could buy one more thread to extend your equipment and earn 10 coins. It will be perfect start! You can an find information about your quest opening QuestBar on the left side of screen.",
 			"responses": {},
 			"commands": [
-				"start_task",
-				"cancel"
 			]
 		},
 		"002": {
 			"type": "response",
 			"npc_name": "Questgiver",
 			"portrait_id": "neutral",
-			"text": "Don`t worry, my friend. I will wait for you here!",
+			"text": "Great job! I have the second task for you.",
+			"responses": {
+				"I am ready!": {
+					"next": "003"
+				},
+				"Sounds great, but... i will come later!": {
+					"next": "2000"
+				}
+			},
+			"commands": [
+			]
+		},
+		"003": {
+			"type": "response",
+			"npc_name": "Questgiver",
+			"portrait_id": "neutral",
+			"text": "Your task is to defeat one of the enemies. However, try your luck first, maybe it will bring you something interesting! You can an find information about your quest opening QuestBar on the left side of screen.",
 			"responses": {},
 			"commands": [
 			]

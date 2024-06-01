@@ -98,4 +98,4 @@ class UI:
                 else:
                     text_ended = True
 
-        return selected_responses
+        return selected_responses, self.current_dialogue

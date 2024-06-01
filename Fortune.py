@@ -2,6 +2,7 @@ from enum import Enum
 import random
 from os.path import join
 
+import Quests
 from FortuneUI import FortuneUI
 from ItemType import ItemType
 from Item import Item
@@ -58,10 +59,11 @@ class Fortune(NPC):
                 message = f"It seems to me, that {random_amount} {random_element.value[5]} will be useful for your missions!"
                 item_icon = random_element.value[4]
                 self.current_dialogue = '003'
-
+            if player.player_data.quest is not None and player.player_data.quest.quest == Quests.MAGIC_DUEL:
+                player.player_data.quest.specific_cond = True
         self.FortuneUI = FortuneUI(self.groups, self.player, self, message, item_icon)
 
     def dialogue(self):
-        responses = super().dialogue()
+        responses, last_dialogue = super().dialogue()
         if len(responses) > 0 and responses[0] == 0:
             self.action(self.player)

@@ -32,7 +32,7 @@ class GeneralUI:
         self.inventory = InventoryUI(self.groups, self.player.player_data.inventory, self.player)
 
     def create_quests(self):
-        self.quests = QuestsUI(self.groups, self.player, self, "")
+        self.quests = QuestsUI(self.groups, self.player)
 
     def input(self):
         keys = pygame.key.get_pressed()

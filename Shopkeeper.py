@@ -32,7 +32,7 @@ class Shopkeeper(NPC):
             self.inventory.add_item(Item(item_type))
 
     def dialogue(self):
-        responses = super().dialogue()
+        responses, last_dialogue = super().dialogue()
         if len(responses) > 0 and responses[0] == 0:
             self.inventoryUI = ShopInventory2UI(self.groups, self.inventory, self.player, self)
 

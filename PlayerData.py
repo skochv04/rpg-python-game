@@ -24,7 +24,7 @@ class PlayerData:
         self.health = health
         self.coins = coins
         self.power = power
-        self.skills = []
+        self.skills = set()
         self.inventory = Inventory()
         self.timer = timer
         self.quest = None
@@ -37,4 +37,4 @@ class PlayerData:
             print((itemset - 1) % len(Skills))
         for item in available_items[itemset - 1]: self.inventory.add_item(Item(item, 3))
 
-        self.skills.append(list(Skills)[(itemset - 1) % len(Skills)])
+        self.skills.add(list(Skills)[(itemset - 1) % len(Skills)])

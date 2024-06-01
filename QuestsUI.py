@@ -4,13 +4,22 @@ from Settings import WINDOW_WIDTH, WINDOW_HEIGHT
 
 
 class QuestsUI(pygame.sprite.Sprite):
-    def __init__(self, groups, player, fortune, message, item_icon=None):
+    def __init__(self, groups, player):
         super().__init__(groups)
         self.player = player
-        self.fortune = fortune
         self.font = pygame.font.Font(None, 36)
-        self.message = message  # Зберігаємо текст повідомлення
-        self.item_icon = item_icon  # Зберігаємо зображення предмета
+        if self.player.player_data.quest is None:
+            self.message = "You haven`t any quests now. You can ask Questgiver about them!"  # Зберігаємо текст повідомлення
+            self.ui_image = pygame.image.load(join('graphics', 'objects', 'ask.png'))
+        elif self.player.player_data.quest.isDone(self.player.player_data):
+            self.message = "DONE!"  # Зберігаємо текст повідомлення
+            self.ui_image = pygame.image.load(join('graphics', 'objects', 'ask.png'))
+            for npc in groups:
+                if npc.__class__.__name__ == 'Questgiver':
+                    npc.action(player)
+        else:
+            self.message = "Loading quest..."
+            self.ui_image = None  # Зберігаємо зображення предмета
 
         # Збільшуємо ширину вікна та розміщуємо по центру екрану відносно гравця
         self.image = pygame.Surface((WINDOW_WIDTH * 0.7, WINDOW_HEIGHT * 0.7))
@@ -33,10 +42,10 @@ class QuestsUI(pygame.sprite.Sprite):
         self.image.fill('white')
 
         # Якщо передано зображення предмета, відобразимо його
-        if self.item_icon:
-            self.item_rect = self.item_icon.get_rect(
+        if self.ui_image:
+            self.item_rect = self.ui_image.get_rect(
                 center=(self.image.get_width() // 2, self.image.get_height() - self.image.get_height() // 3))
-            self.image.blit(self.item_icon, self.item_rect)
+            self.image.blit(self.ui_image, self.item_rect)
 
         # Відображення повідомлення
         text_surface = self.font.render(self.message, True, (0, 0, 0))
