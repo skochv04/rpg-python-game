@@ -44,3 +44,10 @@ class Inventory:
             self.inventory[i][j].x = i
             self.inventory[i][j].y = j
         return True
+
+    def find_item_amount(self, item):
+        for i in range(self.columns):
+            for j in range(self.rows):
+                if self.inventory[i][j] != 0 and self.inventory[i][j].item_type == item.item_type:
+                    return self.inventory[i][j].amount
+        return 0

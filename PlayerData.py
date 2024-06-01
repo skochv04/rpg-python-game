@@ -27,7 +27,9 @@ class PlayerData:
         self.skills = []
         self.inventory = Inventory()
         self.timer = timer
-        self.task = None
+        self.quest = None
+        self.exp = 0
+        self.enemiesWon = 0
 
         if itemset is None:
             itemset = random.choice(list(available_items.keys())) + 1

@@ -26,6 +26,7 @@ class GeneralUI:
         self.health_icon = pygame.image.load(join('graphics', 'objects', 'health.png')).convert_alpha()  # Приклад шляху до іконки здоров'я
         self.timer_icon = pygame.image.load(join('graphics', 'objects', 'timer.png')).convert_alpha()  # Завантаження іконки таймера
         self.quests_icon = pygame.image.load(join('graphics', 'objects', 'quests.png')).convert_alpha()  # Завантаження іконки tasks
+        self.exp_icon = pygame.image.load(join('graphics', 'objects', 'exp.png')).convert_alpha()  # Завантаження іконки exp
 
     def create_inventory(self):
         self.inventory = InventoryUI(self.groups, self.player.player_data.inventory, self.player)
@@ -66,6 +67,7 @@ class GeneralUI:
         self.render_coins()
         self.render_power()
         self.render_health()
+        self.render_exp()
         self.render_timer()  # Додавання виклику методу відображення таймера
         self.render_tasks_button()
 
@@ -130,6 +132,21 @@ class GeneralUI:
             # Відображення іконки та тексту на екрані
             self.display_surface.blit(self.timer_icon, timer_icon_rect)
             self.display_surface.blit(timer_surface, timer_rect)
+
+    def render_exp(self):
+        # Оновлення тексту з рівнем здоров'я
+        exp_text = str(self.player_data.exp)
+        exp_surface, exp_rect = self.font.render(exp_text, 'white')
+
+        # Позиція іконки та тексту здоров'я
+        exp_icon_rect = self.exp_icon.get_rect(topleft=(150, 30))
+
+        # Центрування тексту по вертикалі відносно іконки
+        exp_rect.midleft = (exp_icon_rect.right + 5, exp_icon_rect.centery)
+
+        # Відображення іконки та тексту на екрані
+        self.display_surface.blit(self.exp_icon, exp_icon_rect)
+        self.display_surface.blit(exp_surface, exp_rect)
 
     def render_tasks_button(self):
         # Позиція іконки tasks
