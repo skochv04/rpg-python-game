@@ -32,9 +32,9 @@ class NPC(pygame.sprite.Sprite):
 
     def dialogue(self):
         ui = UI(self.dialogue_data, self.current_dialogue)
-        responses = ui.run()
+        responses, last_dialogue = ui.run()
         self.last_input_time = pygame.time.get_ticks()
-        return responses
+        return responses, last_dialogue
 
     def is_active(self):
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)

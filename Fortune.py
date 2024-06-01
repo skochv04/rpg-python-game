@@ -62,6 +62,6 @@ class Fortune(NPC):
         self.FortuneUI = FortuneUI(self.groups, self.player, self, message, item_icon)
 
     def dialogue(self):
-        responses = super().dialogue()
+        responses, last_dialogue = super().dialogue()
         if len(responses) > 0 and responses[0] == 0:
             self.action(self.player)
