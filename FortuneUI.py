@@ -13,7 +13,7 @@ class FortuneUI(pygame.sprite.Sprite):
         self.item_icon = item_icon  # Зберігаємо зображення предмета
 
         # Збільшуємо ширину вікна та розміщуємо по центру екрану
-        self.image = pygame.Surface((WINDOW_WIDTH * 0.7, WINDOW_HEIGHT * 0.7))
+        self.image = pygame.Surface((WINDOW_WIDTH * 1, WINDOW_HEIGHT * 1))
         self.image.fill('white')
         self.rect = self.image.get_rect(center=(WINDOW_WIDTH // 1.85, WINDOW_HEIGHT // 1.7))
         self.bound = ((WINDOW_WIDTH - WINDOW_WIDTH * 0.7) // 2, (WINDOW_HEIGHT - WINDOW_HEIGHT * 0.7) // 2)
