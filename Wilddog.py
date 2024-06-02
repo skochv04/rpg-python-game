@@ -8,13 +8,3 @@ class Wilddog(Enemy):
         if health is None:
             health = max_health
         self.enemy_data = EntityData(health, max_health, power)
-        self.lastx = 0
-
-    def fight_ai(self, player):
-        if not self.process_status_effects(player):
-            return False
-
-        player.player_data.health -= self.enemy_data.damage
-        self.enemy_data.damage = 0
-        if player.player_data.health <= 0:
-            return True

@@ -2,10 +2,11 @@ from Settings import *
 from Item import Item
 from Inventory import Inventory
 from EntityData import EntityData
+from BattleSkill import *
 
 class PlayerData(EntityData):
     def __init__(self, health, max_health, power, magic_power, mana, coins, skills = None):
-        super().__init__(health, max_health, power, magic_power, skills)
+        super().__init__(health, max_health, power, magic_power, [Fireball(), Heal()])
         self.coins = coins
         self.level = 1
         self.exp = 0

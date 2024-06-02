@@ -13,8 +13,19 @@ class Button:
         self.color = color
         self.highlight_color = highlight_color
         self.function = function
+        self.surface = pygame.Surface((self.width, self.height))
+        self.is_surface = False
+
+
+    def set_surface(self, surface):
+        self.surface = surface
+        self.is_surface = True
 
     def draw(self, win, outline=None):
+        if self.is_surface:
+            win.blit(self.surface, (self.x, self.y))
+            return
+
         # Call this method to draw the button on the screen
         if outline:
             pygame.draw.rect(win, outline, (self.x - 2, self.y - 2, self.width + 4, self.height + 4), 0)
@@ -31,7 +42,9 @@ class Button:
         # Pos is the mouse position or a tuple of (x,y) coordinates
         if self.x < pos[0] < self.x + self.width:
             if self.y < pos[1] < self.y + self.height:
-                if self.function:
-                    self.function()
                 return True
         return False
+
+    def use_function(self, *args):
+        if self.function:
+            self.function(*args)

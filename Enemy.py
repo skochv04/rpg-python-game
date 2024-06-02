@@ -139,7 +139,13 @@ class Enemy(pygame.sprite.Sprite):
         return True
 
     def fight_ai(self, player):
-        raise NotImplementedError
+        if not self.process_status_effects(player):
+            return False
+
+        player.player_data.health -= self.enemy_data.damage
+        self.enemy_data.damage = 0
+        if player.player_data.health <= 0:
+            return True
 
     def get_health(self):
         return self.enemy_data.health

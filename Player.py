@@ -107,6 +107,28 @@ class Player(pygame.sprite.Sprite):
                         self.rect.bottom = sprite.rect.top
 
 
+    def process_status_effects(self, enemy):
+        if enemy.status_effects.protected:
+            self.player_data.damage = 0
+        else:
+            self.player_data.damage = self.player_data.power
+
+        if self.status_effects.stunned:
+            return False
+
+        if self.status_effects.on_fire:
+            self.player_data.health -= 1
+            if self.player_data.health <= 0:
+                return False
+
+        if self.status_effects.poisoned:
+            self.player_data.health -= 1
+            if self.player_data.health <= 0:
+                return False
+
+        return True
+
+
     def get_health(self):
         return self.player_data.health
 
