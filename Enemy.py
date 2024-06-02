@@ -3,6 +3,7 @@ from Settings import *
 from Spritessheet import SpritesSheet
 from UI import UI
 from Fight import fight
+from StatusEffects import StatusEffects
 
 
 class Enemy(pygame.sprite.Sprite):
@@ -28,33 +29,36 @@ class Enemy(pygame.sprite.Sprite):
 
         self.player = player
         self.enemy_data = EntityData(3, 3, 1)
+        self.status_effects = StatusEffects()
 
         self.speed = 30
         self.collision_sprites = collision_sprites
         self.timer = timer
 
-        self.last_input_time = 0
-        self.time_between_inputs = 200
-
         self.skin_action = 1
         self.skin_timer = 0
         self.prev_image = self.current_skin[1]
         self.is_moving = False
+        self.escape_timer = None
 
     def is_active(self):
+        if self.escape_timer is not None:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.escape_timer >= 3500:
+                self.escape_timer = None
+            else:
+                return False
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
         in_range = self_pos.distance_to(player_pos) < 50
 
         return in_range
 
     def input(self, dt):
-        current_time = pygame.time.get_ticks()
-        if current_time - self.last_input_time >= self.time_between_inputs:
-            if self.is_active():
-                # keys = pygame.key.get_pressed()
-                # if keys[pygame.K_f]:
-                #     fight(self, self.player)
-                fight(self, self.player, dt)
+        if self.is_active():
+            fight(self, self.player, dt)
+            dt.set(0)
+
+
 
     def move(self, dt):
         self.skin_timer = (self.skin_timer + 1) % 56
@@ -109,6 +113,30 @@ class Enemy(pygame.sprite.Sprite):
                     if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
                         self.rect.bottom = sprite.rect.top
                         self.opposite_direction(self.direction)
+
+    def escape(self):
+        self.escape_timer = pygame.time.get_ticks()
+
+    def process_status_effects(self, player):
+        if player.status_effects.protected:
+            self.enemy_data.damage = 0
+        else:
+            self.enemy_data.damage = self.enemy_data.power
+
+        if self.status_effects.stunned:
+            return False
+
+        if self.status_effects.on_fire:
+            self.enemy_data.health -= 1
+            if self.enemy_data.health <= 0:
+                return False
+
+        if self.status_effects.poisoned:
+            self.enemy_data.health -= 1
+            if self.enemy_data.health <= 0:
+                return False
+
+        return True
 
     def fight_ai(self, player):
         raise NotImplementedError

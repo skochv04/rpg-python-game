@@ -108,21 +108,23 @@ def fight(enemy, player, dt):
                 if buttons[0].is_over(pos):
                     if player_attack(player, enemy):
                         enemy.kill()
-                        dt.update()
                         return
                     enemy.fight_ai(player)
                     print('button 1 clicked')
                 if buttons[1].is_over(pos):
-                    notification = Notification('Not implemented yet', 100)
+                    notification = Notification('Not implemented yet')
                     print('button 2 clicked')
                 if buttons[2].is_over(pos):
                     if item_list_surface:
                         item_list_surface = None
                     else:
                         item_list_surface = display_items(player, display_surface, buttons[2])
+                    notification = Notification('Not implemented yet')
                     print('button 3 clicked')
                 if buttons[3].is_over(pos):
                     print('button 4 clicked')
+                    enemy.escape()
+                    return
 
         display_surface.fill((30, 30, 30))
 

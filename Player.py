@@ -2,7 +2,8 @@ import pygame
 
 from Settings import *
 from Spritessheet import SpritesSheet
-from InventoryUI import InventoryUI
+from StatusEffects import StatusEffects
+
 
 class Player(pygame.sprite.Sprite):
     # to choose correct images for character we will use skin and direction
@@ -15,6 +16,7 @@ class Player(pygame.sprite.Sprite):
 
         self.speed = 300
         self.player_data = player_data
+        self.status_effects = StatusEffects()
 
         self.collision_sprites = collision_sprites
 
