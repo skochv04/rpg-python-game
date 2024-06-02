@@ -107,21 +107,20 @@ class Player(pygame.sprite.Sprite):
                 self.not_used_skills or self.current_time - self.last_ability_time > 30000):
             if keys[pygame.K_f] and Skills.SPEED_UP in self.player_data.skills:
                 self.activate_speed_boost()
+                self.update_config()
             elif keys[pygame.K_v] and Skills.INVISIBILITY in self.player_data.skills:
                 self.activate_invisibility()
+                self.update_config()
             elif keys[pygame.K_s] and Skills.SHRINK in self.player_data.skills:
                 self.shrink_player()
-            self.last_ability_time = self.current_time
-            self.not_used_skills = False
-            self.player_data.timer = 30000 - (self.current_time - self.last_ability_time)
+                self.update_config()
+
 
         if keys[pygame.K_t] and Skills.TELEPORTATION in self.player_data.skills and (
                 self.not_used_skills or self.current_time - self.last_ability_time > 30000):
             if pygame.mouse.get_pressed()[0]:
                 self.teleport_target = pygame.mouse.get_pos()
-                self.last_ability_time = self.current_time
-                self.not_used_skills = False
-                self.player_data.timer = 30000 - (self.current_time - self.last_ability_time)
+                self.update_config()
 
         # Телепортація, якщо телепорт-таргет встановлено
         if self.teleport_target:
@@ -135,6 +134,11 @@ class Player(pygame.sprite.Sprite):
             self.teleport_target = None
 
         self.direction = key_direction
+
+    def update_config(self):
+        self.last_ability_time = self.current_time
+        self.not_used_skills = False
+        self.player_data.timer = 30000 - (self.current_time - self.last_ability_time)
 
     def activate_invisibility(self):
         if not self.is_invisible:
@@ -235,7 +239,8 @@ class Player(pygame.sprite.Sprite):
         self.input()
         self.move(dt)
 
-        if self.player_data.timer: self.player_data.timer = 30000 - (self.current_time - self.last_ability_time)
+        if self.player_data.timer > 0: self.player_data.timer = 30000 - (self.current_time - self.last_ability_time)
+        else: self.player_data.timer = 0
 
         # Перевірка часу зменшення персонажа
         if self.shrink_timer != 0:

@@ -36,23 +36,27 @@ class Fortune(NPC):
         else:
 
             self.player.player_data.coins -= 20
-            self.player.player_data.quest.costs += 20
+            if self.player.player_data.quest is not None:
+                self.player.player_data.quest.costs += 20
 
             # 0 - nothing, 1 - health, 2 - coins, 3 - equipment
             random_number = random.randint(0, 3)
             item_types = list(ItemType)
             if random_number == 0:
                 message = "Oh no, fortune isn't on your side today. You have got no presents."
+                self.current_dialogue = '003'
             elif random_number == 1:
                 random_health = random.randint(0, 4)
                 self.player.player_data.health = min(self.player.player_data.health + self.health_set[random_health], 100)
                 message = f"You receive some vitamins to stay healthy! Your XP has been risen by {self.health_set[random_health]}."
                 item_icon = pygame.image.load(join('graphics', 'objects', 'health.png')).convert_alpha()
+                self.current_dialogue = '003'
             elif random_number == 2:
                 random_coins = random.randint(0, 17)
                 self.player.player_data.coins += self.coins_set[random_coins]
                 message = f"Wow! You are going to be rich. {self.coins_set[random_coins]} coins for you!"
                 item_icon = pygame.image.load(join('graphics', 'objects', 'coin.png')).convert_alpha()
+                self.current_dialogue = '003'
             elif random_number == 3:
                 random_element = random.choice(item_types)
                 random_amount = random.randint(1, 5)

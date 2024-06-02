@@ -9,16 +9,17 @@ class QuestsUI(pygame.sprite.Sprite):
         self.player = player
         self.font = pygame.font.Font(None, 36)
         if self.player.player_data.quest is None:
-            self.message = "You haven`t any quests now. You can ask Questgiver about them!"  # Зберігаємо текст повідомлення
+            self.message = "You haven`t any quests now. You can ask Questgiver about them!"
             self.ui_image = pygame.image.load(join('graphics', 'objects', 'ask.png'))
         elif self.player.player_data.quest.isDone(self.player.player_data):
-            self.message = "DONE!"  # Зберігаємо текст повідомлення
-            self.ui_image = pygame.image.load(join('graphics', 'objects', 'ask.png'))
+            self.message = "You have completed all quest tasks. Meet the Questgiver to collect the prize and continue!"
+            self.ui_image = pygame.image.load(join('graphics', 'objects', 'done.png'))
             for npc in groups:
                 if npc.__class__.__name__ == 'Questgiver':
                     npc.action()
         else:
-            self.message = "Loading quest..."
+            self.message = self.player.player_data.quest.quest.value[1]
+            self.additional_message = self.player.player_data.quest.quest.value[13]  # Додаємо друге повідомлення
             self.ui_image = None  # Зберігаємо зображення предмета
 
         # Збільшуємо ширину вікна та розміщуємо по центру екрану відносно гравця
@@ -49,8 +50,14 @@ class QuestsUI(pygame.sprite.Sprite):
 
         # Відображення повідомлення
         text_surface = self.font.render(self.message, True, (0, 0, 0))
-        text_rect = text_surface.get_rect(center=(self.image.get_width() // 2, self.image.get_height() // 2))
+        text_rect = text_surface.get_rect(center=(self.image.get_width() // 2, self.image.get_height() // 2 - 20))
         self.image.blit(text_surface, text_rect)
+
+        # Відображення додаткового повідомлення
+        if hasattr(self, 'additional_message'):
+            additional_text_surface = self.font.render(self.additional_message, True, (0, 0, 0))
+            additional_text_rect = additional_text_surface.get_rect(center=(self.image.get_width() // 2, self.image.get_height() // 2 + 20))
+            self.image.blit(additional_text_surface, additional_text_rect)
 
         # Відображення кнопки
         self.image.blit(self.button_image, self.button_rect)
