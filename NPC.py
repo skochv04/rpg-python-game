@@ -31,7 +31,7 @@ class NPC(pygame.sprite.Sprite):
         self.time_between_inputs = 200
 
     def dialogue(self):
-        ui = UI(self.dialogue_data, self.current_dialogue)
+        ui = UI(self, self.dialogue_data, self.current_dialogue)
         responses, last_dialogue = ui.run()
         self.last_input_time = pygame.time.get_ticks()
         return responses, last_dialogue
@@ -67,5 +67,5 @@ class NPC(pygame.sprite.Sprite):
             self.image = self.sprite_stable[self.current_img]
         self.input()
 
-    def action(self, player):
-        print("Performing NPC action!")
+    def action(self):
+        pass

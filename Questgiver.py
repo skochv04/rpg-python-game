@@ -10,7 +10,14 @@ class Questgiver(NPC):
         self.awarded_player = False
         self.done_quest = False
         self.quest_id = 0
-    def action(self, player):
+
+    def action(self):
+        if not self.awarded_player:
+            # award player
+            self.player.player_data.quest.rewardPlayer(self.player.player_data)
+            self.awarded_player = True
+
+    def configure_data(self):
         if not self.done_quest:
             self.done_quest = True
             self.started_quest = False
@@ -19,10 +26,9 @@ class Questgiver(NPC):
 
     def dialogue(self):
         if self.player.player_data.quest and self.player.player_data.quest.isDone(self.player.player_data):
-            self.action(self.player)
+            self.configure_data()
         responses, last_dialogue = super().dialogue()
         response_num = int(last_dialogue)
-        print("response: ", response_num)
         if 0 < response_num < 1000 and response_num % 2:
 
             # start new quest
@@ -31,10 +37,5 @@ class Questgiver(NPC):
                 self.current_dialogue = last_dialogue
                 self.started_quest = True
                 self.awarded_player = False
+                self.done_quest = False
                 self.quest_id += 1
-
-        elif 0 < response_num < 1000 and not response_num % 2 and not self.awarded_player:
-            # award player
-            print("Award...")
-            self.player.player_data.quest.rewardPlayer(self.player.player_data)
-            self.awarded_player = True

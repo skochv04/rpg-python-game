@@ -2,7 +2,7 @@ import pygame
 from Settings import *
 
 class UI:
-    def __init__(self, dialogue_data, current_dialogue):
+    def __init__(self, NPC, dialogue_data, current_dialogue):
         self.display_surface = pygame.display.get_surface()
         self.image = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT / 4))
         self.image.fill('black')
@@ -12,7 +12,7 @@ class UI:
         self.current_dialogue = current_dialogue
         self.response_keys = [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5,
                               pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9, pygame.K_0]
-
+        self.NPC = NPC
 
     def get_text(self):
         return self.dialogue_data.parse_text(self.current_dialogue)
@@ -81,17 +81,18 @@ class UI:
             else:
                 text_ended = True
 
-
             if text_ended:
                 self.render_end_dialogue_prompt()
                 if keys[pygame.K_RETURN]:
                     end = True
 
+            if 0 < int(self.current_dialogue) < 1000 and not int(self.current_dialogue) % 2: self.NPC.action()
             if answer is not None:
                 selected_response = list(responses.keys())[answer]
                 selected_responses.append(answer)
                 if responses[selected_response]['next'] is not None:
                     self.current_dialogue = responses[selected_response]['next']
+                    # award player, is it is Questgiver
                     text, responses = self.get_text()
                     self.render_text(text)
                     self.render_responses(responses)

@@ -10,7 +10,7 @@
 					"next": "001"
 				},
 				"It seems to be interesting experience, but not for today!": {
-					"next": "002"
+					"next": "005"
 				}
 			},
 			"commands": [
@@ -28,7 +28,7 @@
 				"cancel"
 			]
 		},
-		"002": {
+		"005": {
 			"type": "response",
 			"npc_name": "Fortune",
 			"portrait_id": "neutral",

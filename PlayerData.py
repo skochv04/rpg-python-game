@@ -30,11 +30,12 @@ class PlayerData:
         self.quest = None
         self.exp = 0
         self.enemiesWon = 0
+        self.itemset = itemset
 
-        if itemset is None:
-            itemset = random.choice(list(available_items.keys())) + 1
+        if self.itemset is None:
+            self.itemset = random.choice(list(available_items.keys())) + 1
         else:
-            print((itemset - 1) % len(Skills))
-        for item in available_items[itemset - 1]: self.inventory.add_item(Item(item, 3))
+            print((self.itemset - 1) % len(Skills))
+        for item in available_items[self.itemset - 1]: self.inventory.add_item(Item(item, 3))
 
-        self.skills.add(list(Skills)[(itemset - 1) % len(Skills)])
+        self.skills.add(list(Skills)[(self.itemset - 1) % len(Skills)])

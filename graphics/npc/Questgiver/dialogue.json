@@ -67,6 +67,39 @@
 			"text": "Your task is to defeat one of the enemies. However, try your luck first, maybe it will bring you something interesting! You can an find information about your quest opening QuestBar on the left side of screen.",
 			"responses": {},
 			"commands": []
+		},
+		"004": {
+			"type": "response",
+			"npc_name": "Questgiver",
+			"portrait_id": "neutral",
+			"text": "Wow! Perfect! I have one task left at this level. Would you like to start it now?",
+			"responses": {
+				"Of course! What should I do?": {
+					"next": "005"
+				},
+				"Sorry, but not now... I would like to rest before the next challenge. ": {
+					"next": "2000"
+				}
+			},
+			"commands": []
+		},
+		"005": {
+			"type": "response",
+			"npc_name": "Questgiver",
+			"portrait_id": "neutral",
+			"text": "Wonderful. I think, that now you are ready to defeat all the enemies of our magical world. However, don't forget to buy some gear to get stronger! You can an find information about your quest opening QuestBar on the left side of screen.",
+			"responses": {},
+			"commands": []
+		},
+		"006": {
+			"type": "response",
+			"npc_name": "Questgiver",
+			"portrait_id": "neutral",
+			"text": "You are good! All tasks on this level are done. Let`s go to the next level!",
+			"responses": {
+
+			},
+			"commands": []
 		}
 	}
 }

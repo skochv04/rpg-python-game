@@ -16,7 +16,7 @@ class QuestsUI(pygame.sprite.Sprite):
             self.ui_image = pygame.image.load(join('graphics', 'objects', 'ask.png'))
             for npc in groups:
                 if npc.__class__.__name__ == 'Questgiver':
-                    npc.action(player)
+                    npc.action()
         else:
             self.message = "Loading quest..."
             self.ui_image = None  # Зберігаємо зображення предмета
