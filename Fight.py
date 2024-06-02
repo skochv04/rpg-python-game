@@ -5,6 +5,7 @@ import pygame
 import sys
 from Button import Button
 from os.path import join
+from Notification import *
 
 
 def player_attack(player, enemy):
@@ -29,31 +30,31 @@ def display_items(player, display_surface, button):
     items = list(filter(lambda item: item.usable_during_battle, items))
 
     if len(items) <= 0:
-        return False
+        return None
 
     # show list of items vertically above the items button
     item_x = button.x
     item_y = button.y - 50
     item_width = items[0].image.get_width()
     item_height = items[0].image.get_height()
+    item_list_surface = pygame.Surface((button.width, item_height * len(items)))
+    item_list_surface.fill((0, 110, 250))
     for i, item in enumerate(items):
-        # Create a blue rect for item image and text
-        item_rect = pygame.Rect(item_x, item_y + i * item_height, button.width, item_height)
-        pygame.draw.rect(display_surface, (0, 100, 250), item_rect)
         # Draw item image
-        item_image_position = (item_rect.topleft[0], item_rect.topleft[1] - 5)
-        display_surface.blit(item.image, item_image_position)
+        item_image_position = (0, 0)
+        item_list_surface.blit(item.image, item_image_position)
         # Draw item amount to the right of the item image
         font = pygame.font.Font(None, 36)
         text_surface = font.render(str(item.amount), True, 'black')
-        text_position = (item_image_position[0] + item_width , item_image_position[1] + item_height // 2 - text_surface.get_height() // 2)
-        display_surface.blit(text_surface, text_position)
+        text_position = (item_image_position[0] + item_width, item_image_position[1] + item_height // 2 - text_surface.get_height() // 2)
+        item_list_surface.blit(text_surface, text_position)
         # Draw item name to the right of the item amount
         text_surface = font.render(item.name, True, 'black')
         text_position = (text_position[0] + 30, text_position[1])
-        display_surface.blit(text_surface, text_position)
+        item_list_surface.blit(text_surface, text_position)
 
-    return True
+
+    return item_list_surface
 
 def display_health(player, enemy, display_surface):
     # Create health Bars for player and enemy
@@ -93,6 +94,9 @@ def fight(enemy, player, dt):
     # Create buttons
     buttons = create_buttons()
 
+    item_list_surface = None
+    notification = None
+
     while True:
         for event in pygame.event.get():
             pos = pygame.mouse.get_pos()
@@ -109,14 +113,18 @@ def fight(enemy, player, dt):
                     enemy.fight_ai(player)
                     print('button 1 clicked')
                 if buttons[1].is_over(pos):
+                    notification = Notification('Not implemented yet', 100)
                     print('button 2 clicked')
                 if buttons[2].is_over(pos):
-                    display_items(player, display_surface, buttons[2])
+                    if item_list_surface:
+                        item_list_surface = None
+                    else:
+                        item_list_surface = display_items(player, display_surface, buttons[2])
                     print('button 3 clicked')
                 if buttons[3].is_over(pos):
                     print('button 4 clicked')
 
-        #display_surface.fill((30, 30, 30))
+        display_surface.fill((30, 30, 30))
 
         # Display player sprite
         display_player(player, display_surface)
@@ -130,6 +138,14 @@ def fight(enemy, player, dt):
         # Draw buttons
         for button in buttons:
             button.draw(display_surface)
+
+        if item_list_surface:
+            display_surface.blit(item_list_surface, (buttons[2].x, buttons[2].y - buttons[2].height - 15))
+
+        if notification:
+            notification.draw(display_surface)
+            if notification.update(dt):
+                notification = None
 
         pygame.display.flip()
         clock.tick(30)
