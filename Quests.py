@@ -1,5 +1,6 @@
 from enum import Enum
 
+from Skills import Skills
 from Item import Item
 from ItemType import ItemType
 from Settings import *
@@ -10,6 +11,6 @@ class Quests(Enum):
     # enemiesToWin, coinsToCollect, itemsToBuy, specific_cond (?)
 
     # specific_cond - for example, try Fortune, then FortuneNPC will write down that you have done this task
-    FIRST_STEPS = (1, "First steps", 1, 10, 30, 0, [], [], False, 0, 0, [Item(ItemType.THREAD, 1)], False, "Buy 1 thread and earn 10 coins.")
+    FIRST_STEPS = (1, "First steps", 1, 10, 30, 0, [], [], False, 0, 0, [Item(ItemType.THREAD, 1)], False, "Buy 1 thread and earn 10 coins")
     MAGIC_DUEL = (2, "Magic duel", 1, 15, 50, 0, [Item(ItemType.ACID, 1)], [], False, 0, 0, [], True, "")
     CHAMPION = (3, "Champion", 1, 20, 60, 10, [], [], True, 0, 0, [], True, "")

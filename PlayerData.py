@@ -1,10 +1,12 @@
 import random
 
+
 from Skills import Skills
 from ItemType import ItemType
 from Settings import *
 from Item import Item
 from Inventory import Inventory
+
 
 available_items = {
     0: [ItemType.SCISSORS, ItemType.HAMMER, ItemType.POISONOUS_SNAIL],
