@@ -8,7 +8,6 @@ from pytmx.util_pygame import load_pygame
 from CharacterCreator import create_character
 from PlayerData import PlayerData
 from Menu import MainMenu
-from DeltaTime import DT
 
 #Klasa okienka z grą
 class Game:
@@ -26,7 +25,6 @@ class Game:
 
         self.current_skin = 0
         self.skin_font = pygame.font.Font(None, 24)
-        self.dt = DT(self.clock)
 
     def run(self):
         menu = MainMenu()
@@ -46,11 +44,10 @@ class Game:
 
 
         while True:
-            self.dt.update()
+            dt = self.clock.tick() / 1000
             if self.player_data.level != level:
                 level = self.player_data.level
                 self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -63,7 +60,7 @@ class Game:
                             sys.exit()
                         else:
                             pass
-            self.current_stage.run(self.dt)
+            self.current_stage.run(dt)
 
             pygame.display.update()
 

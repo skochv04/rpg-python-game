@@ -42,15 +42,13 @@ class NPC(pygame.sprite.Sprite):
 
         return in_range
 
-    def input(self, dt):
+    def input(self):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_input_time >= self.time_between_inputs:
             if self.is_active() and not self.player.is_invisible:
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_RETURN]:
-                    dt.update()
                     self.dialogue()
-                    dt.update()
 
     def update(self, dt):
         self.timer += 1
@@ -67,7 +65,7 @@ class NPC(pygame.sprite.Sprite):
             self.current_img += 1
             self.current_img %= 3
             self.image = self.sprite_stable[self.current_img]
-        self.input(dt)
+        self.input()
 
     def action(self):
         pass

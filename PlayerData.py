@@ -6,7 +6,7 @@ from ItemType import ItemType
 from Settings import *
 from Item import Item
 from Inventory import Inventory
-from EntityData import EntityData
+
 
 available_items = {
     0: [ItemType.SCISSORS, ItemType.HAMMER, ItemType.POISONOUS_SNAIL],
@@ -19,14 +19,14 @@ available_items = {
     7: [ItemType.ACID, ItemType.SLEEPING_FLOWER, ItemType.THREAD]
 }
 
-class PlayerData(EntityData):
-    def __init__(self, health=100, max_health=100, power=3, coins=30, itemset=None, skills = None, timer=0):
-        super().__init__(health, max_health, power, skills)
+
+class PlayerData:
+
+    def __init__(self, health=100, coins=30, power=1, itemset=None, timer=0):
+        self.health = health
         self.coins = coins
         self.power = power
         self.skills = set()
-        self.level = 1
-        self.exp = 0
         self.inventory = Inventory()
         self.timer = timer
         self.quest = None
