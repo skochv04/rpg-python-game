@@ -3,20 +3,19 @@ from PlayerData import PlayerData
 
 class Quest:
     def __init__(self, player_data, quest):
-        self.start_player_data = PlayerData(player_data.health, player_data.coins, player_data.power, player_data.itemset)
         self.quest = quest
+        player_data.demand_coins_total += self.quest.value[10]
+        player_data.demand_enemies_won_total += self.quest.value[9]
+        self.start_player_data = PlayerData(player_data.health, player_data.coins, player_data.power, player_data.itemset)
         self.specific_cond = False
-        self.costs = 0
 
     def isDone(self, player_data):
-        if player_data.enemiesWon - self.start_player_data.enemiesWon < self.quest.value[9]: return False
+        if player_data.enemies_won_level < player_data.demand_enemies_won_total: return False
         for item in self.quest.value[11]:
             old_amount = self.start_player_data.inventory.find_item_amount(item)
             new_amount = player_data.inventory.find_item_amount(item)
-            self.costs += item.item_type.value[1]
             if old_amount + item.amount > new_amount: return False
-        print(player_data.coins, self.costs, self.start_player_data.coins, self.quest.value[10])
-        if player_data.coins + self.costs - self.start_player_data.coins < self.quest.value[10]: return False
+        if player_data.earned_coins_level < player_data.demand_coins_total: return False
 
         if self.quest.value[12] and not self.specific_cond: return False
         return True

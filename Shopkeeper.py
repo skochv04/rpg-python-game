@@ -14,11 +14,9 @@ def can_sell_equipment(equipment, player):
 
 def sell_equipment(equipment, player):
     if can_sell_equipment(equipment, player):
-        print(player.player_data.coins, equipment.price)
         player.player_data.coins -= equipment.price
         player.player_data.inventory.add_item(Item(equipment.item_type, 1))
         if player.player_data.quest is not None and player.player_data.quest.quest == Quests.CHAMPION:
-            player.player_data.quest.costs += equipment.price
             player.player_data.quest.specific_cond = True
         return True
     return False

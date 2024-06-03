@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.old_rect = self.rect.copy()
 
         self.speed = 250
-        self.player_data = PlayerData(100, 30, 1, skin)
+        self.player_data = player_data
 
         self.collision_sprites = collision_sprites
 

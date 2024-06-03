@@ -31,8 +31,18 @@ class PlayerData:
         self.timer = timer
         self.quest = None
         self.exp = 0
-        self.enemiesWon = 0
         self.itemset = itemset
+        self.level = 1
+
+        # Player can earn coins only by collecting coins on map, speaking with Fortune and winning enemies
+        # In these variables we don`t add earned coins in quests
+        self.earned_coins_total = 0
+        self.earned_coins_level = 0
+        self.demand_coins_total = 0
+
+        self.enemies_won_total = 0
+        self.enemies_won_level = 0
+        self.demand_enemies_won_total = 0
 
         if self.itemset is None:
             self.itemset = random.choice(list(available_items.keys())) + 1
@@ -41,3 +51,11 @@ class PlayerData:
         for item in available_items[self.itemset - 1]: self.inventory.add_item(Item(item, 3))
 
         self.skills.add(list(Skills)[(self.itemset - 1) % len(Skills)])
+
+    def up_level(self):
+        self.earned_coins_total += self.earned_coins_level
+        self.enemies_won_total += self.enemies_won_level
+
+        self.level += 1
+        self.earned_coins_level = 0
+        self.enemies_won_level = 0

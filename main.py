@@ -18,7 +18,8 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.player_data = None
-        self.tmx_maps = {0: load_pygame(join('data', 'levels', 'omni.tmx'))}
+        self.tmx_maps = {1: load_pygame(join('data', 'levels', 'level1.tmx')),
+                         2: load_pygame(join('data', 'levels', 'level2.tmx'))}
 
         self.current_stage = None
 
@@ -36,11 +37,17 @@ class Game:
 
 
         player_name, self.current_skin = create_character()
+        level = 1
         self.player_data = PlayerData(100, 30, 1, self.current_skin + 1)
-        self.current_stage = Level(self.tmx_maps[0], player_name, self.current_skin + 1, self.player_data)
+        self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
+        self.player_data.level = level
+
 
         while True:
             dt = self.clock.tick() / 1000
+            if self.player_data.level != level:
+                level = self.player_data.level
+                self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()

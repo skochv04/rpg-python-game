@@ -1,4 +1,6 @@
 import pygame.sprite
+
+from Coin import Coin
 from Fortune import Fortune
 from Informator import Informator
 from Questgiver import Questgiver
@@ -52,6 +54,8 @@ class Level:
                 Zombie((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0)
             elif obj.name == 'draft':
                 Draft((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0)
+            elif obj.name == 'coin':
+                Coin((obj.x, obj.y), self.all_sprites, self.player)
 
         self.GUI = GeneralUI(self.all_sprites, self.player.player_data, self.player)
 

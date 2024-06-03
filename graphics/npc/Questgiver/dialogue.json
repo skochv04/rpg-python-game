@@ -87,7 +87,7 @@
 			"type": "response",
 			"npc_name": "Questgiver",
 			"portrait_id": "neutral",
-			"text": "Wonderful. I think, that now you are ready to defeat all the enemies of our magical world. However, don't forget to buy some gear to get stronger! You can an find information about your quest opening QuestBar on the left side of screen.",
+			"text": "I think, that now you are ready to defeat all the enemies of our magical world. However, don't forget to buy some gear to get stronger! You can an find information about your quest opening QuestBar on the left side of screen.",
 			"responses": {},
 			"commands": []
 		},

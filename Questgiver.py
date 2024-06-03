@@ -16,6 +16,9 @@ class Questgiver(NPC):
             # award player
             self.player.player_data.quest.rewardPlayer(self.player.player_data)
             self.awarded_player = True
+            if self.player.player_data.quest.quest.value[8]:
+                self.player.player_data.up_level()
+            self.player.player_data.quest = None
 
     def configure_data(self):
         if not self.done_quest:

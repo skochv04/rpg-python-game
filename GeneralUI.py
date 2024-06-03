@@ -70,6 +70,7 @@ class GeneralUI:
         self.render_exp()
         self.render_timer()  # Додавання виклику методу відображення таймера
         self.render_tasks_button()
+        self.render_level()  # Додавання виклику методу відображення рівня
 
     def render_coins(self):
         # Оновлення тексту з кількістю монет
@@ -154,3 +155,14 @@ class GeneralUI:
 
         # Відображення іконки tasks на екрані
         self.display_surface.blit(self.quests_icon, quests_icon_rect)
+
+    def render_level(self):
+        # Оновлення тексту з рівнем гравця
+        level_text = f'Level: {self.player.player_data.level}'
+        level_surface, level_rect = self.font.render(level_text, 'white')
+
+        # Центрування тексту по горизонталі по центру екрану
+        level_rect.center = (WINDOW_WIDTH // 2, 50)
+
+        # Відображення тексту на екрані
+        self.display_surface.blit(level_surface, level_rect)
