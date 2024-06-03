@@ -1,9 +1,14 @@
+from ItemType import ItemType
+from PlayerData import available_items
 from Settings import *
 from Spritessheet import SpritesSheet
+from Skills import Skills  # Додано імпорт Skills
+import random
+
 
 def create_character():
     font = pygame.font.Font(None, 36)
-    input_box = pygame.Rect(WINDOW_WIDTH/2 - 110, 150, 140, 32)
+    input_box = pygame.Rect(WINDOW_WIDTH / 2 - 110, 150, 140, 32)
     color_inactive = pygame.Color('lightskyblue3')
     color_active = pygame.Color('dodgerblue2')
     color = color_inactive
@@ -13,9 +18,22 @@ def create_character():
     clock = pygame.time.Clock()
     text = ''
     default_text = font.render("Nazwa Postaci", True, color)
+
+    # Список скілів для персонажів (по два на кожен скіл)
+    skills_list = [
+        Skills.SPEED_UP,
+        Skills.TELEPORTATION,
+        Skills.SHRINK,
+        Skills.INVISIBILITY,
+        Skills.SPEED_UP,
+        Skills.TELEPORTATION,
+        Skills.SHRINK,
+        Skills.INVISIBILITY
+    ]
+
     while True:
         for event in pygame.event.get():
-            # Obsługa zamykania okna
+            # Обробка події закриття вікна
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -39,7 +57,7 @@ def create_character():
                 elif event.key == pygame.K_RIGHT:
                     current_skin = (current_skin + 1) % 8
 
-        # Rysowanie okienka z nazwą
+        # Відображення вікна з назвою
         display_surface.fill((30, 30, 30))
         if len(text) == 0:
             txt_surface = default_text
@@ -50,13 +68,43 @@ def create_character():
         display_surface.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
         pygame.draw.rect(display_surface, color, input_box, 2)
 
-        # Rysowanie obecnej postaci
+        # Відображення поточного скину
         my_spritesheet = SpritesSheet(join('graphics', 'player', f'{current_skin + 1}', 'texture.png'))
         sprite_down = my_spritesheet.parse_sprite('2.png')
         skin_view = pygame.transform.scale(sprite_down, (200, 200))
-        display_surface.blit(skin_view, (WINDOW_WIDTH/2 - 110, 300))
+        display_surface.blit(skin_view, (WINDOW_WIDTH / 2 - 110, 300))
 
-        #Rysowanie strzałek wyboru
+        # Відображення трьох предметів під скином
+        skin_items = available_items[current_skin]
+        items_count = len(skin_items)
+        sector_width = WINDOW_WIDTH // items_count
+        for i, item_type in enumerate(skin_items):
+            item_image = item_type.value[4]
+            item_surface = pygame.transform.scale(item_image, (50, 50))
+            item_x = i * sector_width + (sector_width - item_surface.get_width()) // 2
+            item_y = 520
+            display_surface.blit(item_surface, (item_x, item_y))
+
+            item_id, price, damage, min_power_to_get, file, name = item_type.value
+            item_data_text = font.render(f"Damage: {damage} Min level: {min_power_to_get}",
+                                         True, (255, 255, 255))
+            text_x = item_x - 115
+            text_y = item_y + item_surface.get_height()
+            display_surface.blit(item_data_text, (text_x, text_y))
+
+        # Відображення скілу для поточного скину
+        current_skill = skills_list[current_skin]
+        skill_image = current_skill.value[3]
+        skill_surface = pygame.transform.scale(skill_image, (50, 50))
+        skill_x = (WINDOW_WIDTH - skill_surface.get_width()) // 2
+        skill_y = 620
+        display_surface.blit(skill_surface, (skill_x, skill_y))
+
+        skill_id, skill_price, skill_min_power_to_get, skill_file, skill_name = current_skill.value
+        skill_data_text = font.render(f"Skill: {skill_name}, Min level: {skill_min_power_to_get}",
+                                      True, (255, 255, 255))
+        display_surface.blit(skill_data_text, (skill_x - 140, skill_y + skill_surface.get_height()))
+
         arrows_image = pygame.image.load(join("graphics", "buttons", "arrow_keys.png")).convert_alpha()
         arrows_width, arrows_height = arrows_image.get_size()
         left_arrow = arrows_image.subsurface(0, 0, arrows_width / 4, arrows_height)

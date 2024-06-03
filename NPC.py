@@ -1,12 +1,13 @@
 from Dialogue import Dialogue
 from Settings import *
 from Spritessheet import SpritesSheet
-from UI import UI
+from NPC_UI import UI
 
 
 class NPC(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, current_dialogue, player, timer):
         super().__init__([groups, collision_sprites])
+        self.groups = groups
         self.image = pygame.Surface((48, 56))
         # self.image.fill('red')
         self.rect = self.image.get_frect(topleft=pos)
@@ -30,9 +31,10 @@ class NPC(pygame.sprite.Sprite):
         self.time_between_inputs = 200
 
     def dialogue(self):
-        ui = UI(self.dialogue_data, self.current_dialogue)
-        ui.run()
+        ui = UI(self, self.dialogue_data, self.current_dialogue)
+        responses, last_dialogue = ui.run()
         self.last_input_time = pygame.time.get_ticks()
+        return responses, last_dialogue
 
     def is_active(self):
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
@@ -43,7 +45,7 @@ class NPC(pygame.sprite.Sprite):
     def input(self, dt):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_input_time >= self.time_between_inputs:
-            if self.is_active():
+            if self.is_active() and not self.player.is_invisible:
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_RETURN]:
                     dt.update()
@@ -67,5 +69,5 @@ class NPC(pygame.sprite.Sprite):
             self.image = self.sprite_stable[self.current_img]
         self.input(dt)
 
-    def action(self, player):
-        raise NotImplementedError
+    def action(self):
+        pass

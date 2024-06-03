@@ -10,7 +10,7 @@
 					"next": "001"
 				},
 				"Sorry, I am very busy today... We can speake later on!": {
-					"next": "002"
+					"next": "003"
 				}
 			},
 			"commands": [
@@ -28,7 +28,7 @@
 				"cancel"
 			]
 		},
-		"002": {
+		"003": {
 			"type": "response",
 			"npc_name": "Questgiver",
 			"portrait_id": "neutral",

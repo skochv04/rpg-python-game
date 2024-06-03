@@ -1,7 +1,7 @@
 from EntityData import EntityData
 from Settings import *
 from Spritessheet import SpritesSheet
-from UI import UI
+from NPC_UI import UI
 from Fight import fight
 
 
@@ -51,7 +51,7 @@ class Enemy(pygame.sprite.Sprite):
     def input(self, dt):
         current_time = pygame.time.get_ticks()
         if current_time - self.last_input_time >= self.time_between_inputs:
-            if self.is_active():
+            if self.is_active() and not self.player.is_invisible:
                 # keys = pygame.key.get_pressed()
                 # if keys[pygame.K_f]:
                 #     fight(self, self.player)

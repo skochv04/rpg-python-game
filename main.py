@@ -18,8 +18,9 @@ class Game:
         pygame.display.set_caption('No Title RPG Game')
         self.clock = pygame.time.Clock()
 
-        self.player_data = PlayerData(6, 6, 2, 3)
-        self.tmx_maps = {0: load_pygame(join('data', 'levels', 'omni.tmx'))}
+        self.player_data = None
+        self.tmx_maps = {1: load_pygame(join('data', 'levels', 'level1.tmx')),
+                         2: load_pygame(join('data', 'levels', 'level2.tmx'))}
 
         self.current_stage = None
 
@@ -38,11 +39,18 @@ class Game:
 
 
         player_name, self.current_skin = create_character()
-        self.current_stage = Level(self.tmx_maps[0], player_name, self.current_skin + 1, self.player_data)
+        level = 1
+        self.player_data = PlayerData(100, 30, 1, self.current_skin + 1)
+        self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
+        self.player_data.level = level
+
 
         while True:
             self.dt.update()
-            if self.dt.get() > 0.04: print(self.dt.get())
+            if self.player_data.level != level:
+                level = self.player_data.level
+                self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()

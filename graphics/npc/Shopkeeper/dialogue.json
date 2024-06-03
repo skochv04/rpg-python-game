@@ -26,7 +26,8 @@
 	"text": "I have a lot of interesting things. You can choose whatever you want!",
 	"responses": {},
 	"commands": [
-		"buy_equipment", "cancel"]
+		"show_equipment"
+	]
 	}
 }
 }

@@ -4,13 +4,13 @@
 			"type": "response",
 			"npc_name": "Fortune",
 			"portrait_id": "neutral",
-			"text": "Feeling lucky, adventurer? Test your fortune for a chance at a fascinating prize! Just 100 coins and who knows what awaits you!",
+			"text": "Feeling lucky, adventurer? Test your fortune for a chance at a fascinating prize! Just 20 coins and who knows what awaits you!",
 			"responses": {
 				"Hm... I agree!": {
 					"next": "001"
 				},
 				"It seems to be interesting experience, but not for today!": {
-					"next": "002"
+					"next": "005"
 				}
 			},
 			"commands": [
@@ -28,11 +28,20 @@
 				"cancel"
 			]
 		},
-		"002": {
+		"005": {
 			"type": "response",
 			"npc_name": "Fortune",
 			"portrait_id": "neutral",
 			"text": "Don`t worry, my friend. I will wait for you here!",
+			"responses": {},
+			"commands": [
+			]
+		},
+		"003": {
+			"type": "response",
+			"npc_name": "Fortune",
+			"portrait_id": "neutral",
+			"text": "You have tried your fortune! Wait for 2 minutes. I will wait for you, champion!",
 			"responses": {},
 			"commands": [
 			]
