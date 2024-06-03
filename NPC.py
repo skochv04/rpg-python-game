@@ -1,7 +1,7 @@
 from Dialogue import Dialogue
 from Settings import *
 from Spritessheet import SpritesSheet
-from UI import UI
+from NPC_UI import UI
 
 
 class NPC(pygame.sprite.Sprite):
@@ -31,10 +31,10 @@ class NPC(pygame.sprite.Sprite):
         self.time_between_inputs = 200
 
     def dialogue(self):
-        ui = UI(self.dialogue_data, self.current_dialogue)
-        responses = ui.run()
+        ui = UI(self, self.dialogue_data, self.current_dialogue)
+        responses, last_dialogue = ui.run()
         self.last_input_time = pygame.time.get_ticks()
-        return responses
+        return responses, last_dialogue
 
     def is_active(self):
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
@@ -69,5 +69,5 @@ class NPC(pygame.sprite.Sprite):
             self.image = self.sprite_stable[self.current_img]
         self.input(dt)
 
-    def action(self, player):
-        print("Performing NPC action!")
+    def action(self):
+        pass

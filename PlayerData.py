@@ -1,11 +1,13 @@
 import random
 
+
 from Skills import Skills
 from ItemType import ItemType
 from Settings import *
 from Item import Item
 from Inventory import Inventory
 from EntityData import EntityData
+
 
 available_items = {
     0: [ItemType.SCISSORS, ItemType.HAMMER, ItemType.POISONOUS_SNAIL],
@@ -29,13 +31,37 @@ class PlayerData(EntityData):
         self.coins = coins
         self.level = 1
         self.exp = 0
+        self.power = power
+        self.skills = set()
         self.inventory = Inventory()
         self.timer = timer
+        self.quest = None
+        self.exp = 0
+        self.itemset = itemset
+        self.level = 1
 
-        if itemset is None:
-            itemset = random.choice(list(available_items.keys())) + 1
+        # Player can earn coins only by collecting coins on map, speaking with Fortune and winning enemies
+        # In these variables we don`t add earned coins in quests
+        self.earned_coins_total = 0
+        self.earned_coins_level = 0
+        self.demand_coins_total = 0
+
+        self.enemies_won_total = 0
+        self.enemies_won_level = 0
+        self.demand_enemies_won_total = 0
+
+        if self.itemset is None:
+            self.itemset = random.choice(list(available_items.keys())) + 1
         else:
-            print((itemset - 1) % len(Skills))
-        for item in available_items[itemset - 1]: self.inventory.add_item(Item(item, 3))
+            print((self.itemset - 1) % len(Skills))
+        for item in available_items[self.itemset - 1]: self.inventory.add_item(Item(item, 3))
 
-        self.skills.append(list(Skills)[(itemset - 1) % len(Skills)])
+        self.skills.add(list(Skills)[(self.itemset - 1) % len(Skills)])
+
+    def up_level(self):
+        self.earned_coins_total += self.earned_coins_level
+        self.enemies_won_total += self.enemies_won_level
+
+        self.level += 1
+        self.earned_coins_level = 0
+        self.enemies_won_level = 0

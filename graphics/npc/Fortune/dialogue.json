@@ -10,7 +10,7 @@
 					"next": "001"
 				},
 				"It seems to be interesting experience, but not for today!": {
-					"next": "002"
+					"next": "005"
 				}
 			},
 			"commands": [
@@ -28,7 +28,7 @@
 				"cancel"
 			]
 		},
-		"002": {
+		"005": {
 			"type": "response",
 			"npc_name": "Fortune",
 			"portrait_id": "neutral",
@@ -41,7 +41,7 @@
 			"type": "response",
 			"npc_name": "Fortune",
 			"portrait_id": "neutral",
-			"text": "You have tried your fortune on this level! I will wait for you, champion!",
+			"text": "You have tried your fortune! Wait for 2 minutes. I will wait for you, champion!",
 			"responses": {},
 			"commands": [
 			]

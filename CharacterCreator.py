@@ -82,13 +82,13 @@ def create_character():
             item_image = item_type.value[4]
             item_surface = pygame.transform.scale(item_image, (50, 50))
             item_x = i * sector_width + (sector_width - item_surface.get_width()) // 2
-            item_y = 550
+            item_y = 520
             display_surface.blit(item_surface, (item_x, item_y))
 
             item_id, price, damage, min_power_to_get, file, name = item_type.value
-            item_data_text = font.render(f"Damage: {damage} Min Power to get later: {min_power_to_get}",
+            item_data_text = font.render(f"Damage: {damage} Min level: {min_power_to_get}",
                                          True, (255, 255, 255))
-            text_x = item_x - 135
+            text_x = item_x - 115
             text_y = item_y + item_surface.get_height()
             display_surface.blit(item_data_text, (text_x, text_y))
 
@@ -97,13 +97,13 @@ def create_character():
         skill_image = current_skill.value[3]
         skill_surface = pygame.transform.scale(skill_image, (50, 50))
         skill_x = (WINDOW_WIDTH - skill_surface.get_width()) // 2
-        skill_y = 650
+        skill_y = 620
         display_surface.blit(skill_surface, (skill_x, skill_y))
 
         skill_id, skill_price, skill_min_power_to_get, skill_file, skill_name = current_skill.value
-        skill_data_text = font.render(f"Skill: {skill_name}, Min Power to get later: {skill_min_power_to_get}",
+        skill_data_text = font.render(f"Skill: {skill_name}, Min level: {skill_min_power_to_get}",
                                       True, (255, 255, 255))
-        display_surface.blit(skill_data_text, (skill_x - 220, skill_y + skill_surface.get_height()))
+        display_surface.blit(skill_data_text, (skill_x - 140, skill_y + skill_surface.get_height()))
 
         arrows_image = pygame.image.load(join("graphics", "buttons", "arrow_keys.png")).convert_alpha()
         arrows_width, arrows_height = arrows_image.get_size()
