@@ -6,6 +6,7 @@ class Item:
         self.value = item_type.value[1]
         self.image = item_type.value[4]
         self.amount = amount
+        self.usable_during_battle = usable_during_battle
         self.x = None
         self.y = None
         self.item_type = item_type

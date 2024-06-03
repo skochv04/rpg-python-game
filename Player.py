@@ -4,8 +4,9 @@ from Skills import Skills
 from PlayerData import PlayerData
 from Settings import *
 from Spritessheet import SpritesSheet
+from InventoryUI import InventoryUI
 from pygame.math import Vector2 as vector
-
+from StatusEffects import StatusEffects
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, invisible_collision_sprites, player_data, name="undefined",
@@ -19,6 +20,7 @@ class Player(pygame.sprite.Sprite):
 
         self.speed = 250
         self.player_data = player_data
+        self.status_effects = StatusEffects()
 
         self.collision_sprites = collision_sprites
 
@@ -167,9 +169,9 @@ class Player(pygame.sprite.Sprite):
                 self.prev_image = self.image
                 self.image = self.current_skin[self.skin_action]
 
-        self.rect.x += self.direction.x * self.speed * dt
+        self.rect.x += self.direction.x * self.speed * dt.get()
         self.collision('horizontal')
-        self.rect.y += self.direction.y * self.speed * dt
+        self.rect.y += self.direction.y * self.speed * dt.get()
         self.collision('vertical')
 
     def collision(self, axis):
@@ -233,6 +235,34 @@ class Player(pygame.sprite.Sprite):
         name_surface = self.font.render(self.name, True, (255, 255, 255))
         name_rect = name_surface.get_rect(center=(self.rect.centerx, self.rect.top - 10))
         screen.blit(name_surface, name_rect)
+
+    def process_status_effects(self, enemy):
+        if enemy.status_effects.protected:
+            self.player_data.damage = 0
+        else:
+            self.player_data.damage = self.player_data.power
+
+        if self.status_effects.stunned:
+            return False
+
+        if self.status_effects.on_fire:
+            self.player_data.health -= 1
+            if self.player_data.health <= 0:
+                return False
+
+        if self.status_effects.poisoned:
+            self.player_data.health -= 1
+            if self.player_data.health <= 0:
+                return False
+
+        return True
+
+
+    def get_health(self):
+        return self.player_data.health
+
+    def get_max_health(self):
+        return self.player_data.max_health
 
     def update(self, dt):
         self.old_rect = self.rect.copy()

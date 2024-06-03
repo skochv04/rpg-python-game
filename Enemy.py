@@ -1,15 +1,16 @@
-from PlayerData import PlayerData
+from EntityData import EntityData
 from Settings import *
 from Spritessheet import SpritesSheet
+from UI import UI
 from NPC_UI import UI
 from Fight import fight
+from StatusEffects import StatusEffects
 
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, player, timer):
         super().__init__([groups, collision_sprites])
         self.image = pygame.Surface((32, 32))
-        # self.image.fill('red')
         self.rect = self.image.get_frect(topleft=pos)
         self.old_rect = self.rect.copy()
 
@@ -28,34 +29,37 @@ class Enemy(pygame.sprite.Sprite):
         self.direction = vector(1, 0)
 
         self.player = player
-        self.enemy_data = PlayerData(100, 5, 1)
+        self.enemy_data = EntityData(3, 3, 1)
+        self.status_effects = StatusEffects()
 
         self.speed = 30
         self.collision_sprites = collision_sprites
         self.timer = timer
 
-        self.last_input_time = 0
-        self.time_between_inputs = 200
-
         self.skin_action = 1
         self.skin_timer = 0
         self.prev_image = self.current_skin[1]
         self.is_moving = False
+        self.escape_timer = None
 
     def is_active(self):
+        if self.escape_timer is not None:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.escape_timer >= 3500:
+                self.escape_timer = None
+            else:
+                return False
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
         in_range = self_pos.distance_to(player_pos) < 50
 
         return in_range
 
-    def input(self):
-        current_time = pygame.time.get_ticks()
-        if current_time - self.last_input_time >= self.time_between_inputs:
-            if self.is_active() and not self.player.is_invisible:
-                # keys = pygame.key.get_pressed()
-                # if keys[pygame.K_f]:
-                #     fight(self, self.player)
-                fight(self, self.player)
+    def input(self, dt):
+        if self.is_active():
+            fight(self, self.player, dt)
+            dt.set(0)
+
+
 
     def move(self, dt):
         self.skin_timer = (self.skin_timer + 1) % 56
@@ -64,29 +68,27 @@ class Enemy(pygame.sprite.Sprite):
             self.prev_image = self.image
             self.image = self.current_skin[self.skin_action]
 
-        self.rect.x += self.direction.x * self.speed * dt
+        self.rect.x += self.direction.x * self.speed * dt.get()
         self.collision('horizontal')
-        self.rect.y += self.direction.y * self.speed * dt
+        self.rect.y += self.direction.y * self.speed * dt.get()
         self.collision('vertical')
 
     def update(self, dt):
         self.old_rect = self.rect.copy()
-        self.input()
+        self.input(dt)
         self.move(dt)
 
     def opposite_direction(self, direction):
         if direction == vector(0, 1):
-            self.direction = vector(0, -1)
             self.current_skin = self.sprite_down
         elif direction == vector(0, -1):
-            self.direction = vector(0, 1)
             self.current_skin = self.sprite_up
         elif direction == vector(1, 0):
-            self.direction = vector(-1, 0)
             self.current_skin = self.sprite_left
         elif direction == vector(-1, 0):
-            self.direction = vector(1, 0)
             self.current_skin = self.sprite_right
+
+        direction *= -1
 
     def collision(self, axis):
         for sprite in self.collision_sprites:
@@ -112,3 +114,45 @@ class Enemy(pygame.sprite.Sprite):
                     if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
                         self.rect.bottom = sprite.rect.top
                         self.opposite_direction(self.direction)
+
+    def escape(self):
+        self.escape_timer = pygame.time.get_ticks()
+
+    def process_status_effects(self, player):
+        if player.status_effects.protected:
+            self.enemy_data.damage = 0
+        else:
+            self.enemy_data.damage = self.enemy_data.power
+
+        if self.status_effects.stunned:
+            return False
+
+        if self.status_effects.on_fire:
+            self.enemy_data.health -= 1
+            if self.enemy_data.health <= 0:
+                return False
+
+        if self.status_effects.poisoned:
+            self.enemy_data.health -= 1
+            if self.enemy_data.health <= 0:
+                return False
+
+        return True
+
+    def fight_ai(self, player):
+        if not self.process_status_effects(player):
+            return False
+
+        player.player_data.health -= self.enemy_data.damage
+        self.enemy_data.damage = 0
+        if player.player_data.health <= 0:
+            return True
+
+    def get_health(self):
+        return self.enemy_data.health
+
+    def get_max_health(self):
+        return self.enemy_data.max_health
+
+    def destroy(self):
+        self.kill()

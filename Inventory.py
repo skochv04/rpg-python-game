@@ -45,6 +45,14 @@ class Inventory:
             self.inventory[i][j].y = j
         return True
 
+    def get_item_list(self):
+        items = []
+        for i in range(self.columns):
+            for j in range(self.rows):
+                if self.inventory[i][j] != 0:
+                    items.append(self.inventory[i][j])
+        return items
+
     def find_item_amount(self, item):
         for i in range(self.columns):
             for j in range(self.rows):
