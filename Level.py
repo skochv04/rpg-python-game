@@ -49,11 +49,11 @@ class Level:
             elif obj.name == 'fortune':
                 Fortune((obj.x, obj.y), self.all_sprites, self.collision_sprites, "000", self.player, 1500)
             elif obj.name == 'wilddog':
-                Wilddog((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0)
+                Wilddog((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 2, 5)
             elif obj.name == 'zombie':
-                Zombie((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0)
+                Zombie((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 2, 5)
             elif obj.name == 'draft':
-                Draft((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0)
+                Draft((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 2, 5)
             elif obj.name == 'coin':
                 Coin((obj.x, obj.y), self.all_sprites, self.player)
 

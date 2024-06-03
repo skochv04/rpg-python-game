@@ -21,12 +21,11 @@ available_items = {
     7: [ItemType.ACID, ItemType.SLEEPING_FLOWER, ItemType.THREAD]
 }
 
-class PlayerData:
+class PlayerData(EntityData):
 
-    def __init__(self, health=100, coins=30, power=1, itemset=None, timer=0):
-        self.health = health
+    def __init__(self, health=100, coins=30, power=3, magic_power=1, mana=10, itemset=None, timer=0):
+        super().__init__(health, health, power, magic_power)
         self.coins = coins
-        self.power = power
         self.skills = set()
         self.level = 1
         self.exp = 0

@@ -1,14 +1,12 @@
 from EntityData import EntityData
 from Settings import *
 from Spritessheet import SpritesSheet
-from UI import UI
-from NPC_UI import UI
 from Fight import fight
 from StatusEffects import StatusEffects
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, collision_sprites, player, timer):
+    def __init__(self, pos, groups, collision_sprites, player, timer, power, max_health, health = None):
         super().__init__([groups, collision_sprites])
         self.image = pygame.Surface((32, 32))
         self.rect = self.image.get_frect(topleft=pos)
@@ -29,7 +27,9 @@ class Enemy(pygame.sprite.Sprite):
         self.direction = vector(1, 0)
 
         self.player = player
-        self.enemy_data = EntityData(3, 3, 1)
+        if health is None:
+            health = max_health
+        self.enemy_data = EntityData(health, max_health, power)
         self.status_effects = StatusEffects()
 
         self.speed = 30
