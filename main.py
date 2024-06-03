@@ -46,10 +46,11 @@ class Game:
 
 
         while True:
-            dt = self.clock.tick() / 1000
+            self.dt.update()
             if self.player_data.level != level:
                 level = self.player_data.level
                 self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
