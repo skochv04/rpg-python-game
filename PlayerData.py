@@ -27,6 +27,7 @@ class PlayerData(EntityData):
         super().__init__(health, health, power, magic_power)
         self.coins = coins
         self.skills = set()
+        self.battle_skills = [Heal(), Fireball()]
         self.level = 1
         self.exp = 0
         self.mana = mana

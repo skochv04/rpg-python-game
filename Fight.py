@@ -27,7 +27,7 @@ def display_enemy(enemy, display_surface):
 
 
 def skill_buttons_list(player, button, enemy):
-    skills = player.player_data.skills
+    skills = player.player_data.battle_skills
 
     if len(skills) <= 0:
         return None
