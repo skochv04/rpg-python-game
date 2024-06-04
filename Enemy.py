@@ -42,6 +42,8 @@ class Enemy(pygame.sprite.Sprite):
         self.is_moving = False
         self.escape_timer = None
 
+        self.start_power = power
+
     def is_active(self):
         if self.escape_timer is not None:
             current_time = pygame.time.get_ticks()

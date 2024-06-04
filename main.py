@@ -18,7 +18,7 @@ class Game:
         pygame.display.set_caption('No Title RPG Game')
         self.clock = pygame.time.Clock()
 
-        self.player_data = PlayerData(7, 30, 3, 1)
+        self.player_data = None
         self.tmx_maps = {1: load_pygame(join('data', 'levels', 'level1.tmx')),
                          2: load_pygame(join('data', 'levels', 'level2.tmx'))}
 
@@ -40,6 +40,7 @@ class Game:
 
         player_name, self.current_skin = create_character()
         level = 1
+        self.player_data = PlayerData(100, 30, 3, 1, 10, self.current_skin + 1)
         self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
         self.player_data.level = level
 

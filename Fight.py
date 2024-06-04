@@ -4,6 +4,10 @@ from Button import Button
 from Notification import *
 
 
+def reward_player_fight(player, enemy):
+    player.player_data.enemies_won_level += 1
+    player.player_data.coins += player.player_data.level * (enemy.start_power // 10 * player.player_data.power // 2)
+
 def player_attack(player, enemy):
     if not player.process_status_effects(enemy):
         return False
@@ -45,7 +49,7 @@ def skill_buttons_list(player, button, enemy):
 
 def item_buttons_list(player, button):
     items = player.player_data.inventory.get_item_list()
-    items = list(filter(lambda item: item.usable_during_battle, items))
+    items = list(items)
 
     if len(items) <= 0:
         return None
@@ -68,7 +72,7 @@ def item_buttons_list(player, button):
         item_list_surface.blit(text_surface, text_position)
         # Draw item name to the right of the item amount
         text_position = (text_position[0] + text_surface.get_width() + 10, text_position[1])
-        text_surface = font.render(item.name, True, 'black')
+        text_surface = font.render(item.item_type.value[5], True, 'black')
         item_list_surface.blit(text_surface, text_position)
 
         buttons.append(Button(button.x, button.y - item_height * (i + 1), item_width, item_height, item.name,
@@ -107,15 +111,14 @@ def display_health(player, enemy, display_surface):
     display_surface.blit(text_surface_enemy, text_rect_enemy.topleft)  # Use the centered text rect
 
 def create_buttons():
-    button_width, button_height = 250, 50
+    button_width, button_height = 370, 50
     button_y = WINDOW_HEIGHT - button_height - 40
     spacing = 40
     button1 = Button(spacing, button_y, button_width, button_height, 'Attack')
     button2 = Button(spacing * 2 + button_width, button_y, button_width, button_height, 'Skills')
     button3 = Button(spacing * 3 + button_width * 2, button_y, button_width, button_height, 'Items')
-    button4 = Button(spacing * 4 + button_width * 3, button_y, button_width, button_height, 'Escape')
 
-    return button1, button2, button3, button4
+    return button1, button2, button3
 
 def fight(enemy, player, dt):
     display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -147,6 +150,7 @@ def fight(enemy, player, dt):
                             did_action = True
                 if buttons[0].is_over(pos):
                     if player_attack(player, enemy):
+                        reward_player_fight(player, enemy)
                         enemy.kill()
                         return
                     did_action = True
@@ -162,11 +166,6 @@ def fight(enemy, player, dt):
                     else:
                         item_buttons = item_buttons_list(player, buttons[2])
                     print('button 3 clicked')
-                if buttons[3].is_over(pos):
-                    print('button 4 clicked')
-                    enemy.escape()
-                    return
-
         if did_action:
             enemy.fight_ai(player)
             did_action = False
@@ -206,3 +205,5 @@ def fight(enemy, player, dt):
 
         pygame.display.flip()
         clock.tick(30)
+
+

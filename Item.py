@@ -1,6 +1,6 @@
 
 class Item:
-    def __init__(self, item_type, amount=float('inf'), usable_during_battle=False):
+    def __init__(self, item_type, amount=float('inf'), usable_during_battle=True):
         self.name = item_type.name
         self.id = item_type.value[0]
         self.value = item_type.value[1]
