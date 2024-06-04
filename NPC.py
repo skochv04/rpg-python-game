@@ -33,7 +33,7 @@ class NPC(pygame.sprite.Sprite):
     def dialogue(self):
         ui = UI(self, self.dialogue_data, self.current_dialogue)
         responses, last_dialogue = ui.run()
-        self.player.player_data.background_sound.set_volume(0.1)
+        self.player.player_data.background_sound.set_volume(0.05)
         self.player.player_data.npc_sound.set_volume(0.0)
         self.last_input_time = pygame.time.get_ticks()
 

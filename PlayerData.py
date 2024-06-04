@@ -73,7 +73,7 @@ class PlayerData(EntityData):
         self.jump_sound.set_volume(0.4)
 
         self.timer_sound = audio_files['timer']
-        self.timer_sound.set_volume(0.4)
+        self.timer_sound.set_volume(0.6)
 
         self.skill_small_sound = audio_files['skill_small']
         self.skill_small_sound.set_volume(0.45)

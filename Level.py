@@ -31,9 +31,15 @@ class Level:
 
         self.player = None
 
+        # Завантаження зображення фону
+        self.background_image = pygame.image.load(join('data', 'maps', 'grass.png')).convert()
+        self.bg_width, self.bg_height = self.background_image.get_size()
+
         self.setup(tmx_map)
 
     def setup(self, tmx_map):
+        for x, y, surf in tmx_map.get_layer_by_name('BG').tiles():
+            Sprite((x * TILE_SIZE, y * TILE_SIZE), surf, (self.all_sprites))
         for x, y, surf in tmx_map.get_layer_by_name('Terrain').tiles():
             Sprite((x * TILE_SIZE, y * TILE_SIZE), surf, (self.all_sprites, self.collision_sprites))
         for collision in self.collision_sprites: self.invisible_collision_sprites.add(collision)
@@ -56,11 +62,19 @@ class Level:
                 Draft((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 2, 70)
             elif obj.name == 'coin':
                 Coin((obj.x, obj.y), self.all_sprites, self.player)
+            else:
+                # Додавання інших об'єктів, наприклад, дерева, до всіх спрайтів і колізійних спрайтів
+                Sprite((obj.x, obj.y), obj.image, (self.all_sprites, self.collision_sprites))
 
         self.GUI = GeneralUI(self.all_sprites, self.player.player_data, self.player)
 
+    def draw_background(self):
+        for x in range(0, self.display_surface.get_width(), self.bg_width):
+            for y in range(0, self.display_surface.get_height(), self.bg_height):
+                self.display_surface.blit(self.background_image, (x, y))
+
     def run(self, dt):
         self.all_sprites.update(dt)
-        self.display_surface.fill('lightskyblue3')
+        self.draw_background()
         self.all_sprites.draw(self.player.rect.center)
         self.GUI.update(dt)  # Виклик оновлення інтерфейсу

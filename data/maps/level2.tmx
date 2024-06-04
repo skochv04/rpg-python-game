@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="60" height="15" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="32">
+ <tileset firstgid="1" name="Questgiver" tilewidth="48" tileheight="48" tilecount="3" columns="3">
+  <image source="../../graphics/npc/Questgiver/texture.png" width="144" height="48"/>
+ </tileset>
+ <tileset firstgid="4" name="Fortune" tilewidth="48" tileheight="48" tilecount="3" columns="3">
+  <image source="../../graphics/npc/Fortune/texture.png" width="144" height="48"/>
+ </tileset>
+ <tileset firstgid="7" name="Shopkeeper" tilewidth="48" tileheight="48" tilecount="3" columns="3">
+  <image source="../../graphics/npc/Shopkeeper/texture.png" width="144" height="48"/>
+ </tileset>
+ <tileset firstgid="10" name="Informator" tilewidth="48" tileheight="48" tilecount="3" columns="3">
+  <image source="../../graphics/npc/Informator/texture.png" width="144" height="48"/>
+ </tileset>
+ <tileset firstgid="13" name="Player" tilewidth="48" tileheight="48" tilecount="12" columns="12">
+  <image source="../../graphics/player/1/texture.png" width="576" height="48"/>
+ </tileset>
+ <tileset firstgid="25" name="Draft" tilewidth="48" tileheight="48" tilecount="12" columns="12">
+  <image source="../../graphics/enemies/Draft/texture.png" width="576" height="48"/>
+ </tileset>
+ <tileset firstgid="37" name="Wilddog" tilewidth="32" tileheight="32" tilecount="12" columns="12">
+  <image source="../../graphics/enemies/Wilddog/texture.png" width="384" height="32"/>
+ </tileset>
+ <tileset firstgid="49" name="Zombie" tilewidth="48" tileheight="48" tilecount="12" columns="12">
+  <image source="../../graphics/enemies/Zombie/texture.png" width="576" height="48"/>
+ </tileset>
+ <tileset firstgid="61" name="tileset" tilewidth="64" tileheight="64" tilecount="54" columns="9">
+  <image source="tileset.png" width="576" height="384"/>
+ </tileset>
+ <layer id="1" name="BG" width="60" height="15">
+  <data encoding="csv">
+61,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,62,63,
+70,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,64,65,65,65,65,65,65,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,73,74,74,74,74,74,74,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,73,74,74,74,74,74,74,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,73,74,74,74,74,74,74,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,73,74,74,74,74,74,74,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,73,74,74,74,74,74,75,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,82,74,74,83,83,83,84,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,71,73,75,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,71,73,75,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,71,73,75,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,71,73,75,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+70,71,71,82,84,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,71,72,
+79,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,80,81
+</data>
+ </layer>
+ <objectgroup id="2" name="Objects">
+  <object id="7" gid="114" x="378" y="832" width="64" height="64"/>
+  <object id="11" name="Tree" gid="114" x="413" y="891" width="64" height="64"/>
+  <object id="18" name="Tree" gid="105" x="436" y="823" width="64" height="64"/>
+  <object id="20" name="Tree" gid="114" x="493" y="826" width="64" height="64"/>
+  <object id="21" name="Tree" gid="105" x="403" y="765" width="64" height="64"/>
+  <object id="22" name="Tree" gid="96" x="462" y="765" width="64" height="64"/>
+  <object id="23" name="Tree" gid="96" x="484" y="897" width="64" height="64"/>
+  <object id="24" name="Tree" gid="105" x="68" y="644" width="64" height="64"/>
+  <object id="25" name="Tree" gid="105" x="114.667" y="688" width="64" height="64"/>
+  <object id="26" name="Tree" gid="114" x="38.6667" y="716" width="64" height="64"/>
+  <object id="27" name="Tree" gid="96" x="8" y="634.667" width="64" height="64"/>
+  <object id="28" name="Player" gid="13" x="254" y="852" width="48" height="48"/>
+  <object id="29" name="Questgiver" gid="1" x="174" y="493" width="48" height="48"/>
+  <object id="31" name="Wilddog" gid="43" x="217" y="246" width="32" height="32"/>
+ </objectgroup>
+</map>

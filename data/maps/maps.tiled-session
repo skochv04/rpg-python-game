@@ -5,22 +5,127 @@
     },
     "activeFile": "",
     "expandedProjectPaths": [
+        "."
     ],
+    "file.lastUsedOpenFilter": "Всі файли (*)",
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "D:/AGH/4 semestr/Python/RPG_Python_Game/data/levels/level1.tmx": {
+            "expandedObjectLayers": [
+                12
+            ],
+            "scale": 1,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1279,
+                "y": 478.5
+            }
+        },
+        "D:/AGH/4 semestr/Python/RPG_Python_Game/data/tilesets/enemies.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "D:/AGH/4 semestr/Python/RPG_Python_Game/data/tilesets/extra.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "D:/AGH/4 semestr/Python/RPG_Python_Game/data/tilesets/grass.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "D:/AGH/4 semestr/Python/RPG_Python_Game/data/tilesets/inside.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/AGH/4 semestr/Python/RPG_Python_Game/data/tilesets/items.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1
+        },
+        "D:/AGH/4 semestr/Python/RPG_Python_Game/data/tilesets/objects.tsx": {
+            "scaleInDock": 1
+        },
+        "D:/AGH/4 semestr/Python/RPG_Python_Game/data/tilesets/outside.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1
+        },
+        "D:/AGH/4 semestr/Python/RPG_Python_Game/data/tilesets/platforms.tsx": {
+            "scaleInDock": 1
+        },
+        "level1.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 472,
+                "y": 454
+            }
+        },
+        "level1.tmx#Draft": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#Fortune": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#Informator": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#Player": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "level1.tmx#Questgiver": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#Shopkeeper": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#Wilddog": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#Zombie": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#tileset": {
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
+        },
+        "test map.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.25,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1208,
+                "y": 626
+            }
+        },
+        "test map.tmx#Questgiver": {
+            "scaleInDock": 1
+        },
+        "test map.tmx#Shopkeeper": {
+            "scaleInDock": 1
+        },
+        "test map.tmx#tileset": {
+            "scaleInDock": 1
+        }
     },
-    "last.imagePath": "D:/AGH/4 semestr/Python/RPG_Python_Game/data/maps",
-    "map.height": 30,
+    "last.imagePath": "D:/AGH/4 semestr/Python/RPG_Python_Game/graphics/objects",
+    "map.height": 15,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 64,
     "map.tileWidth": 64,
+    "map.width": 60,
     "openFiles": [
     ],
     "project": "maps.tiled-project",
     "recentFiles": [
+        "test map.tmx",
+        "D:/AGH/4 semestr/Python/RPG_Python_Game/data/levels/level1.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
-        "height": 64,
-        "width": 64
+        "height": 48,
+        "width": 48
     }
 }

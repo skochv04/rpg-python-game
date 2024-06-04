@@ -25,7 +25,7 @@ class QuestsUI(pygame.sprite.Sprite):
             self.message = "You haven`t any quests now. You can ask Questgiver about them!"
             self.ui_image = pygame.image.load(join('graphics', 'objects', 'ask.png'))
         elif self.player.player_data.quest.isDone(self.player.player_data):
-            self.message = "You have completed all quest tasks. Meet the Questgiver to collect the prize and continue!"
+            self.message = "You have completed all quest tasks. Meet the Questgiver to get prize!"
             self.ui_image = pygame.image.load(join('graphics', 'objects', 'done.png'))
             for npc in groups:
                 if npc.__class__.__name__ == 'Questgiver':

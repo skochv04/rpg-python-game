@@ -19,8 +19,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.player_data = None
-        self.tmx_maps = {1: load_pygame(join('data', 'levels', 'level1.tmx')),
-                         2: load_pygame(join('data', 'levels', 'level2.tmx'))}
+        self.tmx_maps = {1: load_pygame(join('data', 'maps', 'level1.tmx'))}
 
         self.audio_files = {
             'background': pygame.mixer.Sound(join('audio', 'background.mp3')),
@@ -42,7 +41,7 @@ class Game:
         }
 
         self.background_sound = pygame.mixer.Sound(join('audio', 'background.mp3'))
-        self.background_sound.set_volume(0.1)
+        self.background_sound.set_volume(0.05)
 
         self.menu_sound = pygame.mixer.Sound(join('audio', 'menu_button.mp3'))
         self.arrow_sound = pygame.mixer.Sound(join('audio', 'arrows.flac'))

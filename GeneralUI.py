@@ -79,7 +79,7 @@ class GeneralUI:
         coin_surface, coin_rect = self.font.render(coin_text, 'white')
 
         # Позиція іконки та тексту монет
-        coin_icon_rect = self.coin_icon.get_rect(topleft=(WINDOW_WIDTH - 200, 30))
+        coin_icon_rect = self.coin_icon.get_rect(topleft=(WINDOW_WIDTH - 210, 30))
 
         # Центрування тексту по вертикалі відносно іконки
         coin_rect.midleft = (coin_icon_rect.right + 5, coin_icon_rect.centery)
