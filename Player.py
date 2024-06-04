@@ -10,7 +10,7 @@ from StatusEffects import StatusEffects
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, invisible_collision_sprites, player_data, name="undefined",
-                 skin=1, direction=vector(0, 0)):
+                 skin=1):
         super().__init__([groups, collision_sprites])
         self.invisible_collision_sprites = invisible_collision_sprites
         self.image = pygame.Surface((42, 48))
@@ -109,12 +109,15 @@ class Player(pygame.sprite.Sprite):
                 self.not_used_skills or self.current_time - self.last_ability_time > 30000):
             if keys[pygame.K_f] and Skills.SPEED_UP in self.player_data.skills:
                 self.activate_speed_boost()
+                self.player_data.skill_activate_sound.play()
                 self.update_config()
             elif keys[pygame.K_v] and Skills.INVISIBILITY in self.player_data.skills:
                 self.activate_invisibility()
+                self.player_data.skill_activate_sound.play()
                 self.update_config()
             elif keys[pygame.K_s] and Skills.SHRINK in self.player_data.skills:
                 self.shrink_player()
+                self.player_data.skill_activate_sound.play()
                 self.update_config()
 
 
@@ -122,6 +125,7 @@ class Player(pygame.sprite.Sprite):
                 self.not_used_skills or self.current_time - self.last_ability_time > 30000):
             if pygame.mouse.get_pressed()[0]:
                 self.teleport_target = pygame.mouse.get_pos()
+                self.player_data.jump_sound.play()
                 self.update_config()
 
         # Телепортація, якщо телепорт-таргет встановлено
@@ -269,7 +273,10 @@ class Player(pygame.sprite.Sprite):
         self.input()
         self.move(dt)
 
-        if self.player_data.timer > 0: self.player_data.timer = 30000 - (self.current_time - self.last_ability_time)
+
+        if self.player_data.timer > 0:
+            self.player_data.timer = 30000 - (self.current_time - self.last_ability_time)
+            if self.player_data.timer == 0: self.player_data.timer_sound.play()
         else: self.player_data.timer = 0
 
         # Перевірка часу зменшення персонажа

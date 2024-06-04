@@ -29,6 +29,7 @@ class Questgiver(NPC):
 
     def dialogue(self):
         if self.player.player_data.quest and self.player.player_data.quest.isDone(self.player.player_data):
+            self.player.player_data.quest_done_sound.play()
             self.configure_data()
         responses, last_dialogue = super().dialogue()
         response_num = int(last_dialogue)

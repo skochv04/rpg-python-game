@@ -35,6 +35,6 @@ class Coin(pygame.sprite.Sprite):
             # Check collision with player
 
         if self.rect.collidepoint(self.player.rect.center):
-            self.player.player_data.coins += 1
+            self.player.player_data.increase_coins(1)
             self.player.player_data.earned_coins_level += 1
             self.kill()

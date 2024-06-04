@@ -22,6 +22,20 @@ class Game:
         self.tmx_maps = {1: load_pygame(join('data', 'levels', 'level1.tmx')),
                          2: load_pygame(join('data', 'levels', 'level2.tmx'))}
 
+        self.audio_files = {
+            'coin': pygame.mixer.Sound(join('audio', 'coin.wav')),
+            'jump': pygame.mixer.Sound(join('audio', 'jump.wav')),
+            'up_level': pygame.mixer.Sound(join('audio', 'up_level.wav')),
+            'quest_done': pygame.mixer.Sound(join('audio', 'quest_done.mp3')),
+            'fight_win': pygame.mixer.Sound(join('audio', 'fight_win.mp3')),
+            'skill_activate': pygame.mixer.Sound(join('audio', 'skill_activate.mp3')),
+            'timer': pygame.mixer.Sound(join('audio', 'timer.mp3'))
+        }
+
+        self.background_sound = pygame.mixer.Sound(join('audio', 'background.mp3'))
+        self.background_sound.set_volume(0.1)
+
+
         self.current_stage = None
 
         self.current_skin = 0
@@ -40,8 +54,9 @@ class Game:
 
         player_name, self.current_skin = create_character()
         level = 1
-        self.player_data = PlayerData(100, 30, 3, 1, 10, self.current_skin + 1)
+        self.player_data = PlayerData(100, 30, 3, 1, 10, self.current_skin + 1, self.audio_files)
         self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
+        self.background_sound.play(-1)
         self.player_data.level = level
 
 

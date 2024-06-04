@@ -1,6 +1,5 @@
 import random
 
-
 from Skills import Skills
 from ItemType import ItemType
 from Settings import *
@@ -21,9 +20,10 @@ available_items = {
     7: [ItemType.ACID, ItemType.SLEEPING_FLOWER, ItemType.THREAD]
 }
 
+
 class PlayerData(EntityData):
 
-    def __init__(self, health=100, coins=30, power=3, magic_power=1, mana=10, itemset=None, timer=0):
+    def __init__(self, health, coins, power, magic_power, mana, itemset, audio_files, timer=0):
         super().__init__(health, health, power, magic_power)
         self.coins = coins
         self.skills = set()
@@ -36,6 +36,30 @@ class PlayerData(EntityData):
         self.quest = None
         self.exp = 0
         self.itemset = itemset
+
+        self.audio_files = audio_files
+
+        #sounds
+        self.coin_sound = audio_files['coin']
+        self.coin_sound.set_volume(0.3)
+
+        self.up_level_sound = audio_files['up_level']
+        self.up_level_sound.set_volume(0.3)
+
+        self.quest_done_sound = audio_files['quest_done']
+        self.quest_done_sound.set_volume(0.45)
+
+        self.fight_win_sound = audio_files['fight_win']
+        self.fight_win_sound.set_volume(0.45)
+
+        self.skill_activate_sound = audio_files['skill_activate']
+        self.skill_activate_sound.set_volume(0.45)
+
+        self.jump_sound = audio_files['jump']
+        self.jump_sound.set_volume(0.4)
+
+        self.timer_sound = audio_files['timer']
+        self.timer_sound.set_volume(0.4)
 
         # Player can earn coins only by collecting coins on map, speaking with Fortune and winning enemies
         # In these variables we don`t add earned coins in quests
@@ -62,3 +86,8 @@ class PlayerData(EntityData):
         self.level += 1
         self.earned_coins_level = 0
         self.enemies_won_level = 0
+        self.up_level_sound.play()
+
+    def increase_coins(self, amount):
+        self.coins += amount
+        self.coin_sound.play()
