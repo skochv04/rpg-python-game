@@ -6,7 +6,11 @@ from Notification import *
 
 def reward_player_fight(player, enemy):
     player.player_data.enemies_won_level += 1
-    player.player_data.coins += player.player_data.level * (enemy.start_power // 10 * player.player_data.power // 2)
+    print(player.player_data.level, enemy.start_power * 10, player.player_data.power // 2)
+    earned = enemy.start_power * 5 * player.player_data.power // 2
+    player.player_data.coins += earned
+    player.player_data.earned_coins_level += earned
+    player.player_data.exp += 15 * player.player_data.level
 
 def player_attack(player, enemy):
     if not player.process_status_effects(enemy):
@@ -150,7 +154,6 @@ def fight(enemy, player, dt):
                             did_action = True
                 if buttons[0].is_over(pos):
                     if player_attack(player, enemy):
-                        reward_player_fight(player, enemy)
                         enemy.kill()
                         return
                     did_action = True
@@ -200,6 +203,7 @@ def fight(enemy, player, dt):
                 notification = None
 
         if is_enemy_dead(enemy):
+            reward_player_fight(player, enemy)
             enemy.destroy()
             return
 

@@ -125,7 +125,7 @@ class GeneralUI:
             timer_surface, timer_rect = self.font.render(timer_text, 'white')
 
             # Позиція іконки та тексту таймера
-            timer_icon_rect = self.timer_icon.get_rect(center=(WINDOW_WIDTH // 2 - 16, 100))
+            timer_icon_rect = self.timer_icon.get_rect(center=(WINDOW_WIDTH // 2 - 18, 100))
 
             # Центрування тексту по вертикалі відносно іконки
             timer_rect.midleft = (timer_icon_rect.right + 5, timer_icon_rect.centery)

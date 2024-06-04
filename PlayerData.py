@@ -36,7 +36,6 @@ class PlayerData(EntityData):
         self.quest = None
         self.exp = 0
         self.itemset = itemset
-        self.level = 1
 
         # Player can earn coins only by collecting coins on map, speaking with Fortune and winning enemies
         # In these variables we don`t add earned coins in quests
