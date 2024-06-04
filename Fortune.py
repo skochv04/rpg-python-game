@@ -42,15 +42,21 @@ class Fortune(NPC):
             random_number = random.randint(0, 3)
             item_types = list(ItemType)
             if random_number == 0:
+                # fail
                 message = "Oh no, fortune isn't on your side today. You have got no presents."
+                self.player.player_data.fortune_fail_sound.play()
                 self.upd_data()
             elif random_number == 1:
+                # health
+                self.player.player_data.fortune_health_sound.play()
                 random_health = random.randint(0, 4)
                 self.player.player_data.health = min(self.player.player_data.health + self.health_set[random_health], 100)
                 message = f"You receive some vitamins to stay healthy! Your XP has been risen by {self.health_set[random_health]}."
                 item_icon = pygame.image.load(join('graphics', 'objects', 'health.png')).convert_alpha()
                 self.upd_data()
             elif random_number == 2:
+                # coin
+                self.player.player_data.fortune_coin_sound.play()
                 random_coins = random.randint(0, 17)
                 self.player.player_data.coins += self.coins_set[random_coins]
                 self.player.player_data.earned_coins_level += self.coins_set[random_coins]
@@ -58,6 +64,8 @@ class Fortune(NPC):
                 item_icon = pygame.image.load(join('graphics', 'objects', 'coin.png')).convert_alpha()
                 self.upd_data()
             elif random_number == 3:
+                # equipment
+                self.player.player_data.fortune_equipment_sound.play()
                 random_element = random.choice(item_types)
                 random_amount = random.randint(1, 5)
                 self.player.player_data.inventory.add_item(Item(random_element, random_amount))

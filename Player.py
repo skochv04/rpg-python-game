@@ -117,7 +117,7 @@ class Player(pygame.sprite.Sprite):
                 self.update_config()
             elif keys[pygame.K_s] and Skills.SHRINK in self.player_data.skills:
                 self.shrink_player()
-                self.player_data.skill_activate_sound.play()
+                self.player_data.skill_small_sound.play()
                 self.update_config()
 
 
@@ -282,6 +282,7 @@ class Player(pygame.sprite.Sprite):
         # Перевірка часу зменшення персонажа
         if self.shrink_timer != 0:
             if pygame.time.get_ticks() - self.shrink_timer > self.shrink_duration:
+                self.player_data.skill_small_sound.play()
                 self.rect.size = self.original_size  # Повернення до оригінального розміру
                 self.reset_images()  # Відновлення оригінальних зображень
                 self.shrink_timer = 0

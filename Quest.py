@@ -6,7 +6,7 @@ class Quest:
         self.quest = quest
         player_data.demand_coins_total += self.quest.value[10]
         player_data.demand_enemies_won_total += self.quest.value[9]
-        self.start_player_data = PlayerData(player_data.health, player_data.coins, player_data.power, player_data.magic_power, player_data.mana, player_data.itemset, player_data.audio_files)
+        self.start_player_data = PlayerData(player_data.health, player_data.coins, player_data.power, player_data.magic_power, player_data.mana, player_data.itemset, player_data.audio_files, player_data.background_sound)
         self.specific_cond = False
 
     def isDone(self, player_data):

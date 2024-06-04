@@ -6,7 +6,7 @@ from Skills import Skills  # Додано імпорт Skills
 import random
 
 
-def create_character():
+def create_character(arrow_sound):
     font = pygame.font.Font(None, 36)
     input_box = pygame.Rect(WINDOW_WIDTH / 2 - 110, 150, 140, 32)
     color_inactive = pygame.Color('lightskyblue3')
@@ -19,7 +19,6 @@ def create_character():
     text = ''
     default_text = font.render("Nazwa Postaci", True, color)
 
-    # Список скілів для персонажів (по два на кожен скіл)
     skills_list = [
         Skills.SPEED_UP,
         Skills.TELEPORTATION,
@@ -53,8 +52,10 @@ def create_character():
                         text += event.unicode
 
                 if event.key == pygame.K_LEFT:
+                    arrow_sound.play()
                     current_skin = (current_skin - 1) % 8
                 elif event.key == pygame.K_RIGHT:
+                    arrow_sound.play()
                     current_skin = (current_skin + 1) % 8
 
         # Відображення вікна з назвою

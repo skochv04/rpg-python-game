@@ -23,18 +23,29 @@ class Game:
                          2: load_pygame(join('data', 'levels', 'level2.tmx'))}
 
         self.audio_files = {
+            'background': pygame.mixer.Sound(join('audio', 'background.mp3')),
+            'npc': pygame.mixer.Sound(join('audio', 'npc.mp3')),
+
             'coin': pygame.mixer.Sound(join('audio', 'coin.wav')),
             'jump': pygame.mixer.Sound(join('audio', 'jump.wav')),
             'up_level': pygame.mixer.Sound(join('audio', 'up_level.wav')),
             'quest_done': pygame.mixer.Sound(join('audio', 'quest_done.mp3')),
             'fight_win': pygame.mixer.Sound(join('audio', 'fight_win.mp3')),
             'skill_activate': pygame.mixer.Sound(join('audio', 'skill_activate.mp3')),
-            'timer': pygame.mixer.Sound(join('audio', 'timer.mp3'))
+            'timer': pygame.mixer.Sound(join('audio', 'timer.mp3')),
+            'fortune_fail': pygame.mixer.Sound(join('audio', 'fortune_fail.wav')),
+            'fortune_health': pygame.mixer.Sound(join('audio', 'fortune_health.mp3')),
+            'fortune_coin': pygame.mixer.Sound(join('audio', 'fortune_coin.mp3')),
+            'fortune_equipment': pygame.mixer.Sound(join('audio', 'fortune_equipment.mp3')),
+            'skill_small': pygame.mixer.Sound(join('audio', 'skill_small.mp3')),
+            'mouse_click': pygame.mixer.Sound(join('audio', 'mouse_click.mp3'))
         }
 
         self.background_sound = pygame.mixer.Sound(join('audio', 'background.mp3'))
         self.background_sound.set_volume(0.1)
 
+        self.menu_sound = pygame.mixer.Sound(join('audio', 'menu_button.mp3'))
+        self.arrow_sound = pygame.mixer.Sound(join('audio', 'arrows.flac'))
 
         self.current_stage = None
 
@@ -43,7 +54,7 @@ class Game:
         self.dt = DT(self.clock)
 
     def run(self):
-        menu = MainMenu()
+        menu = MainMenu(self.menu_sound)
         option = menu.run()
 
         if option == 'Exit':
@@ -52,9 +63,9 @@ class Game:
         elif option == 'Settings':
             pass
 
-        player_name, self.current_skin = create_character()
+        player_name, self.current_skin = create_character(self.arrow_sound)
         level = 1
-        self.player_data = PlayerData(100, 30, 3, 1, 10, self.current_skin + 1, self.audio_files)
+        self.player_data = PlayerData(100, 30, 3, 1, 10, self.current_skin + 1, self.audio_files, self.background_sound)
         self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
         self.background_sound.play(-1)
         self.player_data.level = level
