@@ -1,5 +1,7 @@
 import pygame.sprite
 
+from Enemy import Enemy
+from NPC import NPC
 from Coin import Coin
 from Fortune import Fortune
 from Informator import Informator
@@ -63,18 +65,69 @@ class Level:
             elif obj.name == 'coin':
                 Coin((obj.x, obj.y), self.all_sprites, self.player)
             else:
-                # Додавання інших об'єктів, наприклад, дерева, до всіх спрайтів і колізійних спрайтів
                 Sprite((obj.x, obj.y), obj.image, (self.all_sprites, self.collision_sprites))
 
         self.GUI = GeneralUI(self.all_sprites, self.player.player_data, self.player)
+        self.GUI.set_level(self)
 
     def draw_background(self):
         for x in range(0, self.display_surface.get_width(), self.bg_width):
             for y in range(0, self.display_surface.get_height(), self.bg_height):
                 self.display_surface.blit(self.background_image, (x, y))
 
+    import pygame
+
+    def draw_minimap(self):
+        # Визначення розмірів мінікарти
+        minimap_scale = 0.2  # 20% від реального розміру
+        minimap_width = int(WINDOW_WIDTH * minimap_scale)
+        minimap_height = int(WINDOW_HEIGHT * minimap_scale)
+
+        # Створення поверхні мінікарти
+        minimap_surface = pygame.Surface((minimap_width, minimap_height))
+
+        # Розрахунок зміщення, щоб центр мінікарти відповідав позиції гравця
+        player_pos_on_map = (self.player.rect.centerx * minimap_scale, self.player.rect.centery * minimap_scale)
+        offset_x = player_pos_on_map[0] - minimap_width // 2
+        offset_y = player_pos_on_map[1] - minimap_height // 2
+
+        # Масштабування фону та зміщення
+        scaled_background = pygame.transform.scale(self.background_image, (minimap_width, minimap_height))
+        minimap_surface.blit(scaled_background, (0, 0))
+        # minimap_surface.blit(scaled_background, (-offset_x, -offset_y))
+
+        # Ініціалізація шрифту
+        font = pygame.font.Font(None, 14)  # Ви можете змінити розмір шрифту на свій розсуд
+
+        for sprite in self.all_sprites:
+            sprite_pos_on_minimap = (
+                int(sprite.rect.centerx * minimap_scale) - offset_x,
+                int(sprite.rect.centery * minimap_scale) - offset_y
+            )
+            if isinstance(sprite, Player):
+                color = (16, 200, 0)
+                pygame.draw.circle(minimap_surface, color, sprite_pos_on_minimap, 8)
+            elif isinstance(sprite, NPC):
+                color = (255, 255, 0)
+                pygame.draw.circle(minimap_surface, color, sprite_pos_on_minimap, 5)
+
+                # Додавання тексту "NPC" під об'єктом
+                text_surface = font.render(sprite.__class__.__name__, True, (255, 255, 255))  # Білий колір тексту
+                text_rect = text_surface.get_rect(center=(sprite_pos_on_minimap[0], sprite_pos_on_minimap[1] + 10))
+                minimap_surface.blit(text_surface, text_rect)
+            elif isinstance(sprite, Enemy):
+                color = (255, 0, 0)
+                pygame.draw.circle(minimap_surface, color, sprite_pos_on_minimap, 8)
+
+        pygame.draw.rect(minimap_surface, (255, 255, 255), minimap_surface.get_rect(), 4)
+
+        # Розташування мінікарти в правому нижньому куті
+        self.display_surface.blit(minimap_surface,
+                                  (WINDOW_WIDTH - minimap_width - 10, WINDOW_HEIGHT - minimap_height - 10))
+
     def run(self, dt):
         self.all_sprites.update(dt)
         self.draw_background()
         self.all_sprites.draw(self.player.rect.center)
-        self.GUI.update(dt)  # Виклик оновлення інтерфейсу
+        self.GUI.update(dt)
+        self.draw_minimap()

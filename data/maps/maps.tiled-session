@@ -3,14 +3,15 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level1.tmx",
     "expandedProjectPaths": [
         "."
     ],
     "file.lastUsedOpenFilter": "Всі файли (*)",
     "fileStates": {
         "": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "D:/AGH/4 semestr/Python/RPG_Python_Game/data/levels/level1.tmx": {
             "expandedObjectLayers": [
@@ -53,12 +54,18 @@
             "scaleInDock": 1
         },
         "level1.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
             "scale": 0.75,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 472,
-                "y": 454
+                "x": 1092,
+                "y": 315.33333333333337
             }
+        },
+        "level1.tmx#Coins": {
+            "scaleInDock": 1
         },
         "level1.tmx#Draft": {
             "scaleInDock": 1
@@ -83,6 +90,18 @@
             "scaleInDock": 1
         },
         "level1.tmx#Zombie": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#ask": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#info": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#secret": {
+            "scaleInDock": 1
+        },
+        "level1.tmx#shop": {
             "scaleInDock": 1
         },
         "level1.tmx#tileset": {
@@ -117,9 +136,11 @@
     "map.tileWidth": 64,
     "map.width": 60,
     "openFiles": [
+        "level1.tmx"
     ],
     "project": "maps.tiled-project",
     "recentFiles": [
+        "level1.tmx",
         "test map.tmx",
         "D:/AGH/4 semestr/Python/RPG_Python_Game/data/levels/level1.tmx"
     ],
