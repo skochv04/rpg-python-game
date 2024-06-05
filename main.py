@@ -8,7 +8,6 @@ from pytmx.util_pygame import load_pygame
 from CharacterCreator import create_character
 from PlayerData import PlayerData
 from Menu import MainMenu
-from Sounds import Sounds
 from DeltaTime import DT
 
 #Klasa okienka z grą
