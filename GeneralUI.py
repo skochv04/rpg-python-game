@@ -50,7 +50,7 @@ class GeneralUI:
         tasks_button_rect = self.quests_icon.get_rect(topleft=(30, 90))
         if tasks_button_rect.collidepoint(mouse_pos):
             if self.quests is None:
-                self.player.player_data.mouse_click_sound.play()
+                Sounds().mouse_click_sound.play()
                 self.create_quests()
             else:
                 self.quests.kill()
@@ -62,7 +62,6 @@ class GeneralUI:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Ліва кнопка миші
                 self.check_tasks_button_click(event.pos)
 
