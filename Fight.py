@@ -2,6 +2,7 @@ from Settings import *
 from Spritessheet import SpritesSheet
 from Button import Button
 from Notification import *
+from Sounds import Sounds
 
 
 def reward_player_fight(player, enemy):
@@ -203,7 +204,7 @@ def fight(enemy, player, dt):
                 notification = None
 
         if is_enemy_dead(enemy):
-            player.player_data.fight_win_sound.play()
+            Sounds().fight_win_sound.play()
             reward_player_fight(player, enemy)
             enemy.destroy()
             return
