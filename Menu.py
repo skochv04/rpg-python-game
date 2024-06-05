@@ -1,13 +1,14 @@
 from Settings import *
+from Sounds import *
 
 class MainMenu:
-    def __init__(self, menu_sound):
+    def __init__(self):
         self.display_surface = pygame.display.get_surface()
         self.image = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
         self.rect = self.image.get_rect()
         self.options = ['Start Game', 'Settings', 'Save', 'Exit']
         self.current_option = 0
-        self.menu_sound = menu_sound
+        self.menu_sound = Sounds().menu_sound
 
     def render(self):
         self.image.fill('black')
