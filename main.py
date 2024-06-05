@@ -48,6 +48,7 @@ class Game:
         self.dt.update()
         while True:
             self.dt.update()
+            print(self.dt.clock.get_fps())
             if self.player_data.level != level:
                 level = self.player_data.level
                 self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
