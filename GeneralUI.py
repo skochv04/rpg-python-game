@@ -3,7 +3,6 @@ import pygame.image
 from os.path import join
 
 from QuestsUI import QuestsUI
-from Sounds import Sounds
 from Settings import *
 from InventoryUI import InventoryUI
 

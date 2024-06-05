@@ -1,7 +1,4 @@
-import pygame
-from os.path import join
-from Settings import WINDOW_WIDTH, WINDOW_HEIGHT
-from Sounds import Sounds
+from Settings import *
 
 
 class QuestsUI(pygame.sprite.Sprite):

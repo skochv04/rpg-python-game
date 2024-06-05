@@ -1,7 +1,7 @@
 from Quests import Quests
 from NPC import NPC
 from Quest import Quest
-from Sounds import Sounds
+from Settings import *
 
 
 class Questgiver(NPC):

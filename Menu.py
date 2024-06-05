@@ -1,5 +1,4 @@
 from Settings import *
-from Sounds import *
 
 class MainMenu:
     def __init__(self):

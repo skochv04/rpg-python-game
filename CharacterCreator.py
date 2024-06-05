@@ -3,7 +3,6 @@ from PlayerData import available_items
 from Settings import *
 from Spritessheet import SpritesSheet
 from Skills import Skills
-from Sounds import *
 import random
 
 

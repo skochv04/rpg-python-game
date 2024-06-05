@@ -2,7 +2,6 @@ from Dialogue import Dialogue
 from Settings import *
 from Spritessheet import SpritesSheet
 from NPC_UI import UI
-from Sounds import Sounds
 
 
 class NPC(pygame.sprite.Sprite):

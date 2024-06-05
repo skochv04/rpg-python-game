@@ -8,7 +8,7 @@ from ItemType import ItemType
 from Item import Item
 from NPC import NPC
 from PlayerData import available_items
-from Sounds import Sounds
+from Settings import *
 
 from enum import Enum
 import random

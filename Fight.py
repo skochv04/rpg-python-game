@@ -2,7 +2,6 @@ from Settings import *
 from Spritessheet import SpritesSheet
 from Button import Button
 from Notification import *
-from Sounds import Sounds
 
 
 def reward_player_fight(player, enemy):
