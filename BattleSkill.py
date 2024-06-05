@@ -17,6 +17,7 @@ class BattleSkill:
         if not self.validation(player)[0]:
             return False
         player.player_data.mana -= self.mana_cost
+        return True
 
     def effect(self, player, enemy):
         raise NotImplementedError("Skill not implemented yet")
@@ -30,7 +31,8 @@ class Heal(BattleSkill):
         super().__init__(2, 3, "Heal")
 
     def effect(self, player, _enemy):
-        super().use(player, _enemy)
+        if not super().use(player, _enemy):
+            return False
 
         player.player_data.increase_health(self.power + math.ceil(player.player_data.magic_power * 0.1))
 
@@ -39,7 +41,8 @@ class Fireball(BattleSkill):
         super().__init__(2, 4, "Fireball")
 
     def effect(self, player, enemy):
-        super().use(player, enemy)
+        if not super().use(player, enemy):
+            return False
 
         enemy.enemy_data.reduce_health(self.power + math.ceil(player.player_data.magic_power * 0.2))
         if enemy.enemy_data.health <= 0:
@@ -52,6 +55,7 @@ class Protect(BattleSkill):
 
 
     def effect(self, player, _enemy):
-        super().use(player, _enemy)
+        if not super().use(player, _enemy):
+            return False
 
         player.status_effects.protected = True
