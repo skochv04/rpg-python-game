@@ -57,11 +57,11 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 0.75,
+            "scale": 0.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1092,
-                "y": 315.33333333333337
+                "x": 918,
+                "y": 269
             }
         },
         "level1.tmx#Coins": {

@@ -56,11 +56,13 @@ class GeneralUI:
                 self.quests.kill()
                 self.quests = None
 
-    def set_level(self, level):
-        self.level = level
     def update(self, dt):
         self.input()
         for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:  # Ліва кнопка миші
                 self.check_tasks_button_click(event.pos)
 
@@ -74,9 +76,6 @@ class GeneralUI:
         self.render_timer()  # Додавання виклику методу відображення таймера
         self.render_tasks_button()
         self.render_level()  # Додавання виклику методу відображення рівня
-
-        if self.level:
-            self.level.draw_minimap()
 
     def render_coins(self):
         # Оновлення тексту з кількістю монет
