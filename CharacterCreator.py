@@ -34,7 +34,6 @@ def create_character():
 
     while True:
         for event in pygame.event.get():
-            # Обробка події закриття вікна
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()

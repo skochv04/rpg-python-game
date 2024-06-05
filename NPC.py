@@ -2,6 +2,7 @@ from Dialogue import Dialogue
 from Settings import *
 from Spritessheet import SpritesSheet
 from NPC_UI import UI
+from Sounds import Sounds
 
 
 class NPC(pygame.sprite.Sprite):
@@ -33,8 +34,8 @@ class NPC(pygame.sprite.Sprite):
     def dialogue(self):
         ui = UI(self, self.dialogue_data, self.current_dialogue)
         responses, last_dialogue = ui.run()
-        self.player.player_data.background_sound.set_volume(0.05)
-        self.player.player_data.npc_sound.set_volume(0.0)
+        Sounds().background_sound.set_volume(0.05)
+        Sounds().npc_sound.set_volume(0.0)
         self.last_input_time = pygame.time.get_ticks()
 
         return responses, last_dialogue
@@ -51,9 +52,9 @@ class NPC(pygame.sprite.Sprite):
             if self.is_active() and not self.player.is_invisible:
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_RETURN]:
-                    self.player.player_data.background_sound.set_volume(0.0)
-                    self.player.player_data.npc_sound.set_volume(0.45)
-                    self.player.player_data.npc_sound.play(-1)
+                    Sounds().background_sound.set_volume(0.0)
+                    Sounds().npc_sound.set_volume(0.45)
+                    Sounds().npc_sound.play(-1)
                     self.dialogue()
 
     def update(self, dt):
