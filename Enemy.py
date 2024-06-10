@@ -6,7 +6,7 @@ from StatusEffects import StatusEffects
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, collision_sprites, player, timer, power, max_health, health=None):
+    def __init__(self, pos, groups, collision_sprites, player, timer, power, max_health, direction, health=None):
         super().__init__([groups, collision_sprites])
         self.image = pygame.Surface((32, 32))
         self.rect = self.image.get_frect(topleft=pos)
@@ -25,8 +25,9 @@ class Enemy(pygame.sprite.Sprite):
                           my_spritesheet.parse_sprite('12.png')]
 
         self.current_skin = self.sprite_right
+        self.direction = direction
+        self.opposite_direction(self.direction)
         self.image = self.current_skin[1]
-        self.direction = vector(1, 0)
 
         self.player = player
         if health is None:
@@ -59,7 +60,11 @@ class Enemy(pygame.sprite.Sprite):
 
     def input(self, dt):
         if self.is_active():
+            self.player.player_data.sound.background_sound.set_volume(0.0)
+            self.player.player_data.sound.fight_sound.set_volume(0.45)
+            self.player.paused = True
             fight(self, self.player, dt)
+            self.player.paused = False
             dt.set(0)
 
 
@@ -78,14 +83,15 @@ class Enemy(pygame.sprite.Sprite):
 
     def update(self, dt):
         self.old_rect = self.rect.copy()
-        self.input(dt)
-        self.move(dt)
+        if not self.player.paused:
+            self.input(dt)
+            self.move(dt)
 
     def opposite_direction(self, direction):
         if direction == vector(0, 1):
-            self.current_skin = self.sprite_down
-        elif direction == vector(0, -1):
             self.current_skin = self.sprite_up
+        elif direction == vector(0, -1):
+            self.current_skin = self.sprite_down
         elif direction == vector(1, 0):
             self.current_skin = self.sprite_left
         elif direction == vector(-1, 0):
@@ -146,6 +152,7 @@ class Enemy(pygame.sprite.Sprite):
         if not self.process_status_effects(player):
             return False
 
+        player.player_data.sound.attack_sound.play()
         player.player_data.health -= self.enemy_data.damage
         self.enemy_data.damage = 0
         if player.player_data.health <= 0:

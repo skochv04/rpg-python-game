@@ -1,12 +1,11 @@
-from ItemType import ItemType
 from PlayerData import available_items
 from Settings import *
 from Spritessheet import SpritesSheet
-from Skills import Skills
+from Skills import Skills  # Додано імпорт Skills
 import random
 
 
-def create_character():
+def create_character(sound):
     font = pygame.font.Font(None, 36)
     input_box = pygame.Rect(WINDOW_WIDTH / 2 - 110, 150, 140, 32)
     color_inactive = pygame.Color('lightskyblue3')
@@ -17,8 +16,7 @@ def create_character():
     display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     clock = pygame.time.Clock()
     text = ''
-    default_text = font.render("Nazwa Postaci", True, color)
-    arrow_sound = Sounds().arrow_sound
+    default_text = font.render("Character name", True, color)
 
     skills_list = [
         Skills.SPEED_UP,
@@ -33,6 +31,7 @@ def create_character():
 
     while True:
         for event in pygame.event.get():
+            # Обробка події закриття вікна
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -52,10 +51,10 @@ def create_character():
                         text += event.unicode
 
                 if event.key == pygame.K_LEFT:
-                    arrow_sound.play()
+                    sound.arrow_sound.play()
                     current_skin = (current_skin - 1) % 8
                 elif event.key == pygame.K_RIGHT:
-                    arrow_sound.play()
+                    sound.arrow_sound.play()
                     current_skin = (current_skin + 1) % 8
 
         # Відображення вікна з назвою
@@ -80,16 +79,16 @@ def create_character():
         items_count = len(skin_items)
         sector_width = WINDOW_WIDTH // items_count
         for i, item_type in enumerate(skin_items):
-            item_image = item_type.value[4]
+            item_image = item_type.image
             item_surface = pygame.transform.scale(item_image, (50, 50))
             item_x = i * sector_width + (sector_width - item_surface.get_width()) // 2
             item_y = 520
             display_surface.blit(item_surface, (item_x, item_y))
 
             item_id, price, damage, min_power_to_get, file, name = item_type.value
-            item_data_text = font.render(f"Damage: {damage} Min level: {min_power_to_get}",
+            item_data_text = font.render(f"Damage: {damage}, Min level to get: {min_power_to_get}",
                                          True, (255, 255, 255))
-            text_x = item_x - 115
+            text_x = item_x - 150
             text_y = item_y + item_surface.get_height()
             display_surface.blit(item_data_text, (text_x, text_y))
 
@@ -102,9 +101,9 @@ def create_character():
         display_surface.blit(skill_surface, (skill_x, skill_y))
 
         skill_id, skill_price, skill_min_power_to_get, skill_file, skill_name = current_skill.value
-        skill_data_text = font.render(f"Skill: {skill_name}, Min level: {skill_min_power_to_get}",
+        skill_data_text = font.render(f"Skill: {skill_name}",
                                       True, (255, 255, 255))
-        display_surface.blit(skill_data_text, (skill_x - 140, skill_y + skill_surface.get_height()))
+        display_surface.blit(skill_data_text, (skill_x - 70, skill_y + skill_surface.get_height()))
 
         arrows_image = pygame.image.load(join("graphics", "buttons", "arrow_keys.png")).convert_alpha()
         arrows_width, arrows_height = arrows_image.get_size()
