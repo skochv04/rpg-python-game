@@ -45,6 +45,13 @@ class Enemy(pygame.sprite.Sprite):
         self.is_moving = False
         self.escape_timer = None
 
+    def is_in_move_range(self):
+        player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
+        in_range = False
+        if abs(player_pos[0] - self_pos[0]) < WINDOW_WIDTH//2 and abs(player_pos[1] - self_pos[1]) < WINDOW_HEIGHT//2:
+            in_range = True
+
+        return in_range
 
     def is_active(self):
         if self.escape_timer is not None:
@@ -70,6 +77,9 @@ class Enemy(pygame.sprite.Sprite):
 
 
     def move(self, dt):
+        if not self.is_in_move_range():
+            return
+
         self.skin_timer = (self.skin_timer + 1) % 56
         if self.skin_timer == 55:
             self.skin_action = (self.skin_action + 1) % 3
