@@ -21,13 +21,15 @@ from MiniMap import MiniMap
 from QuestItem import QuestItem
 
 class Level:
-    def __init__(self, tmx_map, player_name, current_skin, player_data):
+    def __init__(self, tmx_map, player_name, current_skin, player_data, sound):
         self.player_name = None
         self.display_surface = pygame.display.get_surface()
 
         self.player_name = player_name
         self.current_skin = current_skin
         self.player_data = player_data
+
+        self.sound = sound
 
         # groups
         self.all_sprites = AllSprites()
@@ -54,7 +56,7 @@ class Level:
         for collision in self.collision_sprites: self.invisible_collision_sprites.add(collision)
         for obj in tmx_map.get_layer_by_name('Objects'):
             if obj.name == 'player':
-                self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.invisible_collision_sprites, self.player_data, self.player_name, self.current_skin)
+                self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.invisible_collision_sprites, self.player_data, self.player_name, self.current_skin, self.sound)
             elif obj.name == 'shopkeeper':
                 Shopkeeper((obj.x, obj.y), self.all_sprites, self.collision_sprites, "000", self.player, 0)
             elif obj.name == 'questgiver':

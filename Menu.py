@@ -3,6 +3,7 @@ import sys
 from os.path import join
 from GameSound import GameSound
 from Settings import *
+from Save import *
 
 class MainMenu:
     def __init__(self, sound):
@@ -27,7 +28,7 @@ class MainMenu:
         self.logo_image = pygame.image.load(join('graphics', 'objects', 'logo.png')).convert_alpha()
         self.logo_rect = self.logo_image.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 6))
 
-        self.options = ['Play', 'Settings', 'Save', 'Exit']
+        self.options = ['Play', 'Save', 'Load', 'Exit']
         self.current_option = 0
         self.sound = sound
 
@@ -58,15 +59,24 @@ class MainMenu:
             self.sound.menu_sound.play()
             return self.options[self.current_option]
 
-    def run(self):
+    def run(self, player_data, current_skin, player_name):
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
             option = self.update()
-            if option:
-                return option
+            if option == 'Exit':
+                pygame.quit()
+                sys.exit()
+            elif option == "Load":
+                return load_save()
+            elif option == "Save":
+                if player_data is None or current_skin is None:
+                    continue
+                create_save(player_data, current_skin, player_name)
+            elif option == "Play":
+                return None
             self.render()
             pygame.display.flip()
             pygame.time.wait(100)

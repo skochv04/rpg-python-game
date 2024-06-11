@@ -16,6 +16,7 @@ class LevelUpUI(WindowUI):
         self.image.blit(self.background_image, (0, 0))
         self.rect = self.image.get_rect(center=(self.player.rect.centerx, self.player.rect.centery))
         self.bound = ((WINDOW_WIDTH - WINDOW_WIDTH * 0.7) // 2, (WINDOW_HEIGHT - WINDOW_HEIGHT * 0.7) // 2)
+        self.sound = player.sound
 
     def render(self):
         self.image.blit(self.background_image, (0, 0))
@@ -27,6 +28,7 @@ class LevelUpUI(WindowUI):
         if mouse_buttons[0]:
             relative_mouse_pos = (mouse_pos[0] - 2 * self.button_rect.width, (mouse_pos[1] - self.bound[1]))
             if self.button_rect.collidepoint(relative_mouse_pos):
-                self.player.player_data.sound.mouse_click_sound.play()
+                self.player.sound.mouse_click_sound.play()
                 self.player.player_data.up_level()
+                self.sound.up_level_sound.play()
                 self.kill()

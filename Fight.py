@@ -15,7 +15,7 @@ def reward_player_fight(player, enemy):
 def player_attack(player, enemy):
     if not player.process_status_effects(enemy):
         return False
-    player.player_data.sound.attack_sound.play()
+    player.sound.attack_sound.play()
     enemy.enemy_data.reduce_health(player.player_data.damage)
 
 
@@ -247,10 +247,10 @@ def draw_everything(player, enemy, display_surface, background_image, buttons, i
 
 
 def confirm_enemy_death(enemy, player):
-    player.player_data.sound.fight_win_sound.play()
+    player.sound.fight_win_sound.play()
     reward_player_fight(player, enemy)
-    player.player_data.sound.fight_sound.set_volume(0.0)
-    player.player_data.sound.background_sound.set_volume(0.05)
+    player.sound.fight_sound.set_volume(0.0)
+    player.sound.background_sound.set_volume(0.05)
     enemy.destroy()
 
 

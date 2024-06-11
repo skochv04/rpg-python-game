@@ -79,7 +79,7 @@ def create_character(sound):
         items_count = len(skin_items)
         sector_width = WINDOW_WIDTH // items_count
         for i, item_type in enumerate(skin_items):
-            item_image = item_type.image
+            item_image = pygame.image.load(item_type.image)
             item_surface = pygame.transform.scale(item_image, (50, 50))
             item_x = i * sector_width + (sector_width - item_surface.get_width()) // 2
             item_y = 520

@@ -26,7 +26,7 @@ available_items = {
 
 class PlayerData(EntityData):
 
-    def __init__(self, health, coins, power, magic_power, mana, itemset, sound, timer=0):
+    def __init__(self, health, coins, power, magic_power, mana, itemset, timer=0):
         super().__init__(health, health, power, magic_power)
         self.coins = coins
         self.skills = set()
@@ -39,7 +39,6 @@ class PlayerData(EntityData):
         self.quest = None
         self.exp = 0
         self.itemset = itemset
-        self.sound = sound
         self.level_UI = None
         self.last_questgiver_dialogue = None
 
@@ -68,8 +67,6 @@ class PlayerData(EntityData):
         self.level += 1
         self.earned_coins_level = 0
         self.enemies_won_level = 0
-        self.sound.up_level_sound.play()
 
     def increase_coins(self, amount):
         self.coins += amount
-        self.sound.coin_sound.play()

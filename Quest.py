@@ -10,7 +10,7 @@ class Quest:
         self.quest = quest
         player_data.demand_coins_total += self.quest.coins_to_earn
         player_data.demand_enemies_won_total += self.quest.enemies_to_win
-        self.start_player_data = PlayerData(player_data.health, player_data.coins, player_data.power, player_data.magic_power, player_data.mana, player_data.itemset, player_data.sound)
+        self.start_player_data = PlayerData(player_data.health, player_data.coins, player_data.power, player_data.magic_power, player_data.mana, player_data.itemset)
         self.specific_cond = False
         self.prize_skill = self.define_prize_skills()
 

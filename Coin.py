@@ -36,5 +36,6 @@ class Coin(pygame.sprite.Sprite):
 
         if self.rect.collidepoint(self.player.rect.center):
             self.player.player_data.increase_coins(1)
+            self.player.sound.coin_sound.play()
             self.player.player_data.earned_coins_level += 1
             self.kill()

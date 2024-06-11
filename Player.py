@@ -11,7 +11,7 @@ from StatusEffects import StatusEffects
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, invisible_collision_sprites, player_data, name="undefined",
-                 skin=1):
+                 skin=1, sound=None):
         super().__init__([groups, collision_sprites])
         self.invisible_collision_sprites = invisible_collision_sprites
         self.image = pygame.Surface((42, 48))
@@ -27,6 +27,8 @@ class Player(pygame.sprite.Sprite):
         self.name = name
         self.direction = None
         self.skin = skin
+
+        self.sound = sound
 
         self.move_disabled = False
 
@@ -111,15 +113,15 @@ class Player(pygame.sprite.Sprite):
                 self.not_used_skills or self.current_time - self.last_ability_time > 30000):
             if keys[pygame.K_f] and Skills.SPEED_UP in self.player_data.skills:
                 self.activate_speed_boost()
-                self.player_data.sound.skill_activate_sound.play()
+                self.sound.skill_activate_sound.play()
                 self.update_config()
             elif keys[pygame.K_v] and Skills.INVISIBILITY in self.player_data.skills:
                 self.activate_invisibility()
-                self.player_data.sound.skill_activate_sound.play()
+                self.sound.skill_activate_sound.play()
                 self.update_config()
             elif keys[pygame.K_s] and Skills.SHRINK in self.player_data.skills:
                 self.shrink_player()
-                self.player_data.sound.skill_small_sound.play()
+                self.sound.skill_small_sound.play()
                 self.update_config()
 
 
@@ -139,7 +141,7 @@ class Player(pygame.sprite.Sprite):
                     return False
             self.rect.center = self.teleport_target
             self.teleport_target = None
-            self.player_data.sound.jump_sound.play()
+            self.sound.jump_sound.play()
             self.update_config()
             return True
         return False
@@ -280,13 +282,13 @@ class Player(pygame.sprite.Sprite):
 
         if self.player_data.timer > 0:
             self.player_data.timer = 30000 - (self.current_time - self.last_ability_time)
-            if self.player_data.timer == 0: self.player_data.sound.timer_sound.play()
+            if self.player_data.timer == 0: self.sound.timer_sound.play()
         else: self.player_data.timer = 0
 
         # Перевірка часу зменшення персонажа
         if self.shrink_timer != 0:
             if pygame.time.get_ticks() - self.shrink_timer > self.shrink_duration:
-                self.player_data.sound.skill_small_sound.play()
+                self.sound.skill_small_sound.play()
                 self.rect.size = self.original_size  # Повернення до оригінального розміру
                 self.reset_images()  # Відновлення оригінальних зображень
                 self.shrink_timer = 0

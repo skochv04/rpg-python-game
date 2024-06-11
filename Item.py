@@ -1,9 +1,10 @@
+from Settings import *
 
 class Item:
     def __init__(self, item_type, amount=float('inf'), usable_during_battle=True):
         self.name = item_type.name
         self.id = item_type.id
-        self.image = item_type.image
+        self._image = item_type.image
         self.amount = amount
         self.usable_during_battle = usable_during_battle
         self.x = None
@@ -11,6 +12,11 @@ class Item:
         self.item_type = item_type
         self.price = item_type.price
         self.description = f"Price: {self.price}, Damage: {item_type.damage}, Min Level: {item_type.min_level_to_get}"
+
+
+    @property
+    def image(self):
+        return pygame.image.load(self._image)
 
     def decrease_amount(self):
         if self.amount > 0:

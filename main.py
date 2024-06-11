@@ -48,21 +48,20 @@ class Game:
 
     def run(self):
         menu = MainMenu(self.sound)
-        option = menu.run()
+        save_data = menu.run(None, None, None)
 
-        if option == 'Exit':
-            pygame.quit()
-            sys.exit()
-        elif option == 'Settings':
-            pass
+        if save_data is not None:
+            self.player_data, self.current_skin, player_name = save_data
+            level = self.player_data.level
+        else:
+            self.player_data = PlayerData(100, 30, 30, 1, 10, self.current_skin + 1)
+            player_name, self.current_skin = create_character(self.sound)
+            level = 1
+            self.player_data.level = level
 
-        player_name, self.current_skin = create_character(self.sound)
-        level = 1
-        self.player_data = PlayerData(100, 30, 30, 1, 10, self.current_skin + 1, self.sound)
-        self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
+        self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data, self.sound)
         self.sound.start_game_sound.stop()
         self.sound.background_sound.play(-1)
-        self.player_data.level = level
 
         self.dt.update()
         while True:
@@ -84,7 +83,7 @@ class Game:
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        option = menu.run()
+                        option = menu.run(self.player_data, self.current_skin, player_name)
                         if option == 'Exit':
                             pygame.quit()
                             sys.exit()

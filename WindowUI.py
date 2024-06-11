@@ -35,5 +35,5 @@ class WindowUI(pygame.sprite.Sprite):
         if mouse_buttons[0]:
             relative_mouse_pos = (mouse_pos[0] - 2 * self.button_rect.width, (mouse_pos[1] - self.bound[1]))
             if self.button_rect.collidepoint(relative_mouse_pos):
-                self.player.player_data.sound.mouse_click_sound.play()
+                self.player.sound.mouse_click_sound.play()
                 self.kill()
