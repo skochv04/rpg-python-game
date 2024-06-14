@@ -18,19 +18,14 @@ class GeneralUI:
         self.last_input = pygame.time.get_ticks()
 
         self.font = pygame.freetype.Font(None, 30)
+        self.small_font = pygame.freetype.Font(None, 16)
 
         self.coin_icon = pygame.image.load(join('graphics', 'objects', 'coin.png')).convert_alpha()
-        self.power_icon = pygame.image.load(
-            join('graphics', 'objects', 'power.png')).convert_alpha()  # Приклад шляху до іконки сили
-        self.health_icon = pygame.image.load(
-            join('graphics', 'objects', 'health.png')).convert_alpha()  # Приклад шляху до іконки здоров'я
-        self.timer_icon = pygame.image.load(
-            join('graphics', 'objects', 'timer.png')).convert_alpha()  # Завантаження іконки таймера
-        self.quests_icon = pygame.image.load(
-            join('graphics', 'objects', 'quests.png')).convert_alpha()  # Завантаження іконки tasks
-        self.exp_icon = pygame.image.load(
-            join('graphics', 'objects', 'exp.png')).convert_alpha()  # Завантаження іконки exp
-
+        self.power_icon = pygame.image.load(join('graphics', 'objects', 'power.png')).convert_alpha()
+        self.health_icon = pygame.image.load(join('graphics', 'objects', 'health.png')).convert_alpha()
+        self.timer_icon = pygame.image.load(join('graphics', 'objects', 'timer.png')).convert_alpha()
+        self.quests_icon = pygame.image.load(join('graphics', 'objects', 'quests.png')).convert_alpha()
+        self.exp_icon = pygame.image.load(join('graphics', 'objects', 'exp.png')).convert_alpha()
     def create_inventory(self):
         self.inventory = InventoryUI(self.groups, self.player.player_data.inventory, self.player)
 
@@ -79,9 +74,9 @@ class GeneralUI:
         self.render_timer()
         self.render_tasks_button()
         self.render_level()
+        self.render_skills()
 
     def render_coins(self):
-
         coin_text = str(self.player_data.coins)
         coin_surface, coin_rect = self.font.render(coin_text, 'white')
 
@@ -93,7 +88,6 @@ class GeneralUI:
         self.display_surface.blit(coin_surface, coin_rect)
 
     def render_power(self):
-
         power_text = str(self.player_data.power)
         power_surface, power_rect = self.font.render(power_text, 'white')
 
@@ -151,3 +145,21 @@ class GeneralUI:
         level_rect.center = (WINDOW_WIDTH // 2, 50)
 
         self.display_surface.blit(level_surface, level_rect)
+
+    def render_skills(self):
+        start_y = 150  # Starting y position below the medal icon
+        icon_size = 40  # Size for each skill icon
+        spacing = 10  # Space between each skill icon and text
+
+        for skill in self.player.player_data.skills:
+            skill_icon = skill.image
+            skill_icon = pygame.transform.scale(skill_icon, (icon_size, icon_size))
+            skill_text, skill_rect = self.small_font.render(skill.keyboard, 'white')
+
+            skill_icon_rect = skill_icon.get_rect(topleft=(34, start_y))
+            skill_rect.midleft = (skill_icon_rect.right + spacing, skill_icon_rect.centery)
+
+            self.display_surface.blit(skill_icon, skill_icon_rect)
+            self.display_surface.blit(skill_text, skill_rect)
+
+            start_y += icon_size + spacing  # Move down for the next skill

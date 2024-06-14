@@ -8,6 +8,8 @@ from Spritessheet import SpritesSheet
 from InventoryUI import InventoryUI
 from pygame.math import Vector2 as vector
 from StatusEffects import StatusEffects
+from TimerWindow import TimerWindow
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, invisible_collision_sprites, player_data, name="undefined",
@@ -110,28 +112,26 @@ class Player(pygame.sprite.Sprite):
             self.image = self.current_skin[1]
 
         # Обробка натискання кнопок
-        if (keys[pygame.K_f] or keys[pygame.K_v] or keys[pygame.K_s]) and (
-                self.not_used_skills or self.current_time - self.last_ability_time > 30000):
-            if keys[pygame.K_f] and Skills.SPEED_UP in self.player_data.skills:
-                self.activate_speed_boost()
-                self.sound.skill_activate_sound.play()
-                self.update_config()
-            elif keys[pygame.K_v] and Skills.INVISIBILITY in self.player_data.skills:
-                self.activate_invisibility()
-                self.sound.skill_activate_sound.play()
-                self.update_config()
-            elif keys[pygame.K_s] and Skills.SHRINK in self.player_data.skills:
-                self.shrink_player()
-                self.sound.skill_small_sound.play()
-                self.update_config()
-
-
-        if keys[pygame.K_t] and Skills.TELEPORTATION in self.player_data.skills and (
-                self.not_used_skills or self.current_time - self.last_ability_time > 30000):
-            if pygame.mouse.get_pressed()[0]:
-                self.teleport_target = (self.rect.centerx + pygame.mouse.get_pos()[0] - WINDOW_WIDTH // 2,
-                                        self.rect.centery + pygame.mouse.get_pos()[1] - WINDOW_HEIGHT // 2)
-                self.try_teleport()
+        if keys[pygame.K_f] or keys[pygame.K_v] or keys[pygame.K_s] or keys[pygame.K_t]:
+            if self.not_used_skills or self.current_time - self.last_ability_time > 30000:
+                if keys[pygame.K_f] and Skills.SPEED_UP in self.player_data.skills:
+                    self.activate_speed_boost()
+                    self.sound.skill_activate_sound.play()
+                    self.update_config()
+                elif keys[pygame.K_v] and Skills.INVISIBILITY in self.player_data.skills:
+                    self.activate_invisibility()
+                    self.sound.skill_activate_sound.play()
+                    self.update_config()
+                elif keys[pygame.K_s] and Skills.SHRINK in self.player_data.skills:
+                    self.shrink_player()
+                    self.sound.skill_small_sound.play()
+                    self.update_config()
+                elif keys[pygame.K_t] and Skills.TELEPORTATION in self.player_data.skills:
+                    if pygame.mouse.get_pressed()[0]:
+                        self.teleport_target = (self.rect.centerx + pygame.mouse.get_pos()[0] - WINDOW_WIDTH // 2,
+                                                self.rect.centery + pygame.mouse.get_pos()[1] - WINDOW_HEIGHT // 2)
+                        self.try_teleport()
+            elif 0 < self.player_data.timer < 29500: TimerWindow(self.groups, self)
 
         self.direction = key_direction
 

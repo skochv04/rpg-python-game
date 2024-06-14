@@ -32,7 +32,7 @@ def display_player(player, display_surface):
 
 
 def display_enemy(enemy, display_surface):
-    enemy_spritesheet = SpritesSheet(join(f'graphics/enemies/{enemy.__class__.__name__}/texture.png'))
+    enemy_spritesheet = SpritesSheet(join(f'graphics/enemies/{enemy.name}/texture.png'))
     sprite_right = enemy_spritesheet.parse_sprite('5.png')
     skin_view_right = pygame.transform.scale(sprite_right, (200, 200))
     display_surface.blit(skin_view_right, (WINDOW_WIDTH - 350, 300))
@@ -131,10 +131,10 @@ def create_buttons():
     return button1, button2, button3
 
 
-def attack_animation(player, enemy, display_surface):
+def attack_animation(player, enemy, display_surface, enemy_dead):
     # Load player and enemy sprites
     player_spritesheet = SpritesSheet(join('graphics', 'player', f'{player.skin}', 'texture.png'))
-    enemy_spritesheet = SpritesSheet(join(f'graphics/enemies/{enemy.__class__.__name__}/texture.png'))
+    enemy_spritesheet = SpritesSheet(join(f'graphics/enemies/{enemy.name}/texture.png'))
     player_right = player_spritesheet.parse_sprite('8.png')
     enemy_right = enemy_spritesheet.parse_sprite('5.png')
     player_right = pygame.transform.scale(player_right, (200, 200))
@@ -160,7 +160,6 @@ def attack_animation(player, enemy, display_surface):
     pygame.display.flip()
 
     while True:
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -182,7 +181,8 @@ def attack_animation(player, enemy, display_surface):
             background_subsurface.blit(player_surface, (0, 0))
             if player_pos[0] <= 150 - 4:
                 move_player_left = False
-                move_enemy_left = True
+                if not enemy_dead: move_enemy_left = True
+                else: return
         elif move_enemy_left:
             enemy_pos = (enemy_pos[0] - 2, enemy_pos[1])
             background_subsurface = background_image.subsurface(
@@ -310,7 +310,7 @@ def fight(enemy, player, dt):
                         item_buttons = item_buttons_list(player, buttons[2])
                     print('button 3 clicked')
         if did_action:
-            attack_animation(player, enemy, display_surface)
+            attack_animation(player, enemy, display_surface, is_enemy_dead(enemy))
             if is_enemy_dead(enemy):
                 confirm_enemy_death(enemy, player)
                 return

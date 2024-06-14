@@ -43,13 +43,13 @@
   <image source="../../graphics/objects/fortune.png" width="48" height="48"/>
  </tileset>
  <tileset firstgid="145" name="Glasser" tilewidth="48" tileheight="48" tilecount="12" columns="12">
-  <image source="../../graphics/enemies/Glasser/texture.png" width="576" height="48"/>
+  <image source="../../graphics/enemies/glasser/texture.png" width="576" height="48"/>
  </tileset>
  <tileset firstgid="157" name="Hatter" tilewidth="48" tileheight="48" tilecount="12" columns="12">
-  <image source="../../graphics/enemies/Hatter/texture.png" width="576" height="48"/>
+  <image source="../../graphics/enemies/hatter/texture.png" width="576" height="48"/>
  </tileset>
  <tileset firstgid="169" name="UglyAngel" tilewidth="48" tileheight="48" tilecount="12" columns="12">
-  <image source="../../graphics/enemies/UglyAngel/texture.png" width="576" height="48"/>
+  <image source="../../graphics/enemies/ugly_angel/texture.png" width="576" height="48"/>
  </tileset>
  <tileset firstgid="181" name="Winged" tilewidth="48" tileheight="48" tilecount="12" columns="12">
   <image source="../../graphics/enemies/Winged/texture.png" width="576" height="48"/>

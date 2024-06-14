@@ -6,15 +6,16 @@ from StatusEffects import StatusEffects
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, pos, groups, collision_sprites, player, timer, power, max_health, direction, health=None):
+    def __init__(self, pos, groups, collision_sprites, player, timer, power, max_health, direction, name, health=None):
         super().__init__([groups, collision_sprites])
         self.image = pygame.Surface((32, 32))
         self.rect = self.image.get_frect(topleft=pos)
         self.old_rect = self.rect.copy()
+        self.name = name
 
         self.start_power = power
 
-        my_spritesheet = SpritesSheet(f'graphics/enemies/{self.__class__.__name__}/texture.png')
+        my_spritesheet = SpritesSheet(f'graphics/enemies/{self.name}/texture.png')
         self.sprite_down = [my_spritesheet.parse_sprite('1.png'), my_spritesheet.parse_sprite('2.png'),
                             my_spritesheet.parse_sprite('3.png')]
         self.sprite_left = [my_spritesheet.parse_sprite('4.png'), my_spritesheet.parse_sprite('5.png'),

@@ -19,7 +19,7 @@
   <image source="../../graphics/enemies/Draft/texture.png" width="576" height="48"/>
  </tileset>
  <tileset firstgid="37" name="Wilddog" tilewidth="32" tileheight="32" tilecount="12" columns="12">
-  <image source="../../graphics/enemies/Wilddog/texture.png" width="384" height="32"/>
+  <image source="../../graphics/enemies/wilddog/texture.png" width="384" height="32"/>
  </tileset>
  <tileset firstgid="49" name="Zombie" tilewidth="48" tileheight="48" tilecount="12" columns="12">
   <image source="../../graphics/enemies/Zombie/texture.png" width="576" height="48"/>
@@ -49,7 +49,7 @@
   <image source="../../graphics/enemies/Hatter/texture.png" width="576" height="48"/>
  </tileset>
  <tileset firstgid="169" name="UglyAngel" tilewidth="48" tileheight="48" tilecount="12" columns="12">
-  <image source="../../graphics/enemies/UglyAngel/texture.png" width="576" height="48"/>
+  <image source="../../graphics/enemies/ugly_angel/texture.png" width="576" height="48"/>
  </tileset>
  <tileset firstgid="181" name="Winged" tilewidth="48" tileheight="48" tilecount="12" columns="12">
   <image source="../../graphics/enemies/Winged/texture.png" width="576" height="48"/>
