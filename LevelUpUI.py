@@ -16,13 +16,15 @@ class LevelUpUI(WindowUI):
         self.image.blit(self.background_image, (0, 0))
         self.rect = self.image.get_rect(center=(self.player.rect.centerx, self.player.rect.centery))
         self.bound = ((WINDOW_WIDTH - WINDOW_WIDTH * 0.7) // 2, (WINDOW_HEIGHT - WINDOW_HEIGHT * 0.7) // 2)
-        self.sound = player.sound
 
-        self.sound.up_level_sound.play()
+        self.sound_played = False
 
     def render(self):
         self.image.blit(self.background_image, (0, 0))
         self.image.blit(self.button_image, self.button_rect)
+        if not self.sound_played:
+            self.player.sound.up_level_sound.play()
+            self.sound_played = True
 
     def input(self):
         mouse_buttons = pygame.mouse.get_pressed()

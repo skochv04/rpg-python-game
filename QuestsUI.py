@@ -38,6 +38,7 @@ class QuestsUI(WindowUI):
             self.paragraph = 60
 
             if len(self.prizeEquipment) > 0: self.equipment_paragraph = 60
+            if self.prizeSkill is not None: self.skills_paragraph = 60
 
 
         self.item_rect = None

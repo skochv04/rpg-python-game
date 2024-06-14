@@ -38,8 +38,6 @@ class Questgiver(NPC):
             self.configure_data()
         responses, last_dialogue = super().dialogue()
         response_num = int(last_dialogue)
-        print(list(Quests)[(self.quest_id * self.player.player_data.level)-1])
-        print(self.quest_id, self.player.player_data.level)
         if 0 < response_num < 1000 and response_num % 2:
 
             # start new quest

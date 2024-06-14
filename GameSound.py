@@ -22,6 +22,7 @@ class GameSound:
             'money': pygame.mixer.Sound(join('audio', 'money.wav')),
             'attack': pygame.mixer.Sound(join('audio', 'attack.wav')),
             'start_game': pygame.mixer.Sound(join('audio', 'start_game.mp3')),
+            'quest_item': pygame.mixer.Sound(join('audio', 'quest_item.wav')),
         }
 
         self.background_sound = pygame.mixer.Sound(join('audio', 'background.mp3'))
@@ -78,6 +79,9 @@ class GameSound:
 
         self.attack_sound = self.audio_files['attack']
         self.attack_sound.set_volume(0.6)
+
+        self.quest_item_sound = self.audio_files['quest_item']
+        self.quest_item_sound.set_volume(0.6)
 
         self.start_game_sound = self.audio_files['start_game']
         self.start_game_sound.set_volume(0.3)

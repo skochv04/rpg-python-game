@@ -55,8 +55,6 @@ class PlayerData(EntityData):
 
         if self.itemset is None:
             self.itemset = random.choice(list(available_items.keys())) + 1
-        else:
-            print((self.itemset - 1) % len(Skills))
         for item in available_items[self.itemset - 1]: self.inventory.add_item(Item(item, 3))
 
         self.skills.add(list(Skills)[(self.itemset - 1) % len(Skills)])

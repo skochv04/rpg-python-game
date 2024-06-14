@@ -25,11 +25,12 @@ class Quest:
         return None
 
     def isDone(self, player_data):
-        if player_data.enemies_won_level < player_data.demand_enemies_won_total: return False
+        if player_data.enemies_won_total + player_data.enemies_won_level < player_data.demand_enemies_won_total: return False
         for item in self.quest.items_to_buy:
             old_amount = self.start_player_data.inventory.find_item_amount(item)
             new_amount = player_data.inventory.find_item_amount(item)
-            if old_amount + item.amount > new_amount: return False
+            if old_amount + item.amount > new_amount:
+                return False
         if player_data.earned_coins_level < player_data.demand_coins_total: return False
 
         if self.quest.specific_cond and not self.specific_cond: return False
