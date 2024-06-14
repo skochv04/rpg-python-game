@@ -10,7 +10,7 @@ class GameSound:
             'quest_done': pygame.mixer.Sound(join('audio', 'quest_done.mp3')),
             'fight': pygame.mixer.Sound(join('audio', 'fight.mp3')),
             'fight_win': pygame.mixer.Sound(join('audio', 'fight_win.mp3')),
-            'fight_loose': pygame.mixer.Sound(join('audio', 'fight_loose.mp3')),
+            'fight_lost': pygame.mixer.Sound(join('audio', 'fight_lost.mp3')),
             'skill_activate': pygame.mixer.Sound(join('audio', 'skill_activate.mp3')),
             'timer': pygame.mixer.Sound(join('audio', 'timer.mp3')),
             'fortune_fail': pygame.mixer.Sound(join('audio', 'fortune_fail.wav')),
@@ -47,8 +47,8 @@ class GameSound:
         self.fight_win_sound = self.audio_files['fight_win']
         self.fight_win_sound.set_volume(0.45)
 
-        self.fight_loose_sound = self.audio_files['fight_loose']
-        self.fight_loose_sound.set_volume(0.45)
+        self.fight_lost_sound = self.audio_files['fight_lost']
+        self.fight_lost_sound.set_volume(0.45)
 
         self.skill_activate_sound = self.audio_files['skill_activate']
         self.skill_activate_sound.set_volume(0.45)

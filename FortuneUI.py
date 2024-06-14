@@ -11,8 +11,6 @@ class FortuneUI(WindowUI):
         self.message = message
         self.item_icon = item_icon
 
-
-
         self.image.fill('white')
         self.rect = self.image.get_rect(center=(self.player.rect.centerx, self.player.rect.centery))
         self.bound = ((WINDOW_WIDTH - WINDOW_WIDTH * 0.7) // 2, (WINDOW_HEIGHT - WINDOW_HEIGHT * 0.7) // 2)
@@ -22,7 +20,6 @@ class FortuneUI(WindowUI):
     def render(self):
         self.image.fill('white')
 
-        # Якщо передано зображення предмета, відобразимо його
         if self.item_icon:
             self.item_rect = self.item_icon.get_rect(
                 center=(self.image.get_width() // 2, self.image.get_height() - self.image.get_height() // 3))

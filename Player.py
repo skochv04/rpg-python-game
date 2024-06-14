@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, invisible_collision_sprites, player_data, name="undefined",
                  skin=1, sound=None):
         super().__init__([groups, collision_sprites])
+        self.groups = groups
         self.invisible_collision_sprites = invisible_collision_sprites
         self.image = pygame.Surface((42, 48))
 

@@ -68,7 +68,7 @@ class Level:
             elif obj.name == 'wilddog':
                 Wilddog((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 5, 45, vector(1, 0))
             elif obj.name == 'zombie':
-                Zombie((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 15, 120, vector(1, 0))
+                Zombie((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 95, 120, vector(1, 0))
             elif obj.name == 'draft':
                 Draft((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 8, 70, vector(1, 0))
             elif obj.name == 'ugly_angel':

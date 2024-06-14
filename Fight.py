@@ -1,3 +1,4 @@
+from FightLostUI import FightLostUI
 from Settings import *
 from Spritessheet import SpritesSheet
 from Button import Button
@@ -97,7 +98,7 @@ def display_health(player, enemy, display_surface):
 
     player_max_health = pygame.Surface((health_bar_width, health_bar_height))
     player_max_health.fill('black')
-    player_health = pygame.Surface((health_bar_width * (player.get_health()/player.get_max_health()), health_bar_height))
+    player_health = pygame.Surface((health_bar_width * (max(player.get_health(), 0)/player.get_max_health()), health_bar_height))
     player_health.fill('green')
     player_health_rect = player_health.get_rect(topleft=(150, 250))
     text_surface_player = font.render(f"{player.get_health()}/{player.get_max_health()}", True, 'black')
@@ -245,12 +246,14 @@ def draw_everything(player, enemy, display_surface, background_image, buttons, i
 
     pygame.display.flip()
 
+def configure_sound(player):
+    player.sound.fight_sound.set_volume(0.0)
+    player.sound.background_sound.set_volume(0.05)
 
 def confirm_enemy_death(enemy, player):
     player.sound.fight_win_sound.play()
     reward_player_fight(player, enemy)
-    player.sound.fight_sound.set_volume(0.0)
-    player.sound.background_sound.set_volume(0.05)
+    configure_sound(player)
     enemy.destroy()
 
 
@@ -311,7 +314,12 @@ def fight(enemy, player, dt):
             if is_enemy_dead(enemy):
                 confirm_enemy_death(enemy, player)
                 return
-            enemy.fight_ai(player)
+            if enemy.fight_ai(player):
+                FightLostUI(player.groups, player)
+                configure_sound(player)
+                player.sound.fight_lost_sound.play()
+                enemy.escape()
+                return
             did_action = False
 
         # Display background image
