@@ -54,8 +54,8 @@ class Game:
             self.player_data, self.current_skin, player_name = save_data
             level = self.player_data.level
         else:
-            self.player_data = PlayerData(100, 30, 30, 1, 10, self.current_skin + 1)
             player_name, self.current_skin = create_character(self.sound)
+            self.player_data = PlayerData(100, 30, 30, 1, 10, self.current_skin + 1)
             level = 1
             self.player_data.level = level
 
@@ -73,7 +73,7 @@ class Game:
                 if level == 4:
                     pygame.quit()
                     sys.exit()
-                self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data)
+                self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data, self.sound)
                 pygame.display.update()
                 pygame.time.delay(100)  # Залишаємо екран чорним на короткий час
                 self.fade_to_black(reverse=True)

@@ -26,9 +26,6 @@ class QuestsUI(WindowUI):
         elif self.player.player_data.quest.isDone(self.player.player_data):
             self.message = "You have completed all quest tasks. Meet the Questgiver to get prize!"
             self.ui_image = pygame.image.load(join('graphics', 'objects', 'done.png'))
-            for npc in groups:
-                if npc.__class__.__name__ == 'Questgiver':
-                    npc.action()
         else:
             self.message = "Your quest: " + self.player.player_data.quest.quest.name
             self.additional_message = self.player.player_data.quest.quest.text
@@ -103,12 +100,12 @@ class QuestsUI(WindowUI):
             width = image_width * equipment_amount + step * (equipment_amount - 2)
             start = equipment_text_rect.centerx - width // 2 + step
             for item in self.prizeEquipment:
-                item_image = item.item_type.image
+                item_image = item.image
                 item_rect = item_image.get_rect(center=(start, equipment_text_rect.centery + 50))
                 self.image.blit(item_image, item_rect)
                 start += (image_width + step)
 
-        if hasattr(self, 'prizeSkills') and self.prizeSkill:
+        if hasattr(self, 'prizeSkill') and self.prizeSkill:
             skills_text_surface = self.font.render("Skills:", True, (0, 0, 0))
             skills_text_rect = skills_text_surface.get_rect(
                 center=(self.image.get_width() // 2, self.image.get_height() // 2 + 70 + self.equipment_paragraph))
