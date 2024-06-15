@@ -1,5 +1,5 @@
 from Save import *
-
+from Settings import *
 
 class MainMenu:
     def __init__(self, sound):
@@ -9,15 +9,15 @@ class MainMenu:
 
         self.button_images = [
             pygame.image.load(join('graphics', 'objects', 'button_play.png')).convert_alpha(),
-            pygame.image.load(join('graphics', 'objects', 'button_settings.png')).convert_alpha(),
             pygame.image.load(join('graphics', 'objects', 'button_save.png')).convert_alpha(),
+            pygame.image.load(join('graphics', 'objects', 'button_load.png')).convert_alpha(),
             pygame.image.load(join('graphics', 'objects', 'button_exit.png')).convert_alpha()
         ]
 
         self.button_images_bigger = [
             pygame.image.load(join('graphics', 'objects', 'button_play_bigger.png')).convert_alpha(),
-            pygame.image.load(join('graphics', 'objects', 'button_settings_bigger.png')).convert_alpha(),
             pygame.image.load(join('graphics', 'objects', 'button_save_bigger.png')).convert_alpha(),
+            pygame.image.load(join('graphics', 'objects', 'button_load_bigger.png')).convert_alpha(),
             pygame.image.load(join('graphics', 'objects', 'button_exit_bigger.png')).convert_alpha()
         ]
 

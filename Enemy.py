@@ -68,7 +68,7 @@ class Enemy(pygame.sprite.Sprite):
         return in_range
 
     def input(self, dt):
-        if self.is_active() and not self.player.is_invisible and self.player.player_data.health >= 15:
+        if self.is_active() and not self.player.is_invisible and self.player.player_data.health >= 10:
             self.player.sound.background_sound.set_volume(0.0)
             self.player.sound.fight_sound.set_volume(0.45)
             self.player.paused = True

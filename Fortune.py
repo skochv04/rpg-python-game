@@ -62,7 +62,8 @@ class Fortune(NPC):
                 message = f"It seems to me, that {random_amount} {random_element.name} will be useful for your missions!"
                 item_icon = pygame.image.load(random_element.image).convert_alpha()
                 self.upd_data()
-            if self.player.player_data.quest is not None and self.player.player_data.quest.quest == Quests.MAGIC_DUEL:
+            if self.player.player_data.quest is not None \
+                    and (self.player.player_data.quest.quest == Quests.MAGIC_DUEL or self.player.player_data.quest.quest == Quests.THE_LUCKY):
                 self.player.player_data.quest.specific_cond = True
         self.FortuneUI = FortuneUI(self.groups, self.player, self, message, item_icon)
 

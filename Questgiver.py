@@ -37,7 +37,7 @@ class Questgiver(NPC):
             self.configure_data()
         responses, last_dialogue = super().dialogue()
         response_num = int(last_dialogue)
-        if 0 < response_num < 1000 and response_num % 2:
+        if 0 < response_num < 1000 and response_num % 2 and response_num != 23:
 
             # start new quest
             if not self.started_quest:

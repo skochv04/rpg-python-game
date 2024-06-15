@@ -106,7 +106,7 @@ class QuestsUI(WindowUI):
             width = image_width * equipment_amount + step * (equipment_amount - 2)
             start = equipment_text_rect.centerx - width // 2 + step
             for item in self.prizeEquipment:
-                item_image = item.image
+                item_image = pygame.image.load(item.item_type.image)
                 item_rect = item_image.get_rect(center=(start, equipment_text_rect.centery + 50))
                 self.image.blit(item_image, item_rect)
                 start += (image_width + step)

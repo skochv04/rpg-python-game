@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level3.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -60,8 +60,8 @@
             "scale": 0.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1068,
-                "y": 469
+                "x": 906,
+                "y": 411
             }
         },
         "level1.tmx#Coins": {
@@ -110,6 +110,9 @@
         "level1.tmx#ask": {
             "scaleInDock": 1
         },
+        "level1.tmx#health": {
+            "scaleInDock": 1
+        },
         "level1.tmx#info": {
             "scaleInDock": 1
         },
@@ -127,11 +130,11 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 0.5,
+            "scale": 0.33,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1240,
-                "y": 353
+                "x": 772.7272727272727,
+                "y": 762.1212121212121
             }
         },
         "level2.tmx#Coins": {
@@ -182,6 +185,9 @@
         "level2.tmx#brown_buttons": {
             "scaleInDock": 1
         },
+        "level2.tmx#health": {
+            "scaleInDock": 1
+        },
         "level2.tmx#info": {
             "scaleInDock": 1
         },
@@ -201,8 +207,8 @@
             "scale": 0.5,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 1450,
-                "y": 915
+                "x": 858,
+                "y": 567
             }
         },
         "level3.tmx#Coins": {
@@ -247,6 +253,15 @@
             "scaleInDock": 1
         },
         "level3.tmx#ask": {
+            "scaleInDock": 1.5
+        },
+        "level3.tmx#blue_ball": {
+            "scaleInDock": 1
+        },
+        "level3.tmx#brown_buttons": {
+            "scaleInDock": 1
+        },
+        "level3.tmx#health": {
             "scaleInDock": 1
         },
         "level3.tmx#info": {
@@ -282,7 +297,7 @@
             "scaleInDock": 1
         }
     },
-    "last.imagePath": "D:/AGH/4 semestr/Python/RPG_Python_Game/graphics/objects/items",
+    "last.imagePath": "D:/AGH/4 semestr/Python/RPG_Python_Game/graphics/objects",
     "map.height": 15,
     "map.lastUsedFormat": "tmx",
     "map.tileHeight": 64,
@@ -296,14 +311,14 @@
     "project": "maps.tiled-project",
     "recentFiles": [
         "level1.tmx",
-        "level3.tmx",
         "level2.tmx",
+        "level3.tmx",
         "test map.tmx",
         "D:/AGH/4 semestr/Python/RPG_Python_Game/data/levels/level1.tmx"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
-        "height": 58,
-        "width": 64
+        "height": 48,
+        "width": 48
     }
 }

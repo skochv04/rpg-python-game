@@ -95,7 +95,7 @@ def create_character(sound):
         skill_y = 620
         display_surface.blit(skill_surface, (skill_x, skill_y))
 
-        skill_id, skill_price, skill_min_power_to_get, skill_file, skill_name, skill_keyboard = current_skill.value
+        skill_id, skill_file, skill_name, skill_keyboard = current_skill.value
         skill_data_text = font.render(f"Skill: {skill_name}",
                                       True, (255, 255, 255))
         display_surface.blit(skill_data_text, (skill_x - 70, skill_y + skill_surface.get_height()))

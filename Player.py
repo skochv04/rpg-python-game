@@ -5,6 +5,7 @@ from Spritessheet import SpritesSheet
 from pygame.math import Vector2 as Vector
 from StatusEffects import StatusEffects
 from TimerWindow import TimerWindow
+from Quests import Quests
 
 
 class Player(pygame.sprite.Sprite):
@@ -143,6 +144,8 @@ class Player(pygame.sprite.Sprite):
         self.last_ability_time = self.current_time
         self.not_used_skills = False
         self.player_data.timer = 30000 - (self.current_time - self.last_ability_time)
+        if self.player_data.quest is not None and (self.player_data.quest.quest == Quests.LAST_DANCE):
+            self.player_data.quest.specific_cond = True
 
     def activate_invisibility(self):
         if not self.is_invisible:
@@ -336,4 +339,4 @@ class Player(pygame.sprite.Sprite):
         self.sprite_up = self.original_images["up"].copy()
 
     def up_level_UI(self):
-        LevelUpUI(self.groups()[0], self)
+        LevelUpUI(self.groups, self)

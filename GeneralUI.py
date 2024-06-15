@@ -152,14 +152,15 @@ class GeneralUI:
         spacing = 10  # Space between each skill icon and text
 
         for skill in self.player.player_data.skills:
-            skill_icon = skill.image
-            skill_icon = pygame.transform.scale(skill_icon, (icon_size, icon_size))
-            skill_text, skill_rect = self.small_font.render(skill.keyboard, 'white')
+            if skill is not None:
+                skill_icon = skill.image
+                skill_icon = pygame.transform.scale(skill_icon, (icon_size, icon_size))
+                skill_text, skill_rect = self.small_font.render(skill.keyboard, 'white')
 
-            skill_icon_rect = skill_icon.get_rect(topleft=(34, start_y))
-            skill_rect.midleft = (skill_icon_rect.right + spacing, skill_icon_rect.centery)
+                skill_icon_rect = skill_icon.get_rect(topleft=(34, start_y))
+                skill_rect.midleft = (skill_icon_rect.right + spacing, skill_icon_rect.centery)
 
-            self.display_surface.blit(skill_icon, skill_icon_rect)
-            self.display_surface.blit(skill_text, skill_rect)
+                self.display_surface.blit(skill_icon, skill_icon_rect)
+                self.display_surface.blit(skill_text, skill_rect)
 
-            start_y += icon_size + spacing  # Move down for the next skill
+                start_y += icon_size + spacing  # Move down for the next skill

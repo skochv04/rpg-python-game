@@ -17,7 +17,8 @@ def sell_equipment(equipment, player):
         player.player_data.inventory.add_item(Item(equipment.item_type, 1))
         if player.player_data.quest is not None and \
                 (player.player_data.quest.quest == Quests.CHAMPION
-                 or player.player_data.quest.quest == Quests.FASHION_ENEMIES):
+                 or player.player_data.quest.quest == Quests.FASHION_ENEMIES
+                 or player.player_data.quest.quest == Quests.STRONG_MAGICIAN):
             player.player_data.quest.specific_cond = True
         return True
     return False

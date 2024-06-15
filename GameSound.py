@@ -25,6 +25,7 @@ class GameSound:
             'attack': pygame.mixer.Sound(join('audio', 'attack.wav')),
             'start_game': pygame.mixer.Sound(join('audio', 'start_game.mp3')),
             'quest_item': pygame.mixer.Sound(join('audio', 'quest_item.wav')),
+            'health': pygame.mixer.Sound(join('audio', 'health.mp3')),
         }
 
         self.background_sound = pygame.mixer.Sound(join('audio', 'background.mp3'))
@@ -72,6 +73,9 @@ class GameSound:
 
         self.timer_sound = self.audio_files['timer']
         self.timer_sound.set_volume(0.6)
+
+        self.health_sound = self.audio_files['health']
+        self.health_sound.set_volume(0.6)
 
         self.skill_small_sound = self.audio_files['skill_small']
         self.skill_small_sound.set_volume(0.45)

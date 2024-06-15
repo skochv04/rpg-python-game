@@ -3,7 +3,8 @@ import pygame.sprite
 from Enemy import Enemy
 from Coin import Coin
 from Fortune import Fortune
-from NPC import NPC
+from Health import Health
+from Informator import Informator
 from Questgiver import Questgiver
 from Settings import *
 from Shopkeeper import Shopkeeper
@@ -59,7 +60,7 @@ class Level:
             elif obj.name == 'questgiver':
                 Questgiver((obj.x, obj.y), self.all_sprites, self.collision_sprites, quest_dialogue, self.player, 500)
             elif obj.name == 'informator':
-                NPC((obj.x, obj.y), self.all_sprites, self.collision_sprites, "000", self.player, 1000)
+                Informator((obj.x, obj.y), self.all_sprites, self.collision_sprites, "000", self.player, 1000)
             elif obj.name == 'fortune':
                 Fortune((obj.x, obj.y), self.all_sprites, self.collision_sprites, "000", self.player, 1500)
             elif obj.name == 'wilddog':
@@ -85,8 +86,12 @@ class Level:
                       obj.name)
             elif obj.name == 'coin':
                 Coin((obj.x, obj.y), self.all_sprites, self.player)
+            elif obj.name == 'health':
+                Health((obj.x, obj.y), self.all_sprites, self.player)
             elif obj.name == 'brown_buttons':
                 QuestItem((obj.x, obj.y), self.all_sprites, self.player, "brown_buttons")
+            elif obj.name == 'blue_ball':
+                QuestItem((obj.x, obj.y), self.all_sprites, self.player, "blue_ball")
             else:
                 Sprite((obj.x, obj.y), obj.image, (self.all_sprites, self.collision_sprites))
 

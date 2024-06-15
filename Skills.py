@@ -25,4 +25,4 @@ class Skills(Enum):
         return self.value[3]
 
     def __str__(self):
-        return self.name()
+        return self.value[2]

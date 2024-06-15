@@ -30,7 +30,7 @@ class Quest:
             new_amount = player_data.inventory.find_item_amount(item)
             if old_amount + item.amount > new_amount:
                 return False
-        if player_data.earned_coins_level < player_data.demand_coins_total: return False
+        if player_data.earned_coins_total + player_data.earned_coins_level < player_data.demand_coins_total: return False
 
         if self.quest.specific_cond and not self.specific_cond: return False
         return True

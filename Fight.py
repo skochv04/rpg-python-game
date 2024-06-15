@@ -6,7 +6,7 @@ from Notification import *
 
 def reward_player_fight(player, enemy):
     player.player_data.enemies_won_level += 1
-    earned = enemy.start_power * player.player_data.power // 2
+    earned = enemy.start_power * player.player_data.power // 4
     player.player_data.coins += earned
     player.player_data.earned_coins_level += earned
     player.player_data.exp += 15 * player.player_data.level
@@ -37,7 +37,7 @@ def display_enemy(enemy, display_surface):
     display_surface.blit(skin_view_right, (WINDOW_WIDTH - 350, 300))
 
 
-def skill_buttons_list(player, button):
+def skill_buttons_list(player, button, enemy):
     skills = player.player_data.battle_skills
 
     if len(skills) <= 0:
@@ -55,7 +55,7 @@ def skill_buttons_list(player, button):
     return buttons
 
 
-def item_buttons_list(player, button):
+def item_buttons_list(player, button, enemy):
     items = player.player_data.inventory.get_item_list()
     items = list(items)
 
@@ -309,7 +309,7 @@ def fight(enemy, player, dt):
                     if item_buttons:
                         item_buttons = None
                     else:
-                        item_buttons = item_buttons_list(player, buttons[2])
+                        item_buttons = item_buttons_list(player, buttons[2], enemy)
         if did_action:
             attack_animation(player, enemy, display_surface, is_enemy_dead(enemy))
             if is_enemy_dead(enemy):
