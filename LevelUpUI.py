@@ -1,6 +1,5 @@
 from Settings import *
 from os.path import join
-
 from WindowUI import WindowUI
 
 

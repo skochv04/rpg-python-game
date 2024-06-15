@@ -1,5 +1,5 @@
-from Settings import *
 import pickle
+
 
 def create_save(player_data, current_skin, player_name):
     save = {
@@ -20,6 +20,5 @@ def load_save():
             save = pickle.load(f)
     except FileNotFoundError:
         return None
-
 
     return save['player_data'], save['current_skin'], save['player_name']

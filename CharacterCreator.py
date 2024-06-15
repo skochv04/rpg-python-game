@@ -1,8 +1,7 @@
 from PlayerData import available_items
 from Settings import *
 from Spritessheet import SpritesSheet
-from Skills import Skills  # Додано імпорт Skills
-import random
+from Skills import Skills
 
 
 def create_character(sound):
@@ -31,7 +30,7 @@ def create_character(sound):
 
     while True:
         for event in pygame.event.get():
-            # Обробка події закриття вікна
+
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
@@ -57,7 +56,6 @@ def create_character(sound):
                     sound.arrow_sound.play()
                     current_skin = (current_skin + 1) % 8
 
-        # Відображення вікна з назвою
         display_surface.fill((30, 30, 30))
         if len(text) == 0:
             txt_surface = default_text
@@ -68,13 +66,11 @@ def create_character(sound):
         display_surface.blit(txt_surface, (input_box.x + 5, input_box.y + 5))
         pygame.draw.rect(display_surface, color, input_box, 2)
 
-        # Відображення поточного скину
         my_spritesheet = SpritesSheet(join('graphics', 'player', f'{current_skin + 1}', 'texture.png'))
         sprite_down = my_spritesheet.parse_sprite('2.png')
         skin_view = pygame.transform.scale(sprite_down, (200, 200))
         display_surface.blit(skin_view, (WINDOW_WIDTH / 2 - 110, 300))
 
-        # Відображення трьох предметів під скином
         skin_items = available_items[current_skin]
         items_count = len(skin_items)
         sector_width = WINDOW_WIDTH // items_count
@@ -92,9 +88,8 @@ def create_character(sound):
             text_y = item_y + item_surface.get_height()
             display_surface.blit(item_data_text, (text_x, text_y))
 
-        # Відображення скілу для поточного скину
         current_skill = skills_list[current_skin]
-        skill_image = current_skill.value[3]
+        skill_image = current_skill.image
         skill_surface = pygame.transform.scale(skill_image, (50, 50))
         skill_x = (WINDOW_WIDTH - skill_surface.get_width()) // 2
         skill_y = 620

@@ -3,7 +3,7 @@ import pygame.sprite
 from Enemy import Enemy
 from Coin import Coin
 from Fortune import Fortune
-from Informator import Informator
+from NPC import NPC
 from Questgiver import Questgiver
 from Settings import *
 from Shopkeeper import Shopkeeper
@@ -13,6 +13,7 @@ from AllSprites import AllSprites
 from GeneralUI import GeneralUI
 from MiniMap import MiniMap
 from QuestItem import QuestItem
+
 
 class Level:
     def __init__(self, tmx_map, player_name, current_skin, player_data, sound):
@@ -50,29 +51,38 @@ class Level:
         for collision in self.collision_sprites: self.invisible_collision_sprites.add(collision)
         for obj in tmx_map.get_layer_by_name('Objects'):
             if obj.name == 'player':
-                self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.invisible_collision_sprites, self.player_data, self.player_name, self.current_skin, self.sound)
+                self.player = Player((obj.x, obj.y), self.all_sprites, self.collision_sprites,
+                                     self.invisible_collision_sprites, self.player_data, self.player_name,
+                                     self.current_skin, self.sound)
             elif obj.name == 'shopkeeper':
                 Shopkeeper((obj.x, obj.y), self.all_sprites, self.collision_sprites, "000", self.player, 0)
             elif obj.name == 'questgiver':
                 Questgiver((obj.x, obj.y), self.all_sprites, self.collision_sprites, quest_dialogue, self.player, 500)
             elif obj.name == 'informator':
-                Informator((obj.x, obj.y), self.all_sprites, self.collision_sprites, "000", self.player, 1000)
+                NPC((obj.x, obj.y), self.all_sprites, self.collision_sprites, "000", self.player, 1000)
             elif obj.name == 'fortune':
                 Fortune((obj.x, obj.y), self.all_sprites, self.collision_sprites, "000", self.player, 1500)
             elif obj.name == 'wilddog':
-                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 5, 45, vector(1, 0), obj.name)
+                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 5, 45, vector(1, 0),
+                      obj.name)
             elif obj.name == 'zombie':
-                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 15, 120, vector(1, 0), obj.name)
+                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 15, 120, vector(1, 0),
+                      obj.name)
             elif obj.name == 'draft':
-                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 8, 70, vector(1, 0), obj.name)
+                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 8, 70, vector(1, 0),
+                      obj.name)
             elif obj.name == 'ugly_angel':
-                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 10, 80, vector(1, 0), obj.name)
+                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 10, 80, vector(1, 0),
+                      obj.name)
             elif obj.name == 'hatter':
-                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 15, 100, vector(0, 1), obj.name)
+                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 15, 100, vector(0, 1),
+                      obj.name)
             elif obj.name == 'glasser':
-                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 10, 95, vector(0, 1), obj.name)
+                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 10, 95, vector(0, 1),
+                      obj.name)
             elif obj.name == 'winged':
-                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 15, 150, vector(0, 1), obj.name)
+                Enemy((obj.x, obj.y), self.all_sprites, self.collision_sprites, self.player, 0, 15, 150, vector(0, 1),
+                      obj.name)
             elif obj.name == 'coin':
                 Coin((obj.x, obj.y), self.all_sprites, self.player)
             elif obj.name == 'brown_buttons':

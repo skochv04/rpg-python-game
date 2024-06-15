@@ -1,4 +1,6 @@
 from Settings import *
+
+
 class GameSound:
     def __init__(self):
         self.audio_files = {

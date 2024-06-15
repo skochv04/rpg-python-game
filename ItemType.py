@@ -1,6 +1,7 @@
 from enum import Enum
-import pygame
 from os.path import join
+
+
 class ItemType(Enum):
     # id, price, damage, min_level_to_get, image, name
     THREAD = (1, 15, 20, 1, join('graphics', 'objects', 'items', 'thread.png'), "thread")

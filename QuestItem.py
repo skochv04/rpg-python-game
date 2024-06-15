@@ -1,8 +1,5 @@
-import pygame
-
 from Quests import Quests
 from Settings import *
-from Spritessheet import SpritesSheet
 
 
 class QuestItem(pygame.sprite.Sprite):
@@ -22,5 +19,4 @@ class QuestItem(pygame.sprite.Sprite):
             if self.name == "brown_buttons" and self.player.player_data.quest is not None and self.player.player_data.quest.quest == Quests.THE_BEST_ASSISTANT:
                 self.player.player_data.quest.specific_cond = True
                 self.player.sound.quest_item_sound.play()
-                print(self.player.player_data.quest.specific_cond)
                 self.kill()

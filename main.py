@@ -1,4 +1,3 @@
-import sys
 import pygame.sprite
 from GameSound import GameSound
 from Settings import *
@@ -9,7 +8,7 @@ from PlayerData import PlayerData
 from Menu import MainMenu
 from DeltaTime import DT
 
-# Клас гри
+
 class Game:
     def __init__(self):
         pygame.init()
@@ -59,7 +58,8 @@ class Game:
             level = 1
             self.player_data.level = level
 
-        self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data, self.sound)
+        self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data,
+                                   self.sound)
         self.sound.start_game_sound.stop()
         self.sound.background_sound.play(-1)
 
@@ -73,9 +73,10 @@ class Game:
                 if level == 4:
                     pygame.quit()
                     sys.exit()
-                self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data, self.sound)
+                self.current_stage = Level(self.tmx_maps[level], player_name, self.current_skin + 1, self.player_data,
+                                           self.sound)
                 pygame.display.update()
-                pygame.time.delay(100)  # Залишаємо екран чорним на короткий час
+                pygame.time.delay(100)
                 self.fade_to_black(reverse=True)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -91,6 +92,7 @@ class Game:
                             pass
             self.current_stage.run(self.dt)
             pygame.display.update()
+
 
 if __name__ == '__main__':
     game = Game()

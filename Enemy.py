@@ -49,7 +49,8 @@ class Enemy(pygame.sprite.Sprite):
     def is_in_move_range(self):
         player_pos, self_pos = vector(self.player.rect.center), vector(self.rect.center)
         in_range = False
-        if abs(player_pos[0] - self_pos[0]) < WINDOW_WIDTH//2 and abs(player_pos[1] - self_pos[1]) < WINDOW_HEIGHT//2:
+        if abs(player_pos[0] - self_pos[0]) < WINDOW_WIDTH // 2 and abs(
+                player_pos[1] - self_pos[1]) < WINDOW_HEIGHT // 2:
             in_range = True
 
         return in_range
@@ -74,8 +75,6 @@ class Enemy(pygame.sprite.Sprite):
             fight(self, self.player, dt)
             self.player.paused = False
             dt.set(0)
-
-
 
     def move(self, dt):
         if not self.is_in_move_range():
@@ -114,23 +113,23 @@ class Enemy(pygame.sprite.Sprite):
         for sprite in self.collision_sprites:
             if sprite.rect.colliderect(self.rect):
                 if axis == 'horizontal':
-                    # lewo
+                    # left
                     if self.rect.left <= sprite.rect.right and self.old_rect.left >= sprite.old_rect.right:
                         self.rect.left = sprite.rect.right
                         self.opposite_direction(self.direction)
 
-                    # prawo
+                    # right
                     if self.rect.right >= sprite.rect.left and self.old_rect.right <= sprite.old_rect.left:
                         self.rect.right = sprite.rect.left
                         self.opposite_direction(self.direction)
 
                 else:
-                    # gora
+                    # up
                     if self.rect.top <= sprite.rect.bottom and self.old_rect.top >= sprite.old_rect.bottom:
                         self.rect.top = sprite.rect.bottom
                         self.opposite_direction(self.direction)
 
-                    # dol
+                    # down
                     if self.rect.bottom >= sprite.rect.top and self.old_rect.bottom <= sprite.old_rect.top:
                         self.rect.bottom = sprite.rect.top
                         self.opposite_direction(self.direction)

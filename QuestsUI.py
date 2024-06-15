@@ -40,7 +40,6 @@ class QuestsUI(WindowUI):
             if len(self.prizeEquipment) > 0: self.equipment_paragraph = 60
             if self.prizeSkill is not None: self.skills_paragraph = 60
 
-
         self.item_rect = None
 
     def render(self):
@@ -57,18 +56,21 @@ class QuestsUI(WindowUI):
 
         if hasattr(self, 'additional_message'):
             additional_text_surface = self.font.render(self.additional_message, True, (0, 0, 0))
-            additional_text_rect = additional_text_surface.get_rect(center=(self.image.get_width() // 2, self.image.get_height() // 2 - 160))
+            additional_text_rect = additional_text_surface.get_rect(
+                center=(self.image.get_width() // 2, self.image.get_height() // 2 - 160))
             self.image.blit(additional_text_surface, additional_text_rect)
 
         if hasattr(self, 'additional_message'):
             explicite_text_surface = self.font.render("Awards:", True, (0, 0, 0))
-            explicite_text_rect = explicite_text_surface.get_rect(center=(self.image.get_width() // 2, self.image.get_height() // 2 +5 - self.equipment_paragraph - self.skills_paragraph))
+            explicite_text_rect = explicite_text_surface.get_rect(center=(self.image.get_width() // 2,
+                                                                          self.image.get_height() // 2 + 5 - self.equipment_paragraph - self.skills_paragraph))
             self.image.blit(explicite_text_surface, explicite_text_rect)
 
         if hasattr(self, 'prizeExp'):
             exp_text_surface = self.font.render(f"Exp: {self.prizeExp}", True, (0, 0, 0))
             exp_text_rect = exp_text_surface.get_rect(
-                center=(self.image.get_width() // 2 - 150, self.image.get_height() // 2 + 40 - self.equipment_paragraph - self.skills_paragraph))
+                center=(self.image.get_width() // 2 - 150,
+                        self.image.get_height() // 2 + 40 - self.equipment_paragraph - self.skills_paragraph))
             exp_icon_rect = self.exp_icon.get_rect(center=(exp_text_rect.centerx, exp_text_rect.centery + 40))
             self.image.blit(self.exp_icon, exp_icon_rect)
             self.image.blit(exp_text_surface, exp_text_rect)
@@ -76,7 +78,8 @@ class QuestsUI(WindowUI):
         if hasattr(self, 'prizeCoins'):
             coins_text_surface = self.font.render(f"Coins: {self.prizeCoins}", True, (0, 0, 0))
             coins_text_rect = coins_text_surface.get_rect(
-                center=(self.image.get_width() // 2, self.image.get_height() // 2 + 40 - self.equipment_paragraph - self.skills_paragraph))
+                center=(self.image.get_width() // 2,
+                        self.image.get_height() // 2 + 40 - self.equipment_paragraph - self.skills_paragraph))
             coins_icon_rect = self.coin_icon.get_rect(center=(coins_text_rect.centerx, coins_text_rect.centery + 40))
             self.image.blit(self.coin_icon, coins_icon_rect)
             self.image.blit(coins_text_surface, coins_text_rect)
@@ -84,7 +87,8 @@ class QuestsUI(WindowUI):
         if hasattr(self, 'prizeHealth'):
             health_text_surface = self.font.render(f"Health: {self.prizeHealth}", True, (0, 0, 0))
             health_text_rect = health_text_surface.get_rect(
-                center=(self.image.get_width() // 2 + 150, self.image.get_height() // 2 + 40 - self.equipment_paragraph - self.skills_paragraph))
+                center=(self.image.get_width() // 2 + 150,
+                        self.image.get_height() // 2 + 40 - self.equipment_paragraph - self.skills_paragraph))
             health_icon_rect = self.health_icon.get_rect(
                 center=(health_text_rect.centerx, health_text_rect.centery + 40))
             self.image.blit(self.health_icon, health_icon_rect)
@@ -93,7 +97,8 @@ class QuestsUI(WindowUI):
         if hasattr(self, 'prizeEquipment') and len(self.prizeEquipment) > 0:
             equipment_text_surface = self.font.render("Equipment:", True, (0, 0, 0))
             equipment_text_rect = equipment_text_surface.get_rect(
-                center=(self.image.get_width() // 2, self.image.get_height() // 2 + 20 + abs(self.equipment_paragraph - self.skills_paragraph)))
+                center=(self.image.get_width() // 2,
+                        self.image.get_height() // 2 + 20 + abs(self.equipment_paragraph - self.skills_paragraph)))
             self.image.blit(equipment_text_surface, equipment_text_rect)
             equipment_amount = len(self.prizeEquipment)
             step = 20
@@ -116,7 +121,7 @@ class QuestsUI(WindowUI):
             width = image_width - step
             start = skills_text_rect.centerx - width // 2 + step
 
-            skill_image = self.prizeSkill.value[3]
+            skill_image = self.prizeSkill.image
             skill_rect = skill_image.get_rect(center=(start, skills_text_rect.centery + 40))
             self.image.blit(skill_image, skill_rect)
             start += (image_width + step)

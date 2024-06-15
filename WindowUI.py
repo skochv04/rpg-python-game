@@ -1,5 +1,4 @@
 from Settings import *
-from os.path import join
 
 
 class WindowUI(pygame.sprite.Sprite):

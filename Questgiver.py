@@ -1,7 +1,6 @@
 from Quests import Quests
 from NPC import NPC
 from Quest import Quest
-from Settings import *
 
 
 class Questgiver(NPC):

@@ -1,22 +1,11 @@
-from enum import Enum
-import random
 from os.path import join
-
 from Quests import Quests
-from FortuneUI import FortuneUI
-from ItemType import ItemType
-from Item import Item
-from NPC import NPC
-from PlayerData import available_items
-
-from enum import Enum
 import random
 import pygame
 from FortuneUI import FortuneUI
 from ItemType import ItemType
 from Item import Item
 from NPC import NPC
-from PlayerData import available_items
 
 
 class Fortune(NPC):
@@ -50,7 +39,8 @@ class Fortune(NPC):
                 # health
                 self.player.sound.fortune_health_sound.play()
                 random_health = random.randint(0, 4)
-                self.player.player_data.health = min(self.player.player_data.health + self.health_set[random_health], 100)
+                self.player.player_data.health = min(self.player.player_data.health + self.health_set[random_health],
+                                                     100)
                 message = f"You receive some vitamins to stay healthy! Your XP has been risen by {self.health_set[random_health]}."
                 item_icon = pygame.image.load(join('graphics', 'objects', 'health.png')).convert_alpha()
                 self.upd_data()
@@ -77,8 +67,9 @@ class Fortune(NPC):
         self.FortuneUI = FortuneUI(self.groups, self.player, self, message, item_icon)
 
     def upd_data(self):
-        self.fortune_timer = 120000 #2 minutes
+        self.fortune_timer = 120000  # 2 minutes
         self.current_dialogue = '003'
+
     def dialogue(self):
         responses, last_dialogue = super().dialogue()
         if len(responses) > 0 and responses[0] == 0:

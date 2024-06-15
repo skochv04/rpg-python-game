@@ -1,6 +1,5 @@
 import pygame.freetype
 import pygame.image
-from os.path import join
 from QuestsUI import QuestsUI
 from Settings import *
 from InventoryUI import InventoryUI
@@ -26,6 +25,7 @@ class GeneralUI:
         self.timer_icon = pygame.image.load(join('graphics', 'objects', 'timer.png')).convert_alpha()
         self.quests_icon = pygame.image.load(join('graphics', 'objects', 'quests.png')).convert_alpha()
         self.exp_icon = pygame.image.load(join('graphics', 'objects', 'exp.png')).convert_alpha()
+
     def create_inventory(self):
         self.inventory = InventoryUI(self.groups, self.player.player_data.inventory, self.player)
 

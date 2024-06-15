@@ -1,4 +1,3 @@
-import pygame
 import Shopkeeper
 from Settings import *
 

@@ -1,5 +1,4 @@
 from FightLostUI import FightLostUI
-from Settings import *
 from Spritessheet import SpritesSheet
 from Button import Button
 from Notification import *
@@ -38,7 +37,7 @@ def display_enemy(enemy, display_surface):
     display_surface.blit(skin_view_right, (WINDOW_WIDTH - 350, 300))
 
 
-def skill_buttons_list(player, button, enemy):
+def skill_buttons_list(player, button):
     skills = player.player_data.battle_skills
 
     if len(skills) <= 0:
@@ -49,8 +48,9 @@ def skill_buttons_list(player, button, enemy):
     skill_height = 50
     buttons = []
     for i, skill in enumerate(skills):
-        buttons.append(Button(button.x, button.y - skill_height * (i + 1), skill_width, skill_height, skill.name, (10, 120, 255),
-                       function= skill.effect))
+        buttons.append(
+            Button(button.x, button.y - skill_height * (i + 1), skill_width, skill_height, skill.name, (10, 120, 255),
+                   function=skill.effect))
 
     return buttons
 
@@ -98,7 +98,8 @@ def display_health(player, enemy, display_surface):
 
     player_max_health = pygame.Surface((health_bar_width, health_bar_height))
     player_max_health.fill('black')
-    player_health = pygame.Surface((health_bar_width * (max(player.get_health(), 0)/player.get_max_health()), health_bar_height))
+    player_health = pygame.Surface(
+        (health_bar_width * (max(player.get_health(), 0) / player.get_max_health()), health_bar_height))
     player_health.fill('green')
     player_health_rect = player_health.get_rect(topleft=(150, 250))
     text_surface_player = font.render(f"{player.get_health()}/{player.get_max_health()}", True, 'black')
@@ -106,7 +107,7 @@ def display_health(player, enemy, display_surface):
 
     enemy_max_health = pygame.Surface((health_bar_width, health_bar_height))
     enemy_max_health.fill('black')
-    enemy_health = pygame.Surface((health_bar_width * (enemy.get_health()/enemy.get_max_health()), health_bar_height))
+    enemy_health = pygame.Surface((health_bar_width * (enemy.get_health() / enemy.get_max_health()), health_bar_height))
     enemy_health.fill('green')
     enemy_health_rect = enemy_health.get_rect(topleft=(WINDOW_WIDTH - 350, 250))
     text_surface_enemy = font.render(f"{enemy.get_health()}/{enemy.get_max_health()}", True, 'black')
@@ -181,8 +182,10 @@ def attack_animation(player, enemy, display_surface, enemy_dead):
             background_subsurface.blit(player_surface, (0, 0))
             if player_pos[0] <= 150 - 4:
                 move_player_left = False
-                if not enemy_dead: move_enemy_left = True
-                else: return
+                if not enemy_dead:
+                    move_enemy_left = True
+                else:
+                    return
         elif move_enemy_left:
             enemy_pos = (enemy_pos[0] - 2, enemy_pos[1])
             background_subsurface = background_image.subsurface(
@@ -197,7 +200,6 @@ def attack_animation(player, enemy, display_surface, enemy_dead):
                 (enemy_pos[0], enemy_pos[1], surface_width, surface_height))
             background_subsurface.blit(enemy_surface, (0, 0))
             if enemy_pos[0] >= WINDOW_WIDTH - 350:
-                move_enemy_right = False
                 return
 
         # Create a subsurface of the background image for player and enemy
@@ -246,9 +248,11 @@ def draw_everything(player, enemy, display_surface, background_image, buttons, i
 
     pygame.display.flip()
 
+
 def configure_sound(player):
     player.sound.fight_sound.set_volume(0.0)
     player.sound.background_sound.set_volume(0.05)
+
 
 def confirm_enemy_death(enemy, player):
     player.sound.fight_win_sound.play()
@@ -270,7 +274,6 @@ def fight(enemy, player, dt):
     notification = None
 
     did_action = False
-
 
     while True:
         for event in pygame.event.get():
@@ -302,13 +305,11 @@ def fight(enemy, player, dt):
                         skill_buttons = None
                     else:
                         skill_buttons = skill_buttons_list(player, buttons[1], enemy)
-                    print('button 2 clicked')
                 if buttons[2].is_over(pos):
                     if item_buttons:
                         item_buttons = None
                     else:
                         item_buttons = item_buttons_list(player, buttons[2])
-                    print('button 3 clicked')
         if did_action:
             attack_animation(player, enemy, display_surface, is_enemy_dead(enemy))
             if is_enemy_dead(enemy):
@@ -360,5 +361,3 @@ def fight(enemy, player, dt):
 
         pygame.display.flip()
         clock.tick(30)
-
-

@@ -1,5 +1,6 @@
 from Settings import *
 
+
 class Item:
     def __init__(self, item_type, amount=float('inf'), usable_during_battle=True):
         self.name = item_type.name
@@ -13,7 +14,6 @@ class Item:
         self.price = item_type.price
         self.description = f"Price: {self.price}, Damage: {item_type.damage}, Min Level: {item_type.min_level_to_get}"
 
-
     @property
     def image(self):
         return pygame.image.load(self._image)
@@ -24,9 +24,9 @@ class Item:
             return True
         return False
 
-    def use(self, player, enemy):
+    def use(self, enemy):
         if self.decrease_amount():
-            enemy.enemy_data.reduce_health(self.item_type.value[2])
+            enemy.enemy_data.reduce_health(self.item_type.damage)
             return True
         return False
 

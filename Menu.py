@@ -1,9 +1,5 @@
-import pygame
-import sys
-from os.path import join
-from GameSound import GameSound
-from Settings import *
 from Save import *
+
 
 class MainMenu:
     def __init__(self, sound):
@@ -43,7 +39,6 @@ class MainMenu:
             else:
                 button = self.button_images[i]
 
-            # Зміщення кнопок нижче
             button_rect = button.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 3 + 25 + i * 100))
             self.display_surface.blit(button, button_rect)
 

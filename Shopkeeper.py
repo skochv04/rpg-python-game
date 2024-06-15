@@ -3,8 +3,6 @@ from Inventory import Inventory
 from Item import Item
 from ItemType import ItemType
 from NPC import NPC
-from InventoryUI import InventoryUI
-from Settings import *
 from ShopInventoryUI import ShopInventoryUI
 
 
@@ -41,7 +39,3 @@ class Shopkeeper(NPC):
         responses, last_dialogue = super().dialogue()
         if len(responses) > 0 and responses[0] == 0:
             self.inventoryUI = ShopInventoryUI(self.groups, self.inventory, self.player, self)
-
-
-    # def action(self, player):
-    #     ShopInventory2UI(self.groups, self.inventory, self.player)
