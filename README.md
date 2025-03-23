@@ -1,16 +1,31 @@
-# Magic Valley
+# 🧙‍♂️ Magic Valley
 
-Python project, carried out in the 4th semester of studies at AGH.
+A Python-based RPG game, developed as part of the 4th semester of studies at AGH.
 
-1) Team members: 
-   - Stas Kochevenko | skochv@04gmail.com
-   - Jan Dróżdż
+## 👥 Team Members:
+- **Stas Kochevenko** | skochv04@gmail.com  
+- **Jan Dróżdż**
 
-2) Project topic: 
-   - Python RPG Game Magic Valley (fights, completing quests, shop etc)
+## 🎮 Game Overview:
+Magic Valley is a **2D RPG game** featuring:  
+✅ Dynamic battles ⚔️  
+✅ Quest completion 📜  
+✅ In-game shop 🛒  
+✅ Interactive world 🌍  
 
-3) Information about the technology used:
-   - Python
-   - Pygame
+Built with **Python** and **Pygame**, it provides an engaging role-playing experience.
+
+## 🛠️ Technologies Used:
+- **Programming Language**: Python 🐍  
+- **Game Engine**: Pygame 🎮  
    
 [![game_banner](baner.png)](https://www.youtube.com/watch?v=M2kYhqqz4nw)
+
+## 🚀 How to Run the Game?
+
+### 1️⃣ Install dependencies
+pip install -r requirements.txt
+
+### 2️⃣ Run the game
+sh
+python main.py
