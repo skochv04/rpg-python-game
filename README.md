@@ -3,7 +3,7 @@
 Python project, carried out in the 4th semester of studies at AGH.
 
 1) Team members: 
-   - Stas Kochevenko | skochevenko@student.agh.edu.pl
+   - Stas Kochevenko | skochv@04gmail.com
    - Jan Dróżdż
 
 2) Project topic: 
