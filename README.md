@@ -27,5 +27,4 @@ Built with **Python** and **Pygame**, it provides an engaging role-playing exper
 pip install -r requirements.txt
 
 ### 2️⃣ Run the game
-sh
 python main.py
