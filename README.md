@@ -24,7 +24,11 @@ Built with **Python** and **Pygame**, it provides an engaging role-playing exper
 ## 🚀 How to Run the Game?
 
 ### 1️⃣ Install dependencies
+```bash
 pip install -r requirements.txt
+```
 
 ### 2️⃣ Run the game
+```bash
 python main.py
+```
