@@ -3,7 +3,7 @@
 A Python-based RPG game, developed as part of the 4th semester of studies at AGH.
 
 ## 👥 Team Members:
-- **Stas Kochevenko** | skochv04@gmail.com  
+- **Stas Kochevenko**  
 - **Jan Dróżdż**
 
 ## 🎮 Game Overview:
