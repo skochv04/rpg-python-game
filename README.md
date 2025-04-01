@@ -23,12 +23,18 @@ Built with **Python** and **Pygame**, it provides an engaging role-playing exper
 
 ## 🚀 How to Run the Game?
 
-### 1️⃣ Install dependencies
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/skochv04/rpg-python-game  
+cd repository
+```
+
+### 2️⃣ Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2️⃣ Run the game
+### 3️⃣ Run the game
 ```bash
 python main.py
 ```
